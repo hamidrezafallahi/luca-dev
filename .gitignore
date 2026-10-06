@@ -1,0 +1,88 @@
+# =============================================================================
+# OnlineShop - Git Ignore
+# =============================================================================
+
+# ─── Environment ──────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+!**/.env.example
+!**/.env.*.example
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+FrontEnd/.env
+FrontEnd/.env.production
+FrontEnd/.env.local
+*.local
+
+# ─── IDE / Editor ─────────────────────────────────────────────────────────
+.idea/
+.vs/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ─── OS ───────────────────────────────────────────────────────────────────
+*.log
+logs/
+*.pid
+
+# ─── Docker ───────────────────────────────────────────────────────────────
+docker/nginx/conf.d/*.conf
+!docker/nginx/nginx.conf
+!docker/nginx/conf.d/default.conf
+!docker/nginx/conf.d/production.conf
+docker/certbot/conf/
+docker/certbot/www/
+
+# ─── Backend ──────────────────────────────────────────────────────────────
+BackEnd/**/bin/
+BackEnd/**/obj/
+BackEnd/**/.vs/
+BackEnd/**/*.user
+BackEnd/**/*.suo
+BackEnd/**/*.userprefs
+BackEnd/**/packages/
+BackEnd/**/*.nupkg
+BackEnd/**/TestResults/
+BackEnd/**/*.trx
+BackEnd/**/coverage/
+BackEnd/**/coverage.json
+BackEnd/**/appsettings.*.local.json
+BackEnd/**/connectionStrings.json
+BackEnd/Api/wwwroot/uploads/*
+BackEnd/**/backups/
+BackEnd/Api/backups/
+
+# ─── Frontend ─────────────────────────────────────────────────────────────
+FrontEnd/.next/
+FrontEnd/out/
+FrontEnd/build/
+FrontEnd/dist/
+FrontEnd/node_modules/
+FrontEnd/.cache/
+FrontEnd/coverage/
+FrontEnd/*.tsbuildinfo
+FrontEnd/next-env.d.ts
+
+# ─── SSL / Certificates ──────────────────────────────────────────────────
+*.pfx
+*.p12
+*.cert
+*.key
+!docker/certbot/conf/ # Track folder existence, not contents
+
+# ─── Secrets ──────────────────────────────────────────────────────────────
+secrets/
+secrets.txt
+**/secrets.txt
+credentials.json
+serviceAccountKey.json
+*.pem
+!nginx_configs/ssl-dhparams.pem

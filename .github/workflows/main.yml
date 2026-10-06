@@ -1,0 +1,127 @@
+name: Build and Push Docker Images
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      frontend: ${{ steps.filter.outputs.frontend }}
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            frontend:
+              - 'FrontEnd/**'
+            backend:
+              - 'BackEnd/**'
+
+  build-frontend:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.frontend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v5
+        with:
+          context: ./FrontEnd
+          file: ./FrontEnd/Dockerfile.prod
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/shop-frontend:${{ github.sha }}
+          build-args: |
+            NEXT_PUBLIC_SITE_URL=https://lucaloupe.ir
+            NEXT_PUBLIC_SITE_NAME=Luca Loupe
+            INTERNAL_SERVER_SIDE_API_URL=http://backend:8080
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
+          sbom: false
+
+  build-backend:
+    needs: detect-changes
+    if: needs.detect-changes.outputs.backend == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v4
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v5
+        with:
+          context: ./BackEnd
+          file: ./BackEnd/Dockerfile.prod
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_USERNAME }}/shop-backend:${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
+          sbom: false
+
+  deploy:
+    name: Deploy to VPS
+    runs-on: ubuntu-latest
+    needs:
+      - detect-changes
+      - build-frontend
+      - build-backend
+    if: |
+      always() &&
+      !cancelled() &&
+      (
+        needs.detect-changes.outputs.frontend == 'true' ||
+        needs.detect-changes.outputs.backend == 'true'
+      ) &&
+      (
+        needs.detect-changes.outputs.frontend != 'true' ||
+        needs.build-frontend.result == 'success'
+      ) &&
+      (
+        needs.detect-changes.outputs.backend != 'true' ||
+        needs.build-backend.result == 'success'
+      )
+    steps:
+      - name: Deploy via SSH (SHA tags)
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.VPS_PORT }}
+          script: |
+            set -euo pipefail
+            cd /opt/shop
+
+            # Keep infra (candyRose) current before pulling new app images
+            git fetch --all --prune
+            git pull --ff-only origin master || true
+
+            # Guard against Windows CRLF if deploy.sh was edited/copied from Windows
+            sed -i 's/\r$//' deploy.sh
+            chmod +x deploy.sh
+
+            FRONTEND_CHANGED="${{ needs.detect-changes.outputs.frontend }}"
+            BACKEND_CHANGED="${{ needs.detect-changes.outputs.backend }}"
+            SHA="${{ github.sha }}"
+
+            if [ "$FRONTEND_CHANGED" = "true" ] && [ "$BACKEND_CHANGED" = "true" ]; then
+              ./deploy.sh all "$SHA"
+            elif [ "$FRONTEND_CHANGED" = "true" ]; then
+              ./deploy.sh frontend "$SHA"
+            elif [ "$BACKEND_CHANGED" = "true" ]; then
+              ./deploy.sh backend "$SHA"
+            fi

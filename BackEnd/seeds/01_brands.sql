@@ -1,0 +1,75 @@
+INSERT INTO public."Brands"(
+    "Id", "Name", "LogoUrl", "Description", 
+    "CreatedAt", "UpdatedAt", "DeletedAt", "IsDeleted", "IsActive", 
+    "CreatedBy", "UpdatedBy", "DeletedBy"
+) VALUES 
+(
+    1,
+    'Luca Optics',
+    '/uploads/brands/luca-optics.png',
+    'برند نمونه لوپ‌های جراحی و دندان‌پزشکی با تمرکز بر وضوح تصویر و وزن سبک.',
+    '2026-01-10 09:00:00',
+    '2026-01-10 09:00:00',
+    NULL,
+    false,
+    true,
+    1,
+    1,
+    NULL
+),
+(
+    2,
+    'ClearVision Dental',
+    '/uploads/brands/clearvision-dental.png',
+    'برند نمونه لوپ‌های پریزماتیک با میدان دید وسیع و عمق میدان بالا برای کارهای دقیق ترمیمی و اندو.',
+    '2026-01-11 09:00:00',
+    '2026-01-11 09:00:00',
+    NULL,
+    false,
+    true,
+    1,
+    1,
+    NULL
+),
+(
+    3,
+    'ErgoScope',
+    '/uploads/brands/ergoscope.png',
+    'برند نمونه با تمرکز بر ارگونومی، زاویه دید قابل تنظیم و کاهش فشار روی گردن و کمر دندان‌پزشک.',
+    '2026-01-12 09:00:00',
+    '2026-01-12 09:00:00',
+    NULL,
+    false,
+    true,
+    1,
+    1,
+    NULL
+),
+(
+    4,
+    'LumiDent',
+    '/uploads/brands/lumident.png',
+    'برند نمونه هدلایت‌های LED با نور سفید یکنواخت، شاخص نوردهی بالا و باتری ماندگار.',
+    '2026-01-13 09:00:00',
+    '2026-01-13 09:00:00',
+    NULL,
+    false,
+    true,
+    1,
+    1,
+    NULL
+),
+(
+    5,
+    'Aurum Optics',
+    '/uploads/brands/aurum-optics.png',
+    'برند نمونه لنزها و فریم‌های تیتانیومی سبک با پوشش ضدبازتاب و ضدخط‌وخش.',
+    '2026-01-14 09:00:00',
+    '2026-01-14 09:00:00',
+    NULL,
+    false,
+    true,
+    1,
+    1,
+    NULL
+);

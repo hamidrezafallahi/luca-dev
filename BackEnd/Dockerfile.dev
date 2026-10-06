@@ -1,0 +1,46 @@
+# ─── Backend Development ────────────────────────────────────────────────────
+# Purpose: SDK image with source baked in at build time.
+# After C# changes: docker compose -f docker-compose.dev.yml build backend && up -d backend
+
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS base
+
+LABEL maintainer="OnlineShop Team" \
+      description="OnlineShop Backend - Development" \
+      version="1.0"
+
+WORKDIR /src
+
+# Restore dependencies first for cache optimization
+COPY ["Api/Api.csproj", "Api/"]
+COPY ["Application/Application.csproj", "Application/"]
+COPY ["Infrastructure/Infrastructure.csproj", "Infrastructure/"]
+COPY ["Domain/Domain.csproj", "Domain/"]
+COPY ["Common/Common.csproj", "Common/"]
+
+RUN dotnet restore "Api/Api.csproj"
+
+# Copy source
+COPY . .
+
+# Tools
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends curl wget postgresql-client \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN dotnet tool install --global dotnet-ef || true
+
+ENV PATH="${PATH}:/root/.dotnet/tools"
+
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV ASPNETCORE_URLS=http://+:8080
+
+EXPOSE 8080
+
+HEALTHCHECK \
+    --interval=30s \
+    --timeout=5s \
+    --start-period=30s \
+    --retries=3 \
+    CMD curl -f http://localhost:8080/health || exit 1
+
+CMD ["dotnet","run","--project","Api/Api.csproj","--urls","http://0.0.0.0:8080","--no-launch-profile"]

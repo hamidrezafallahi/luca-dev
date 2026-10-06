@@ -1,0 +1,159 @@
+﻿using Application.Commands;
+using Application.Common;
+using Application.Common.Interfaces;
+using Common;
+using Domain.Interfaces;
+using MediatR;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using OnlineShop.Domain.Entities;
+using Services.Services.Uploader.DTO;
+
+public class SlideCommandHandler(
+        ISlideRepository _slideRepository,
+        IHttpContextAccessor _accessor,
+        IUploaderService _uploaderService) :
+    IRequestHandler<CreateSlideCommand, ServiceResult<IdDto>>,
+    IRequestHandler<UpdateSlideCommand, ServiceResult<IdDto>>,
+    IRequestHandler<ActiveSlideCommand, ServiceResult<IdDto>>,
+    IRequestHandler<DeleteSlideCommand, ServiceResult<IdDto>>,
+    IRequestHandler<SetHeroBannerCommand, ServiceResult<IdDto>>
+{
+    public async Task<ServiceResult<IdDto>> Handle(CreateSlideCommand request, CancellationToken cancellationToken)
+    {
+        var userId = _accessor.HttpContext.GetUserId();
+        if (userId == null)
+            return ServiceResult<IdDto>.Failed("Unauthorized");
+
+        if (request.BannerUrl is null || request.BannerUrl.Length == 0)
+            return ServiceResult<IdDto>.Failed("انتخاب تصویر بنر الزامی است");
+
+        if (string.IsNullOrWhiteSpace(request.FirstUrl))
+            return ServiceResult<IdDto>.Failed("آدرس صفحه مربوط به بنر الزامی است");
+
+        try
+        {
+            var slide = Slide.Create(
+                userId.Value,
+                request.FirstUrl,
+                request.SecondUrl,
+                request.BannerTitle,
+                request.BannerDescription
+            );
+
+            await _slideRepository.AddAsync(slide);
+            await _slideRepository.SaveChangesAsync(cancellationToken);
+
+            var uploadDto = new UploadDTO
+            {
+                File = request.BannerUrl,
+                Path = UploadPaths.LandingSlides(slide.Id)
+            };
+
+            var bannerUrl = await _uploaderService.UploadAsWebp(uploadDto);
+            if (!UploadPaths.IsStoredPath(bannerUrl))
+                return ServiceResult<IdDto>.Failed("آپلود تصویر بنر ناموفق بود");
+
+            slide.Update(userId.Value, bannerUrl, null, null, null, null);
+            await _slideRepository.SaveChangesAsync(cancellationToken);
+
+            return ServiceResult<IdDto>.Ok(new IdDto { Id = slide.Id });
+        }
+        catch (ArgumentException ex)
+        {
+            return ServiceResult<IdDto>.Failed(ex.Message);
+        }
+    }
+
+    public async Task<ServiceResult<IdDto>> Handle(UpdateSlideCommand request, CancellationToken cancellationToken)
+    {
+        var userId = _accessor.HttpContext.GetUserId();
+        if (userId == null)
+            return ServiceResult<IdDto>.Failed("Unauthorized");
+
+        var slide = await _slideRepository.GetByIdAsync(request.Id);
+        if (slide == null)
+            return ServiceResult<IdDto>.Failed("slide پیدا نشد");
+
+        string? bannerUrl = null;
+        if (request.BannerUrl is not null && request.BannerUrl.Length > 0)
+        {
+            await _uploaderService.DeleteStoredFile(
+                slide.BannerUrl,
+                UploadPaths.LandingSlides(slide.Id));
+
+            var uploadDto = new UploadDTO
+            {
+                File = request.BannerUrl,
+                Path = UploadPaths.LandingSlides(slide.Id)
+            };
+
+            bannerUrl = await _uploaderService.UploadAsWebp(uploadDto);
+            if (!UploadPaths.IsStoredPath(bannerUrl))
+                return ServiceResult<IdDto>.Failed("آپلود تصویر بنر ناموفق بود");
+        }
+
+        slide.Update(
+         userId.Value,
+         bannerUrl,
+         request.FirstUrl,
+         request.SecondUrl,
+         request.BannerTitle,
+         request.BannerDescription
+        );
+        await _slideRepository.SaveChangesAsync(cancellationToken);
+
+        return ServiceResult<IdDto>.Ok(new IdDto { Id = slide.Id });
+    }
+
+    public async Task<ServiceResult<IdDto>> Handle(ActiveSlideCommand request, CancellationToken cancellationToken)
+    {
+        var userId = _accessor.HttpContext.GetUserId();
+        if (userId == null)
+            return ServiceResult<IdDto>.Failed("Unauthorized");
+
+        var slide = await _slideRepository.GetByIdAsync(request.Id);
+        if (slide == null)
+            return ServiceResult<IdDto>.Failed("اسلاید پیدا نشد");
+
+        slide.SetActive(request.IsActive, userId.Value);
+        await _slideRepository.SaveChangesAsync(cancellationToken);
+        return ServiceResult<IdDto>.Ok(new IdDto { Id = slide.Id });
+    }
+
+    public async Task<ServiceResult<IdDto>> Handle(DeleteSlideCommand request, CancellationToken cancellationToken)
+    {
+        var userId = _accessor.HttpContext.GetUserId();
+        if (userId == null)
+            return ServiceResult<IdDto>.Failed("Unauthorized");
+
+        var slide = await _slideRepository.GetByIdAsync(request.Id);
+        if (slide == null)
+            return ServiceResult<IdDto>.Failed("اسلاید پیدا نشد");
+
+        await _uploaderService.DeleteStoredFile(
+            slide.BannerUrl,
+            UploadPaths.LandingSlides(slide.Id));
+
+        slide.Delete(userId.Value);
+        await _slideRepository.SaveChangesAsync(cancellationToken);
+        return ServiceResult<IdDto>.Ok(new IdDto { Id = slide.Id });
+    }
+
+    public async Task<ServiceResult<IdDto>> Handle(SetHeroBannerCommand request, CancellationToken cancellationToken)
+    {
+        var userId = _accessor.HttpContext.GetUserId();
+        if (userId == null)
+            return ServiceResult<IdDto>.Failed("Unauthorized");
+
+        var slides = await _slideRepository.Query(s => s.IsActive).ToListAsync();
+        if (!slides.Any())
+            return ServiceResult<IdDto>.Failed("اسلایدی یافت نشد");
+
+        foreach (var slide in slides)
+            slide.SetHero(slide.Id == request.Id, userId.Value);
+
+        await _slideRepository.SaveChangesAsync(cancellationToken);
+        return ServiceResult<IdDto>.Ok(new IdDto { Id = request.Id });
+    }
+}
