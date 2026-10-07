@@ -184,6 +184,105 @@ namespace Infrastructure.Migrations
                     b.ToTable("ProductSpecification");
                 });
 
+            modelBuilder.Entity("OnlineShop.Domain.Entities.AnnouncementBar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BackgroundColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("BackgroundImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("EndsAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("HeightPx")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LinkUrl")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("MessageEn")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("MessageFa")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<DateTime?>("StartsAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("TextColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsActive", "StartsAt", "EndsAt");
+
+                    b.ToTable("AnnouncementBars", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BackgroundColor = "#1e3a8a",
+                            BackgroundImageUrl = "",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 0,
+                            HeightPx = 36,
+                            IsActive = true,
+                            IsDeleted = false,
+                            LinkUrl = "cooperation",
+                            MessageEn = "Expert guidance for choosing the right loupes",
+                            MessageFa = "مشاوره تخصصی برای انتخاب لوپ مناسب",
+                            TextColor = "#ffffff"
+                        });
+                });
+
             modelBuilder.Entity("OnlineShop.Domain.Entities.Blog", b =>
                 {
                     b.Property<int>("Id")
@@ -774,7 +873,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ContactRequests");
+                    b.ToTable("ContactRequests", (string)null);
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Discount", b =>
@@ -1301,14 +1400,14 @@ namespace Infrastructure.Migrations
                         {
                             Id = 20,
                             ActionsJson = "[\"active\",\"edit\",\"delete\",\"new\",\"default\"]",
-                            ColumnsJson = "[{\"Header\":\"\\u0634\\u0646\\u0627\\u0633\\u0647\",\"Accessor\":\"id\",\"Type\":\"number\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0639\\u06A9\\u0633\",\"Accessor\":\"banner\",\"Type\":\"image\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0639\\u0646\\u0648\\u0627\\u0646 \\u0628\\u0646\\u0631\",\"Accessor\":\"bannerTitle\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u062A\\u0648\\u0636\\u06CC\\u062D \\u0628\\u0646\\u0631\",\"Accessor\":\"bannerDescription\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0622\\u062F\\u0631\\u0633 \\u0627\\u0648\\u0644\",\"Accessor\":\"firstUrl\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0622\\u062F\\u0631\\u0633 \\u062F\\u0648\\u0645\",\"Accessor\":\"secondUrl\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0646\\u0645\\u0627\\u06CC\\u0634 \\u0628\\u0646\\u0631\",\"Accessor\":\"isHero\",\"Type\":\"bool\",\"Sortable\":false,\"Filterable\":false,\"Options\":null}]",
+                            ColumnsJson = "[{\"Header\":\"\\u0634\\u0646\\u0627\\u0633\\u0647\",\"Accessor\":\"id\",\"Type\":\"number\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0639\\u06A9\\u0633\",\"Accessor\":\"banner\",\"Type\":\"image\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0639\\u0646\\u0648\\u0627\\u0646 \\u0628\\u0646\\u0631\",\"Accessor\":\"bannerTitle\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u062A\\u0648\\u0636\\u06CC\\u062D \\u0628\\u0646\\u0631\",\"Accessor\":\"bannerDescription\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0622\\u062F\\u0631\\u0633 \\u0627\\u0648\\u0644\",\"Accessor\":\"firstUrl\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0622\\u062F\\u0631\\u0633 \\u062F\\u0648\\u0645\",\"Accessor\":\"secondUrl\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0648\\u06CC\\u062F\\u06CC\\u0648 \\u062F\\u0633\\u06A9\\u062A\\u0627\\u067E\",\"Accessor\":\"videoUrl\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0648\\u06CC\\u062F\\u06CC\\u0648 \\u0645\\u0648\\u0628\\u0627\\u06CC\\u0644\",\"Accessor\":\"mobileVideoUrl\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0646\\u0645\\u0627\\u06CC\\u0634 \\u0628\\u0646\\u0631\",\"Accessor\":\"isHero\",\"Type\":\"bool\",\"Sortable\":false,\"Filterable\":false,\"Options\":null}]",
                             CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             CreatedBy = 1,
                             EndPoint = "landing",
                             EnglishDisplayName = "landing slide",
                             EntityIconBase64 = "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\" class=\"size-6\">\n                  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5M10 11.25h4M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z\" />\n                </svg>\n                ",
                             EntityName = "landing",
-                            FormFieldsJson = "[{\"Name\":\"bannerUrl\",\"Caption\":\"\\u0627\\u0646\\u062A\\u062E\\u0627\\u0628 \\u0628\\u0646\\u0631\",\"Type\":\"file\",\"PlaceHolder\":\"\\u0627\\u0646\\u062A\\u062E\\u0627\\u0628 \\u0628\\u0646\\u0631\",\"Help\":\"\\u0639\\u06A9\\u0633\\u06CC \\u06A9\\u0647 \\u0627\\u0646\\u062A\\u0638\\u0627\\u0631 \\u0645\\u06CC \\u0631\\u0648\\u062F \\u062F\\u0631 \\u0635\\u0641\\u062D\\u0647 \\u0627\\u0635\\u0644\\u06CC \\u062F\\u06CC\\u062F\\u0647 \\u0634\\u0648\\u062F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0627\\u0646\\u062A\\u062E\\u0627\\u0628 \\u0639\\u06A9\\u0633 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"bannerTitle\",\"Caption\":\"\\u0639\\u0646\\u0648\\u0627\\u0646 \\u0628\\u0646\\u0631\",\"Type\":\"text\",\"PlaceHolder\":\"\\u0639\\u0646\\u0648\\u0627\\u0646 \\u0628\\u0646\\u0631\",\"Help\":\"\\u062F\\u0631 \\u0628\\u0646\\u0631 \\u0686\\u0647 \\u0639\\u0646\\u0648\\u0627\\u0646\\u06CC \\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0627\\u062F\\u0647 \\u0634\\u0648\\u062F \\u061F \\u061F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0639\\u0646\\u0648\\u0627\\u0646 \\u0628\\u0646\\u0631 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"bannerDescription\",\"Caption\":\"\\u062A\\u0648\\u0636\\u06CC\\u062D \\u0628\\u0646\\u0631\",\"Type\":\"text\",\"PlaceHolder\":\"\\u062A\\u0648\\u0636\\u06CC\\u062D\\u0627\\u062A \\u0628\\u0646\\u0631\",\"Help\":\"\\u062F\\u0631 \\u0628\\u0646\\u0631 \\u0686\\u0647 \\u062A\\u0648\\u0636\\u06CC\\u062D\\u0627\\u062A\\u06CC \\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0627\\u062F\\u0647 \\u0634\\u0648\\u062F \\u061F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u062A\\u0648\\u0636\\u06CC\\u062D\\u0627\\u062A \\u0628\\u0646\\u0631 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"firstUrl\",\"Caption\":\"\\u0622\\u062F\\u0631\\u0633 \\u0627\\u0648\\u0644\",\"Type\":\"text\",\"PlaceHolder\":\"\\u0622\\u062F\\u0631\\u0633 \\u0627\\u0648\\u0644\",\"Help\":\"\\u0628\\u0627 \\u06A9\\u0644\\u06CC\\u06A9 \\u0628\\u0631 \\u0631\\u0648\\u06CC \\u0639\\u06A9\\u0633 \\u0628\\u0647 \\u0686\\u0647 \\u0622\\u062F\\u0631\\u0633\\u06CC \\u0628\\u0631\\u0648\\u062F \\u061F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0622\\u062F\\u0631\\u0633   \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"secondUrl\",\"Caption\":\"\\u0622\\u062F\\u0631\\u0633 \\u062F\\u0648\\u0645\",\"Type\":\"text\",\"PlaceHolder\":\"\\u0622\\u062F\\u0631\\u0633 \\u0635\\u0641\\u062D\\u0647 \\u062F\\u0648\\u0645\",\"Help\":\"\\u0628\\u0627 \\u06A9\\u0644\\u06CC\\u06A9 \\u0628\\u0631 \\u0631\\u0648\\u06CC \\u062F\\u06A9\\u0645\\u0647 \\u062F\\u0648\\u0645 \\u0628\\u0647 \\u0686\\u0647 \\u0622\\u062F\\u0631\\u0633\\u06CC \\u0628\\u0631\\u0648\\u062F \\u061F (\\u0627\\u062E\\u062A\\u06CC\\u0627\\u0631\\u06CC)\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[]}]",
+                            FormFieldsJson = "[{\"Name\":\"bannerUrl\",\"Caption\":\"\\u067E\\u0648\\u0633\\u062A\\u0631 / \\u0639\\u06A9\\u0633 \\u062F\\u0633\\u06A9\\u062A\\u0627\\u067E\",\"Type\":\"file\",\"PlaceHolder\":\"\\u0627\\u0646\\u062A\\u062E\\u0627\\u0628 \\u0628\\u0646\\u0631\",\"Help\":\"\\u0639\\u06A9\\u0633 \\u0646\\u0633\\u062E\\u0647\\u200C\\u06CC \\u062F\\u0633\\u06A9\\u062A\\u0627\\u067E\\u061B \\u067E\\u0648\\u0633\\u062A\\u0631 \\u0648\\u06CC\\u062F\\u06CC\\u0648 \\u0648 \\u062C\\u0627\\u06CC\\u06AF\\u0632\\u06CC\\u0646 \\u0622\\u0646 \\u0647\\u0645 \\u0647\\u0633\\u062A\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0627\\u0646\\u062A\\u062E\\u0627\\u0628 \\u0639\\u06A9\\u0633 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"bannerTitle\",\"Caption\":\"\\u0639\\u0646\\u0648\\u0627\\u0646 \\u0628\\u0646\\u0631\",\"Type\":\"text\",\"PlaceHolder\":\"\\u0639\\u0646\\u0648\\u0627\\u0646 \\u0628\\u0646\\u0631\",\"Help\":\"\\u062F\\u0631 \\u0628\\u0646\\u0631 \\u0686\\u0647 \\u0639\\u0646\\u0648\\u0627\\u0646\\u06CC \\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0627\\u062F\\u0647 \\u0634\\u0648\\u062F \\u061F \\u061F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0639\\u0646\\u0648\\u0627\\u0646 \\u0628\\u0646\\u0631 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"bannerDescription\",\"Caption\":\"\\u062A\\u0648\\u0636\\u06CC\\u062D \\u0628\\u0646\\u0631\",\"Type\":\"text\",\"PlaceHolder\":\"\\u062A\\u0648\\u0636\\u06CC\\u062D\\u0627\\u062A \\u0628\\u0646\\u0631\",\"Help\":\"\\u062F\\u0631 \\u0628\\u0646\\u0631 \\u0686\\u0647 \\u062A\\u0648\\u0636\\u06CC\\u062D\\u0627\\u062A\\u06CC \\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0627\\u062F\\u0647 \\u0634\\u0648\\u062F \\u061F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u062A\\u0648\\u0636\\u06CC\\u062D\\u0627\\u062A \\u0628\\u0646\\u0631 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"firstUrl\",\"Caption\":\"\\u0622\\u062F\\u0631\\u0633 \\u0627\\u0648\\u0644\",\"Type\":\"text\",\"PlaceHolder\":\"\\u0622\\u062F\\u0631\\u0633 \\u0627\\u0648\\u0644\",\"Help\":\"\\u0628\\u0627 \\u06A9\\u0644\\u06CC\\u06A9 \\u0628\\u0631 \\u0631\\u0648\\u06CC \\u0639\\u06A9\\u0633 \\u0628\\u0647 \\u0686\\u0647 \\u0622\\u062F\\u0631\\u0633\\u06CC \\u0628\\u0631\\u0648\\u062F \\u061F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0622\\u062F\\u0631\\u0633   \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"secondUrl\",\"Caption\":\"\\u0622\\u062F\\u0631\\u0633 \\u062F\\u0648\\u0645\",\"Type\":\"text\",\"PlaceHolder\":\"\\u0622\\u062F\\u0631\\u0633 \\u0635\\u0641\\u062D\\u0647 \\u062F\\u0648\\u0645\",\"Help\":\"\\u0628\\u0627 \\u06A9\\u0644\\u06CC\\u06A9 \\u0628\\u0631 \\u0631\\u0648\\u06CC \\u062F\\u06A9\\u0645\\u0647 \\u062F\\u0648\\u0645 \\u0628\\u0647 \\u0686\\u0647 \\u0622\\u062F\\u0631\\u0633\\u06CC \\u0628\\u0631\\u0648\\u062F \\u061F (\\u0627\\u062E\\u062A\\u06CC\\u0627\\u0631\\u06CC)\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[]},{\"Name\":\"videoUrl\",\"Caption\":\"\\u0648\\u06CC\\u062F\\u06CC\\u0648\\u06CC \\u062F\\u0633\\u06A9\\u062A\\u0627\\u067E (\\u0627\\u062E\\u062A\\u06CC\\u0627\\u0631\\u06CC)\",\"Type\":\"video\",\"PlaceHolder\":\"\\u0627\\u0646\\u062A\\u062E\\u0627\\u0628 \\u0648\\u06CC\\u062F\\u06CC\\u0648 (mp4 \\u06CC\\u0627 webm)\",\"Help\":\"\\u0648\\u06CC\\u062F\\u06CC\\u0648\\u06CC \\u06A9\\u0648\\u062A\\u0627\\u0647 \\u0628\\u06CC\\u200C\\u0635\\u062F\\u0627\\u060C \\u062D\\u062F\\u0627\\u06A9\\u062B\\u0631 \\u06F3\\u06F0 \\u0645\\u06AF\\u0627\\u0628\\u0627\\u06CC\\u062A\\u060C \\u062A\\u0631\\u062C\\u06CC\\u062D\\u0627\\u064B \\u06F1\\u06F6:\\u06F9 \\u0648 \\u062D\\u062F\\u0648\\u062F \\u06F1\\u06F5 \\u062B\\u0627\\u0646\\u06CC\\u0647. \\u0639\\u06A9\\u0633 \\u0628\\u0646\\u0631 \\u0628\\u0647\\u200C\\u0639\\u0646\\u0648\\u0627\\u0646 \\u067E\\u0648\\u0633\\u062A\\u0631 \\u0648 \\u062C\\u0627\\u06CC\\u06AF\\u0632\\u06CC\\u0646 \\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0627\\u062F\\u0647 \\u0645\\u06CC\\u200C\\u0634\\u0648\\u062F.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[]},{\"Name\":\"mobileBannerUrl\",\"Caption\":\"\\u067E\\u0648\\u0633\\u062A\\u0631 \\u0645\\u0648\\u0628\\u0627\\u06CC\\u0644 (\\u0627\\u062E\\u062A\\u06CC\\u0627\\u0631\\u06CC)\",\"Type\":\"file\",\"PlaceHolder\":\"\\u0627\\u0646\\u062A\\u062E\\u0627\\u0628 \\u067E\\u0648\\u0633\\u062A\\u0631 \\u0645\\u0648\\u0628\\u0627\\u06CC\\u0644\",\"Help\":\"\\u0639\\u06A9\\u0633 \\u0639\\u0645\\u0648\\u062F\\u06CC \\u0645\\u062E\\u0635\\u0648\\u0635 \\u0635\\u0641\\u062D\\u0647\\u200C\\u0647\\u0627\\u06CC \\u06A9\\u0648\\u0686\\u06A9\\u061B \\u0627\\u06AF\\u0631 \\u062E\\u0627\\u0644\\u06CC \\u0628\\u0627\\u0634\\u062F \\u0627\\u0632 \\u0639\\u06A9\\u0633 \\u062F\\u0633\\u06A9\\u062A\\u0627\\u067E \\u0627\\u0633\\u062A\\u0641\\u0627\\u062F\\u0647 \\u0645\\u06CC\\u200C\\u0634\\u0648\\u062F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[]},{\"Name\":\"mobileVideoUrl\",\"Caption\":\"\\u0648\\u06CC\\u062F\\u06CC\\u0648\\u06CC \\u0645\\u0648\\u0628\\u0627\\u06CC\\u0644 (\\u0627\\u062E\\u062A\\u06CC\\u0627\\u0631\\u06CC)\",\"Type\":\"video\",\"PlaceHolder\":\"\\u0627\\u0646\\u062A\\u062E\\u0627\\u0628 \\u0648\\u06CC\\u062F\\u06CC\\u0648 (mp4 \\u06CC\\u0627 webm)\",\"Help\":\"\\u0648\\u06CC\\u062F\\u06CC\\u0648\\u06CC \\u0633\\u0628\\u06A9 \\u0648 \\u0639\\u0645\\u0648\\u062F\\u06CC \\u0628\\u0631\\u0627\\u06CC \\u0645\\u0648\\u0628\\u0627\\u06CC\\u0644\\u060C \\u062D\\u062F\\u0627\\u06A9\\u062B\\u0631 \\u06F3\\u06F0 \\u0645\\u06AF\\u0627\\u0628\\u0627\\u06CC\\u062A\\u061B \\u0627\\u06AF\\u0631 \\u062E\\u0627\\u0644\\u06CC \\u0628\\u0627\\u0634\\u062F \\u0627\\u0632 \\u0648\\u06CC\\u062F\\u06CC\\u0648\\u06CC \\u062F\\u0633\\u06A9\\u062A\\u0627\\u067E \\u0627\\u0633\\u062A\\u0641\\u0627\\u062F\\u0647 \\u0645\\u06CC\\u200C\\u0634\\u0648\\u062F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[]},{\"Name\":\"removeMobileBanner\",\"Caption\":\"\\u062D\\u0630\\u0641 \\u067E\\u0648\\u0633\\u062A\\u0631 \\u0645\\u0648\\u0628\\u0627\\u06CC\\u0644 \\u0641\\u0639\\u0644\\u06CC\",\"Type\":\"checkbox\",\"PlaceHolder\":\"\",\"Help\":\"\\u062F\\u0631 \\u0648\\u06CC\\u0631\\u0627\\u06CC\\u0634: \\u0628\\u0631\\u0627\\u06CC \\u062D\\u0630\\u0641 \\u067E\\u0648\\u0633\\u062A\\u0631 \\u0645\\u0648\\u0628\\u0627\\u06CC\\u0644 \\u062B\\u0628\\u062A\\u200C\\u0634\\u062F\\u0647 \\u0641\\u0639\\u0627\\u0644 \\u06A9\\u0646\\u06CC\\u062F.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[]},{\"Name\":\"removeMobileVideo\",\"Caption\":\"\\u062D\\u0630\\u0641 \\u0648\\u06CC\\u062F\\u06CC\\u0648\\u06CC \\u0645\\u0648\\u0628\\u0627\\u06CC\\u0644 \\u0641\\u0639\\u0644\\u06CC\",\"Type\":\"checkbox\",\"PlaceHolder\":\"\",\"Help\":\"\\u062F\\u0631 \\u0648\\u06CC\\u0631\\u0627\\u06CC\\u0634: \\u0628\\u0631\\u0627\\u06CC \\u062D\\u0630\\u0641 \\u0648\\u06CC\\u062F\\u06CC\\u0648\\u06CC \\u0645\\u0648\\u0628\\u0627\\u06CC\\u0644 \\u062B\\u0628\\u062A\\u200C\\u0634\\u062F\\u0647 \\u0641\\u0639\\u0627\\u0644 \\u06A9\\u0646\\u06CC\\u062F.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[]},{\"Name\":\"removeVideo\",\"Caption\":\"\\u062D\\u0630\\u0641 \\u0648\\u06CC\\u062F\\u06CC\\u0648 \\u0641\\u0639\\u0644\\u06CC\",\"Type\":\"checkbox\",\"PlaceHolder\":\"\",\"Help\":\"\\u062F\\u0631 \\u0648\\u06CC\\u0631\\u0627\\u06CC\\u0634: \\u0628\\u0631\\u0627\\u06CC \\u062D\\u0630\\u0641 \\u0648\\u06CC\\u062F\\u06CC\\u0648\\u06CC \\u062B\\u0628\\u062A\\u200C\\u0634\\u062F\\u0647 \\u0641\\u0639\\u0627\\u0644 \\u06A9\\u0646\\u06CC\\u062F.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[]}]",
                             IsActive = true,
                             IsDeleted = false,
                             PersianDisplayName = "اسلاید صفحه اصلی"
@@ -1408,6 +1507,38 @@ namespace Infrastructure.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             PersianDisplayName = "همکاری با ما"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            ActionsJson = "[\"active\",\"edit\",\"delete\",\"new\"]",
+                            ColumnsJson = "[{\"Header\":\"\\u0634\\u0646\\u0627\\u0633\\u0647\",\"Accessor\":\"id\",\"Type\":\"number\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0646\\u0627\\u0645 \\u062A\\u0645\",\"Accessor\":\"name\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0631\\u0646\\u06AF \\u0627\\u0635\\u0644\\u06CC\",\"Accessor\":\"primaryColor\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647\",\"Accessor\":\"surfaceColor\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0645\\u062A\\u0646\",\"Accessor\":\"textColor\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0641\\u0639\\u0627\\u0644 (\\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0631 \\u0633\\u0627\\u06CC\\u062A)\",\"Accessor\":\"isActive\",\"Type\":\"bool\",\"Sortable\":false,\"Filterable\":false,\"Options\":null}]",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = 1,
+                            EndPoint = "themeSettings",
+                            EnglishDisplayName = "Site theme",
+                            EntityIconBase64 = "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\" class=\"size-6\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 1-2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.22-1.128Zm0 0a15.998 15.998 0 0 0 3.388-1.62m-5.043-.025a15.994 15.994 0 0 1 1.622-3.395m3.42 3.42a15.995 15.995 0 0 0 4.764-4.648l3.876-5.814a1.151 1.151 0 0 0-1.597-1.597L14.146 6.32a15.996 15.996 0 0 0-4.649 4.763m3.42 3.42a6.776 6.776 0 0 0-3.42-3.42\" /></svg>",
+                            EntityName = "themeSettings",
+                            FormFieldsJson = "[{\"Name\":\"name\",\"Caption\":\"\\u0646\\u0627\\u0645 \\u062A\\u0645\",\"Type\":\"text\",\"PlaceHolder\":\"\\u0645\\u062B\\u0644\\u0627: \\u067E\\u0627\\u06CC\\u06CC\\u0632 \\u06A9\\u0631\\u06CC\\u0633\\u062A\\u0627\\u0644\",\"Help\":\"\\u0641\\u0642\\u0637 \\u0628\\u0631\\u0627\\u06CC \\u0634\\u0646\\u0627\\u0633\\u0627\\u06CC\\u06CC \\u062F\\u0631 \\u067E\\u0646\\u0644\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0646\\u0627\\u0645 \\u062A\\u0645 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"primaryColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u0627\\u0635\\u0644\\u06CC\",\"Type\":\"color\",\"PlaceHolder\":\"#1e3a8a\",\"Help\":\"\\u062F\\u06A9\\u0645\\u0647\\u200C\\u0647\\u0627\\u060C \\u0644\\u06CC\\u0646\\u06A9\\u200C\\u0647\\u0627\\u06CC \\u0645\\u0647\\u0645 \\u0648 \\u062A\\u0623\\u06A9\\u06CC\\u062F\\u0647\\u0627\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u0627\\u0635\\u0644\\u06CC \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"secondaryColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u062B\\u0627\\u0646\\u0648\\u06CC\\u0647\",\"Type\":\"color\",\"PlaceHolder\":\"#111111\",\"Help\":\"\\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647\\u200C\\u0647\\u0627\\u06CC \\u0645\\u0644\\u0627\\u06CC\\u0645 \\u0648 \\u062C\\u062F\\u0627\\u06A9\\u0646\\u0646\\u062F\\u0647\\u200C\\u0647\\u0627\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u062B\\u0627\\u0646\\u0648\\u06CC\\u0647 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"highlightColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u062A\\u0623\\u06A9\\u06CC\\u062F\",\"Type\":\"color\",\"PlaceHolder\":\"#1e3a8a\",\"Help\":\"\\u0646\\u0634\\u0627\\u0646\\u200C\\u0647\\u0627 \\u0648 \\u062C\\u0632\\u0626\\u06CC\\u0627\\u062A \\u062A\\u0632\\u0626\\u06CC\\u0646\\u06CC\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u062A\\u0623\\u06A9\\u06CC\\u062F \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"neutralColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u062E\\u0646\\u062B\\u06CC\",\"Type\":\"color\",\"PlaceHolder\":\"#f6f6f3\",\"Help\":\"\\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647\\u200C\\u06CC \\u0628\\u062E\\u0634\\u200C\\u0647\\u0627\\u06CC \\u06A9\\u0645\\u200C\\u0627\\u0647\\u0645\\u06CC\\u062A\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u062E\\u0646\\u062B\\u06CC \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"successColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u0645\\u0648\\u0641\\u0642\\u06CC\\u062A\",\"Type\":\"color\",\"PlaceHolder\":\"#1d5c3f\",\"Help\":\"\\u067E\\u06CC\\u0627\\u0645\\u200C\\u0647\\u0627\\u06CC \\u0645\\u0648\\u0641\\u0642\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u0645\\u0648\\u0641\\u0642\\u06CC\\u062A \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"errorColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u062E\\u0637\\u0627\",\"Type\":\"color\",\"PlaceHolder\":\"#a3262e\",\"Help\":\"\\u062E\\u0637\\u0627\\u0647\\u0627 \\u0648 \\u062A\\u062E\\u0641\\u06CC\\u0641\\u200C\\u0647\\u0627\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u062E\\u0637\\u0627 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"warningColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u0647\\u0634\\u062F\\u0627\\u0631\",\"Type\":\"color\",\"PlaceHolder\":\"#8a5a00\",\"Help\":\"\\u0647\\u0634\\u062F\\u0627\\u0631\\u0647\\u0627\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u0647\\u0634\\u062F\\u0627\\u0631 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"infoColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u0627\\u0637\\u0644\\u0627\\u0639\\u200C\\u0631\\u0633\\u0627\\u0646\\u06CC\",\"Type\":\"color\",\"PlaceHolder\":\"#1e3a8a\",\"Help\":\"\\u067E\\u06CC\\u0627\\u0645\\u200C\\u0647\\u0627\\u06CC \\u0627\\u0637\\u0644\\u0627\\u0639\\u0627\\u062A\\u06CC\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u0627\\u0637\\u0644\\u0627\\u0639\\u200C\\u0631\\u0633\\u0627\\u0646\\u06CC \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"surfaceColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647\\u200C\\u06CC \\u0635\\u0641\\u062D\\u0647\",\"Type\":\"color\",\"PlaceHolder\":\"#ffffff\",\"Help\":\"\\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647\\u200C\\u06CC \\u0627\\u0635\\u0644\\u06CC \\u0633\\u0627\\u06CC\\u062A \\u0648 \\u06A9\\u0627\\u0631\\u062A\\u200C\\u0647\\u0627\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647\\u200C\\u06CC \\u0635\\u0641\\u062D\\u0647 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"surfaceMutedColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647\\u200C\\u06CC \\u0645\\u0644\\u0627\\u06CC\\u0645\",\"Type\":\"color\",\"PlaceHolder\":\"#f6f6f3\",\"Help\":\"\\u0642\\u0627\\u0628 \\u0639\\u06A9\\u0633 \\u0645\\u062D\\u0635\\u0648\\u0644\\u0627\\u062A \\u0648 \\u0628\\u062E\\u0634\\u200C\\u0647\\u0627\\u06CC \\u062E\\u0627\\u06A9\\u0633\\u062A\\u0631\\u06CC\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647\\u200C\\u06CC \\u0645\\u0644\\u0627\\u06CC\\u0645 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"borderColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u062E\\u0637 \\u0648 \\u062D\\u0627\\u0634\\u06CC\\u0647\",\"Type\":\"color\",\"PlaceHolder\":\"#e4e4e0\",\"Help\":\"\\u062E\\u0637\\u200C\\u0647\\u0627\\u06CC \\u062C\\u062F\\u0627\\u06A9\\u0646\\u0646\\u062F\\u0647 \\u0648 \\u062D\\u0627\\u0634\\u06CC\\u0647\\u200C\\u06CC \\u06A9\\u0627\\u0631\\u062A\\u200C\\u0647\\u0627\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u062E\\u0637 \\u0648 \\u062D\\u0627\\u0634\\u06CC\\u0647 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"textColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u0645\\u062A\\u0646\",\"Type\":\"color\",\"PlaceHolder\":\"#111111\",\"Help\":\"\\u0645\\u062A\\u0646 \\u0627\\u0635\\u0644\\u06CC \\u0648 \\u062A\\u06CC\\u062A\\u0631\\u0647\\u0627\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u0645\\u062A\\u0646 \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"textMutedColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u0645\\u062A\\u0646 \\u06A9\\u0645\\u200C\\u0631\\u0646\\u06AF\",\"Type\":\"color\",\"PlaceHolder\":\"#5c5c58\",\"Help\":\"\\u062A\\u0648\\u0636\\u06CC\\u062D\\u0627\\u062A \\u0648 \\u0645\\u062A\\u0646\\u200C\\u0647\\u0627\\u06CC \\u0641\\u0631\\u0639\\u06CC\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0631\\u0646\\u06AF \\u0645\\u062A\\u0646 \\u06A9\\u0645\\u200C\\u0631\\u0646\\u06AF \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]}]",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PersianDisplayName = "تم سایت"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            ActionsJson = "[\"active\",\"edit\",\"delete\",\"new\"]",
+                            ColumnsJson = "[{\"Header\":\"\\u0634\\u0646\\u0627\\u0633\\u0647\",\"Accessor\":\"id\",\"Type\":\"number\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0645\\u062A\\u0646 \\u0641\\u0627\\u0631\\u0633\\u06CC\",\"Accessor\":\"messageFa\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0622\\u062F\\u0631\\u0633 \\u0644\\u06CC\\u0646\\u06A9\",\"Accessor\":\"linkUrl\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0627\\u0631\\u062A\\u0641\\u0627\\u0639 (px)\",\"Accessor\":\"heightPx\",\"Type\":\"number\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0634\\u0631\\u0648\\u0639 \\u0646\\u0645\\u0627\\u06CC\\u0634\",\"Accessor\":\"startsAt\",\"Type\":\"date\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u067E\\u0627\\u06CC\\u0627\\u0646 \\u0646\\u0645\\u0627\\u06CC\\u0634\",\"Accessor\":\"endsAt\",\"Type\":\"date\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u062A\\u0631\\u062A\\u06CC\\u0628\",\"Accessor\":\"displayOrder\",\"Type\":\"number\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"\\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0627\\u062F\\u0647 \\u0634\\u0648\\u062F\",\"Accessor\":\"isActive\",\"Type\":\"bool\",\"Sortable\":false,\"Filterable\":false,\"Options\":null}]",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = 1,
+                            EndPoint = "announcementBars",
+                            EnglishDisplayName = "Announcement bar",
+                            EntityIconBase64 = "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\" class=\"size-6\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 1 1 0-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 0 1-1.44-4.282m3.102.069a18.03 18.03 0 0 1-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 0 1 8.835 2.535M10.34 6.66a23.847 23.847 0 0 0 8.835-2.535m0 0A23.74 23.74 0 0 0 18.795 3m.38 1.125a23.91 23.91 0 0 1 1.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 0 0 1.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 0 1 0 3.46\" /></svg>",
+                            EntityName = "announcementBars",
+                            FormFieldsJson = "[{\"Name\":\"messageFa\",\"Caption\":\"\\u0645\\u062A\\u0646 \\u0641\\u0627\\u0631\\u0633\\u06CC\",\"Type\":\"text\",\"PlaceHolder\":\"\\u0645\\u062B\\u0644\\u0627: \\u0627\\u0631\\u0633\\u0627\\u0644 \\u0631\\u0627\\u06CC\\u06AF\\u0627\\u0646 \\u0628\\u0631\\u0627\\u06CC \\u062E\\u0631\\u06CC\\u062F \\u0628\\u0627\\u0644\\u0627\\u06CC ...\",\"Help\":\"\\u0645\\u062A\\u0646\\u06CC \\u06A9\\u0647 \\u062F\\u0631 \\u0635\\u0641\\u062D\\u0647\\u200C\\u0647\\u0627\\u06CC \\u0641\\u0627\\u0631\\u0633\\u06CC \\u0631\\u0648\\u06CC \\u0646\\u0648\\u0627\\u0631 \\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0627\\u062F\\u0647 \\u0645\\u06CC\\u200C\\u0634\\u0648\\u062F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":[{\"Rule\":\"required\",\"Condition\":\"true\",\"Message\":\"\\u0645\\u062A\\u0646 \\u0641\\u0627\\u0631\\u0633\\u06CC \\u0627\\u0644\\u0632\\u0627\\u0645\\u06CC \\u0627\\u0633\\u062A\"}]},{\"Name\":\"messageEn\",\"Caption\":\"\\u0645\\u062A\\u0646 \\u0627\\u0646\\u06AF\\u0644\\u06CC\\u0633\\u06CC\",\"Type\":\"text\",\"PlaceHolder\":\"English message\",\"Help\":\"\\u0628\\u0631\\u0627\\u06CC \\u0635\\u0641\\u062D\\u0647\\u200C\\u0647\\u0627\\u06CC \\u0627\\u0646\\u06AF\\u0644\\u06CC\\u0633\\u06CC\\u061B \\u0627\\u06AF\\u0631 \\u062E\\u0627\\u0644\\u06CC \\u0628\\u0627\\u0634\\u062F \\u0645\\u062A\\u0646 \\u0641\\u0627\\u0631\\u0633\\u06CC \\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0627\\u062F\\u0647 \\u0645\\u06CC\\u200C\\u0634\\u0648\\u062F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"linkUrl\",\"Caption\":\"\\u0622\\u062F\\u0631\\u0633 \\u0644\\u06CC\\u0646\\u06A9\",\"Type\":\"text\",\"PlaceHolder\":\"\\u0645\\u062B\\u0644\\u0627: discounts \\u06CC\\u0627 https://example.com\",\"Help\":\"\\u0628\\u0627 \\u06A9\\u0644\\u06CC\\u06A9 \\u0631\\u0648\\u06CC \\u0646\\u0648\\u0627\\u0631 \\u0628\\u0647 \\u0627\\u06CC\\u0646 \\u0622\\u062F\\u0631\\u0633 \\u0645\\u06CC\\u200C\\u0631\\u0648\\u062F\\u061B \\u062E\\u0627\\u0644\\u06CC = \\u0628\\u062F\\u0648\\u0646 \\u0644\\u06CC\\u0646\\u06A9\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"backgroundImageUrl\",\"Caption\":\"\\u062A\\u0635\\u0648\\u06CC\\u0631 \\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647 (\\u0627\\u062E\\u062A\\u06CC\\u0627\\u0631\\u06CC)\",\"Type\":\"file\",\"PlaceHolder\":\"\\u0627\\u0646\\u062A\\u062E\\u0627\\u0628 \\u062A\\u0635\\u0648\\u06CC\\u0631\",\"Help\":\"\\u0631\\u0648\\u06CC \\u0631\\u0646\\u06AF \\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647 \\u0642\\u0631\\u0627\\u0631 \\u0645\\u06CC\\u200C\\u06AF\\u06CC\\u0631\\u062F\\u061B \\u062A\\u0635\\u0648\\u06CC\\u0631 \\u0627\\u0641\\u0642\\u06CC \\u0648 \\u06A9\\u0645\\u200C\\u062D\\u062C\\u0645 \\u067E\\u06CC\\u0634\\u0646\\u0647\\u0627\\u062F \\u0645\\u06CC\\u200C\\u0634\\u0648\\u062F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"removeBackgroundImage\",\"Caption\":\"\\u062D\\u0630\\u0641 \\u062A\\u0635\\u0648\\u06CC\\u0631 \\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647 \\u0641\\u0639\\u0644\\u06CC\",\"Type\":\"checkbox\",\"PlaceHolder\":\"\",\"Help\":\"\\u062F\\u0631 \\u0648\\u06CC\\u0631\\u0627\\u06CC\\u0634: \\u0628\\u0631\\u0627\\u06CC \\u062D\\u0630\\u0641 \\u062A\\u0635\\u0648\\u06CC\\u0631 \\u062B\\u0628\\u062A\\u200C\\u0634\\u062F\\u0647 \\u0641\\u0639\\u0627\\u0644 \\u06A9\\u0646\\u06CC\\u062F.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"backgroundColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647\",\"Type\":\"color\",\"PlaceHolder\":\"#1e3a8a\",\"Help\":\"\\u0627\\u06AF\\u0631 \\u062A\\u0635\\u0648\\u06CC\\u0631 \\u067E\\u0633\\u200C\\u0632\\u0645\\u06CC\\u0646\\u0647 \\u0646\\u062F\\u0627\\u0631\\u06CC\\u062F \\u0627\\u06CC\\u0646 \\u0631\\u0646\\u06AF \\u062F\\u06CC\\u062F\\u0647 \\u0645\\u06CC\\u200C\\u0634\\u0648\\u062F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"textColor\",\"Caption\":\"\\u0631\\u0646\\u06AF \\u0645\\u062A\\u0646\",\"Type\":\"color\",\"PlaceHolder\":\"#ffffff\",\"Help\":\"\\u0631\\u0646\\u06AF \\u0645\\u062A\\u0646 \\u0631\\u0648\\u06CC \\u0646\\u0648\\u0627\\u0631\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"heightPx\",\"Caption\":\"\\u0627\\u0631\\u062A\\u0641\\u0627\\u0639 \\u0646\\u0648\\u0627\\u0631 (\\u067E\\u06CC\\u06A9\\u0633\\u0644)\",\"Type\":\"number\",\"PlaceHolder\":\"36\",\"Help\":\"\\u0628\\u06CC\\u0646 \\u06F2\\u06F4 \\u062A\\u0627 \\u06F1\\u06F6\\u06F0 \\u067E\\u06CC\\u06A9\\u0633\\u0644\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"startsAt\",\"Caption\":\"\\u0634\\u0631\\u0648\\u0639 \\u0646\\u0645\\u0627\\u06CC\\u0634\",\"Type\":\"date\",\"PlaceHolder\":\"\",\"Help\":\"\\u062E\\u0627\\u0644\\u06CC = \\u0627\\u0632 \\u0647\\u0645\\u06CC\\u0646 \\u062D\\u0627\\u0644\\u0627\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"endsAt\",\"Caption\":\"\\u067E\\u0627\\u06CC\\u0627\\u0646 \\u0646\\u0645\\u0627\\u06CC\\u0634\",\"Type\":\"date\",\"PlaceHolder\":\"\",\"Help\":\"\\u062E\\u0627\\u0644\\u06CC = \\u0628\\u062F\\u0648\\u0646 \\u067E\\u0627\\u06CC\\u0627\\u0646\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"displayOrder\",\"Caption\":\"\\u062A\\u0631\\u062A\\u06CC\\u0628\",\"Type\":\"number\",\"PlaceHolder\":\"0\",\"Help\":\"\\u0627\\u06AF\\u0631 \\u0686\\u0646\\u062F \\u0646\\u0648\\u0627\\u0631 \\u0647\\u0645\\u200C\\u0632\\u0645\\u0627\\u0646 \\u0645\\u0639\\u062A\\u0628\\u0631 \\u0628\\u0627\\u0634\\u0646\\u062F\\u060C \\u0639\\u062F\\u062F \\u06A9\\u0648\\u0686\\u06A9\\u200C\\u062A\\u0631 \\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0627\\u062F\\u0647 \\u0645\\u06CC\\u200C\\u0634\\u0648\\u062F\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null}]",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PersianDisplayName = "نوار اعلان"
                         });
                 });
 
@@ -1458,7 +1589,7 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Faqs");
+                    b.ToTable("Faqs", (string)null);
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Order", b =>
@@ -2168,6 +2299,14 @@ namespace Infrastructure.Migrations
                         .HasColumnType("boolean")
                         .HasDefaultValue(false);
 
+                    b.Property<string>("MobileBannerUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("MobileVideoUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("SecondUrl")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -2178,6 +2317,11 @@ namespace Infrastructure.Migrations
 
                     b.Property<int?>("UpdatedBy")
                         .HasColumnType("integer");
+
+                    b.Property<string>("VideoUrl")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
 
                     b.HasKey("Id");
 
@@ -2291,6 +2435,137 @@ namespace Infrastructure.Migrations
                         .HasFilter("\"IsDeleted\" = false");
 
                     b.ToTable("Tags", (string)null);
+                });
+
+            modelBuilder.Entity("OnlineShop.Domain.Entities.ThemeSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BorderColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ErrorColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("HighlightColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("InfoColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("NeutralColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("PrimaryColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("SecondaryColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("SuccessColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("SurfaceColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("SurfaceMutedColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("TextColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<string>("TextMutedColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("WarningColor")
+                        .IsRequired()
+                        .HasMaxLength(7)
+                        .HasColumnType("character varying(7)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ThemeSettings", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BorderColor = "#e4e4e0",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            ErrorColor = "#a3262e",
+                            HighlightColor = "#1e3a8a",
+                            InfoColor = "#1e3a8a",
+                            IsActive = true,
+                            IsDeleted = false,
+                            Name = "Luca",
+                            NeutralColor = "#f6f6f3",
+                            PrimaryColor = "#1e3a8a",
+                            SecondaryColor = "#111111",
+                            SuccessColor = "#1d5c3f",
+                            SurfaceColor = "#ffffff",
+                            SurfaceMutedColor = "#f6f6f3",
+                            TextColor = "#111111",
+                            TextMutedColor = "#5c5c58",
+                            WarningColor = "#8a5a00"
+                        });
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.User", b =>

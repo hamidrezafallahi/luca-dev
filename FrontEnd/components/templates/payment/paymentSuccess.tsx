@@ -194,7 +194,6 @@ export default function PaymentSuccess({ params }: IPaymentSuccessProps) {
                   <Button
                     onClick={handlePrint}
                     variant="outline" className="w-full h-14"
-                    variant="outline"
                   >
                     <Printer config={{className:"ml-2 w-4 h-4"}}   />
                     {t('printReceipt')}
@@ -202,7 +201,6 @@ export default function PaymentSuccess({ params }: IPaymentSuccessProps) {
                   <Button
                     onClick={handleDownloadInvoice}
                     variant="outline" className="w-full h-14"
-                    variant="outline"
                   >
                     <Download config={{className:"ml-2 w-4 h-4"}} />
                     {t('downloadInvoice')}

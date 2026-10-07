@@ -1,11 +1,9 @@
 import React from 'react';
 
-import Footer from '@layout/footer';
-import Header from '@layout/header';
-
 /**
- * Storefront chrome for the checkout-flow screens (orders, invoices, payment result),
- * which previously rendered as bare full-screen views.
+ * Content frame for the checkout-flow screens (orders, invoices, payment result).
+ * The storefront header and footer are rendered by the route layouts (they are
+ * server components, so they cannot be imported from these client screens).
  */
 export default function StoreShell({
   children,
@@ -15,12 +13,8 @@ export default function StoreShell({
   className?: string;
 }) {
   return (
-    <>
-      <Header />
-      <main className={`pt-6 pb-16 md:pb-24 min-h-[60vh] text-ink text-start luca-container ${className}`}>
-        {children}
-      </main>
-      <Footer />
-    </>
+    <main className={`pt-6 pb-16 md:pb-24 min-h-[60vh] text-ink text-start luca-container ${className}`}>
+      {children}
+    </main>
   );
 }

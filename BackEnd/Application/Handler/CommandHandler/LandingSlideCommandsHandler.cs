@@ -54,7 +54,29 @@ public class SlideCommandHandler(
             if (!UploadPaths.IsStoredPath(bannerUrl))
                 return ServiceResult<IdDto>.Failed("آپلود تصویر بنر ناموفق بود");
 
-            slide.Update(userId.Value, bannerUrl, null, null, null, null);
+            string? videoPath = null;
+            if (request.VideoUrl is not null && request.VideoUrl.Length > 0)
+            {
+                videoPath = await _uploaderService.UploadVideo(new UploadDTO
+                {
+                    File = request.VideoUrl,
+                    Path = UploadPaths.LandingSlides(slide.Id)
+                });
+                if (!UploadPaths.IsStoredPath(videoPath))
+                    return ServiceResult<IdDto>.Failed("آپلود ویدیو ناموفق بود (فقط mp4/webm تا ۳۰ مگابایت)");
+            }
+
+            slide.Update(userId.Value, bannerUrl, null, null, null, null, videoPath);
+
+            var mobileBanner = await UploadImageIfAny(request.MobileBannerUrl, slide.Id);
+            if (request.MobileBannerUrl is { Length: > 0 } && mobileBanner is null)
+                return ServiceResult<IdDto>.Failed("آپلود پوستر موبایل ناموفق بود");
+
+            var mobileVideo = await UploadVideoIfAny(request.MobileVideoUrl, slide.Id);
+            if (request.MobileVideoUrl is { Length: > 0 } && mobileVideo is null)
+                return ServiceResult<IdDto>.Failed("آپلود ویدیوی موبایل ناموفق بود (فقط mp4/webm تا ۳۰ مگابایت)");
+
+            slide.SetMobileMedia(userId.Value, mobileBanner, mobileVideo);
             await _slideRepository.SaveChangesAsync(cancellationToken);
 
             return ServiceResult<IdDto>.Ok(new IdDto { Id = slide.Id });
@@ -93,13 +115,68 @@ public class SlideCommandHandler(
                 return ServiceResult<IdDto>.Failed("آپلود تصویر بنر ناموفق بود");
         }
 
+        string? videoPath = null;
+        if (request.RemoveVideo && !string.IsNullOrWhiteSpace(slide.VideoUrl))
+        {
+            await _uploaderService.DeleteStoredFile(slide.VideoUrl, UploadPaths.LandingSlides(slide.Id));
+            slide.ClearVideo(userId.Value);
+        }
+        if (request.VideoUrl is not null && request.VideoUrl.Length > 0)
+        {
+            if (!string.IsNullOrWhiteSpace(slide.VideoUrl))
+                await _uploaderService.DeleteStoredFile(slide.VideoUrl, UploadPaths.LandingSlides(slide.Id));
+            videoPath = await _uploaderService.UploadVideo(new UploadDTO
+            {
+                File = request.VideoUrl,
+                Path = UploadPaths.LandingSlides(slide.Id)
+            });
+            if (!UploadPaths.IsStoredPath(videoPath))
+                return ServiceResult<IdDto>.Failed("آپلود ویدیو ناموفق بود (فقط mp4/webm تا ۳۰ مگابایت)");
+        }
+
+        // ---- نسخه‌ی موبایل ----
+        var folder = UploadPaths.LandingSlides(slide.Id);
+        if (request.RemoveMobileBanner && !string.IsNullOrWhiteSpace(slide.MobileBannerUrl))
+        {
+            await _uploaderService.DeleteStoredFile(slide.MobileBannerUrl, folder);
+            slide.ClearMobileBanner(userId.Value);
+        }
+        if (request.RemoveMobileVideo && !string.IsNullOrWhiteSpace(slide.MobileVideoUrl))
+        {
+            await _uploaderService.DeleteStoredFile(slide.MobileVideoUrl, folder);
+            slide.ClearMobileVideo(userId.Value);
+        }
+
+        string? newMobileBanner = null;
+        if (request.MobileBannerUrl is { Length: > 0 })
+        {
+            newMobileBanner = await UploadImageIfAny(request.MobileBannerUrl, slide.Id);
+            if (newMobileBanner is null)
+                return ServiceResult<IdDto>.Failed("آپلود پوستر موبایل ناموفق بود");
+            if (!string.IsNullOrWhiteSpace(slide.MobileBannerUrl))
+                await _uploaderService.DeleteStoredFile(slide.MobileBannerUrl, folder);
+        }
+
+        string? newMobileVideo = null;
+        if (request.MobileVideoUrl is { Length: > 0 })
+        {
+            newMobileVideo = await UploadVideoIfAny(request.MobileVideoUrl, slide.Id);
+            if (newMobileVideo is null)
+                return ServiceResult<IdDto>.Failed("آپلود ویدیوی موبایل ناموفق بود (فقط mp4/webm تا ۳۰ مگابایت)");
+            if (!string.IsNullOrWhiteSpace(slide.MobileVideoUrl))
+                await _uploaderService.DeleteStoredFile(slide.MobileVideoUrl, folder);
+        }
+
+        slide.SetMobileMedia(userId.Value, newMobileBanner, newMobileVideo);
+
         slide.Update(
          userId.Value,
          bannerUrl,
          request.FirstUrl,
          request.SecondUrl,
          request.BannerTitle,
-         request.BannerDescription
+         request.BannerDescription,
+         videoPath
         );
         await _slideRepository.SaveChangesAsync(cancellationToken);
 
@@ -135,9 +212,38 @@ public class SlideCommandHandler(
             slide.BannerUrl,
             UploadPaths.LandingSlides(slide.Id));
 
+        // ویدیوها و نسخه‌ی موبایل هم با اسلاید پاک می‌شوند.
+        foreach (var stored in new[] { slide.VideoUrl, slide.MobileBannerUrl, slide.MobileVideoUrl })
+        {
+            if (!string.IsNullOrWhiteSpace(stored))
+                await _uploaderService.DeleteStoredFile(stored, UploadPaths.LandingSlides(slide.Id));
+        }
+
         slide.Delete(userId.Value);
         await _slideRepository.SaveChangesAsync(cancellationToken);
         return ServiceResult<IdDto>.Ok(new IdDto { Id = slide.Id });
+    }
+
+    private async Task<string?> UploadImageIfAny(IFormFile? file, int slideId)
+    {
+        if (file is not { Length: > 0 }) return null;
+        var stored = await _uploaderService.UploadAsWebp(new UploadDTO
+        {
+            File = file,
+            Path = UploadPaths.LandingSlides(slideId)
+        });
+        return UploadPaths.IsStoredPath(stored) ? stored : null;
+    }
+
+    private async Task<string?> UploadVideoIfAny(IFormFile? file, int slideId)
+    {
+        if (file is not { Length: > 0 }) return null;
+        var stored = await _uploaderService.UploadVideo(new UploadDTO
+        {
+            File = file,
+            Path = UploadPaths.LandingSlides(slideId)
+        });
+        return UploadPaths.IsStoredPath(stored) ? stored : null;
     }
 
     public async Task<ServiceResult<IdDto>> Handle(SetHeroBannerCommand request, CancellationToken cancellationToken)

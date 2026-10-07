@@ -11,6 +11,11 @@ namespace OnlineShop.Domain.Entities
         public string BannerDescription { get; private set; } = string.Empty;
         public string FirstUrl { get; private set; } = string.Empty;
         public string SecondUrl { get; private set; } = string.Empty;
+        /// <summary>Optional hero video (mp4/webm). BannerUrl doubles as its poster / fallback image.</summary>
+        public string VideoUrl { get; private set; } = string.Empty;
+        /// <summary>نسخه‌ی موبایل: پوستر (عکس) و ویدیوی جدا برای صفحه‌های کوچک. خالی = از نسخه‌ی دسکتاپ استفاده می‌شود.</summary>
+        public string MobileBannerUrl { get; private set; } = string.Empty;
+        public string MobileVideoUrl { get; private set; } = string.Empty;
         public bool IsHero { get; private set; } 
 
 
@@ -44,7 +49,8 @@ namespace OnlineShop.Domain.Entities
             string? firstUrl,
             string? secondUrl,
             string? bannerTitle,
-            string? bannerDescription
+            string? bannerDescription,
+            string? videoUrl = null
         )
         {
             if (!string.IsNullOrWhiteSpace(bannerUrl)) BannerUrl = bannerUrl;
@@ -54,6 +60,34 @@ namespace OnlineShop.Domain.Entities
             if (!string.IsNullOrWhiteSpace(bannerTitle)) BannerTitle = bannerTitle;
             if (!string.IsNullOrWhiteSpace(bannerDescription)) BannerDescription = bannerDescription;
 
+            if (!string.IsNullOrWhiteSpace(videoUrl)) VideoUrl = videoUrl;
+
+
+            MarkUpdated(currentUserId);
+        }
+
+        public void SetMobileMedia(int currentUserId, string? mobileBannerUrl, string? mobileVideoUrl)
+        {
+            if (!string.IsNullOrWhiteSpace(mobileBannerUrl)) MobileBannerUrl = mobileBannerUrl;
+            if (!string.IsNullOrWhiteSpace(mobileVideoUrl)) MobileVideoUrl = mobileVideoUrl;
+            MarkUpdated(currentUserId);
+        }
+
+        public void ClearMobileBanner(int currentUserId)
+        {
+            MobileBannerUrl = string.Empty;
+            MarkUpdated(currentUserId);
+        }
+
+        public void ClearMobileVideo(int currentUserId)
+        {
+            MobileVideoUrl = string.Empty;
+            MarkUpdated(currentUserId);
+        }
+
+        public void ClearVideo(int currentUserId)
+        {
+            VideoUrl = string.Empty;
             MarkUpdated(currentUserId);
         }
 

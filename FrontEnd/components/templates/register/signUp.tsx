@@ -18,6 +18,16 @@ import {
 } from '@utils/core';
 
 import {
+  authError,
+  authFooter,
+  authFooterLink,
+  authInput,
+  authInputError,
+  authLabel,
+  authPrimaryButton,
+  authSubtitle,
+} from './authStyles';
+import {
   IProps,
   ISignup,
 } from './type';
@@ -155,6 +165,8 @@ const handleRegister = async () => {
           handleRegister();
         }}
       >
+        <h5 className={authSubtitle}>{t("register.startSignUp")}</h5>
+
         {/* Uploader */}
         <div className="border border-[#8a8a85] border-dashed rounded-full w-[88px] h-[88px] overflow-hidden luca-ph">
           <Uploader
@@ -164,64 +176,64 @@ const handleRegister = async () => {
         </div>
         {/* FullName */}
         <div>
-          <Label htmlFor="fullName" className="luca-label">{t("register.fullName")}</Label>
+          <Label htmlFor="fullName" className={authLabel}>{t("register.fullName")}</Label>
           <Input
             id="fullName"
             name="fullName"
             value={signup.fullName}
             onChange={handleChange}
             className={cn(
-              "luca-input",
+              authInput,
               errors.fullName &&
-                "!border-error",
+                authInputError,
             )}
           />
           {errors.fullName && (
-            <p className="mt-1 text-error text-[13px]">{errors.fullName}</p>
+            <p className={authError}>{errors.fullName}</p>
           )}
         </div>
 
         {/* Email */}
         <div>
-          <Label htmlFor="email" className="luca-label">{t("register.email")}</Label>
+          <Label htmlFor="email" className={authLabel}>{t("register.email")}</Label>
           <Input
             id="email"
             name="email"
             value={signup.email}
             onChange={handleChange}
             className={cn(
-              "luca-input",
+              authInput,
               errors.email &&
-                "!border-error",
+                authInputError,
             )}
           />
           {errors.email && (
-            <p className="mt-1 text-error text-[13px]">{errors.email}</p>
+            <p className={authError}>{errors.email}</p>
           )}
         </div>
 
         {/* Phone */}
         <div>
-          <Label htmlFor="phoneNumber" className="luca-label">{t("register.phoneNumber")}</Label>
+          <Label htmlFor="phoneNumber" className={authLabel}>{t("register.phoneNumber")}</Label>
           <Input
             id="phoneNumber"
             name="phoneNumber"
             value={signup.phoneNumber}
             onChange={handleChange}
             className={cn(
-              "luca-input",
+              authInput,
               errors.phoneNumber &&
-                "!border-error",
+                authInputError,
             )}
           />
           {errors.phoneNumber && (
-            <p className="mt-1 text-error text-[13px]">{errors.phoneNumber}</p>
+            <p className={authError}>{errors.phoneNumber}</p>
           )}
         </div>
 
         {/* Password */}
         <div>
-          <Label htmlFor="password" className="luca-label">{t("register.password")}</Label>
+          <Label htmlFor="password" className={authLabel}>{t("register.password")}</Label>
           <Input
             id="password"
             type="password"
@@ -229,23 +241,34 @@ const handleRegister = async () => {
             value={signup.password}
             onChange={handleChange}
             className={cn(
-              "luca-input",
+              authInput,
               errors.password &&
-                "!border-error",
+                authInputError,
             )}
           />
           {errors.password && (
-            <p className="mt-1 text-error text-[13px]">{errors.password}</p>
+            <p className={authError}>{errors.password}</p>
           )}
         </div>
 
         <Button
-  type="submit"
-  disabled={!isFormValid }
-  className="bg-primary disabled:opacity-50 w-full h-14 text-[15px] text-white"
->
-  {t("register.register")}
-</Button>
+          type="submit"
+          disabled={!isFormValid}
+          className={authPrimaryButton}
+        >
+          {t("register.register")}
+        </Button>
+
+        <div className={authFooter}>
+          {t("register.havingAccount")}{" "}
+          <button
+            type="button"
+            onClick={() => setIsLogin(true)}
+            className={authFooterLink}
+          >
+            {t("register.enter")}
+          </button>
+        </div>
       </form>
     </div>
   );

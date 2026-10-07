@@ -1,10 +1,10 @@
-import Footer from '@layout/footer';
-import Header from '@layout/header';
 import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 import Register from '@components/templates/register';
+import { getSlides, splitHeroSlide } from '@lib/landing';
 import { buildPageMetadata } from '@lib/seo';
+import { toMediaUrl } from '@utils/toMediaUrl';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -23,14 +23,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   });
 }
 
-export default async function RegisterPage() {
+/** Sign-in / sign-up: standalone screen, so no storefront header or footer. */
+export default async function RegisterPage({ params }: Props) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: 'homePage' });
+  const { hero } = splitHeroSlide(await getSlides());
+
   return (
-    <>
-      <Header />
-      <main>
-        <Register />
-      </main>
-      <Footer />
-    </>
+    <Register
+      imageSrc={hero?.bannerUrl ? toMediaUrl(hero.bannerUrl) : '/images/landingPage/11.jpg'}
+      videoSrc={hero?.videoUrl ? toMediaUrl(hero.videoUrl) : undefined}
+      mediaAlt={t('heroImageAlt')}
+      playLabel={t('videoPlay')}
+      pauseLabel={t('videoPause')}
+    />
   );
 }

@@ -39,7 +39,6 @@
     "openMenu": "باز کردن منو",
     "closeMenu": "بستن منو",
     "exhibition": "لیست قیمت",
-    "announcement": "مشاوره تخصصی برای انتخاب لوپ مناسب",
     "announcementCta": "رزرو وقت",
     "dealers": "نمایندگی‌ها",
     "contact": "تماس با ما",
@@ -175,7 +174,9 @@
     "ctaProducts": "مشاهده مجموعه",
     "ctaDiscounts": "تخفیف‌های ویژه",
     "heroImageAlt": "لوپ دندانپزشکی لوکا",
-    "eyebrow": "مجموعه جدید"
+    "eyebrow": "مجموعه جدید",
+    "videoPause": "توقف ویدیوی پس‌زمینه",
+    "videoPlay": "پخش ویدیوی پس‌زمینه"
   },
   "usp": {
     "sectionTitle": "چرا لوکا؟",
@@ -421,7 +422,8 @@
     "minTwoChars": "حداقل ۲ کاراکتر وارد کنید",
     "minTwoCharsShort": "حداقل ۲ کاراکتر",
     "registerError": "خطا در ثبت نام",
-    "connectionError": "خطای اتصال"
+    "connectionError": "خطای اتصال",
+    "backToLogin": "بازگشت به ورود"
   },
   "shoppingCart": {
     "header": {
@@ -684,7 +686,10 @@
   },
   "uploader": {
     "placeholder": "Drag & Drop یا کلیک کنید تا تصویر انتخاب شود",
-    "previousNotFound": "تصویر قبلی یافت نشد؛ لطفاً دوباره آپلود کنید"
+    "previousNotFound": "تصویر قبلی یافت نشد؛ لطفاً دوباره آپلود کنید",
+    "videoType": "فقط ویدیوی MP4 یا WebM مجاز است.",
+    "videoSize": "حجم ویدیو باید حداکثر ۳۰ مگابایت باشد.",
+    "videoPlaceholder": "انتخاب ویدیو (mp4 / webm)"
   },
   "countdown": {
     "expired": "زمان تخفیف به پایان رسیده",

@@ -29,7 +29,8 @@ import LandingHero from '@components/organisms/landingHero';
 import Footer from '@layout/footer';
 import Header from '@layout/header';
 import { getCategories } from '@lib/category';
-import { getSlides } from '@lib/landing';
+import { siteBaseUrl } from '@lib/api';
+import { getSlides, splitHeroSlide } from '@lib/landing';
 import {
   absoluteUrl,
   buildPageMetadata,
@@ -62,10 +63,7 @@ export default async function Home({ params }: Props) {
   const tBrand = await getTranslations({ locale, namespace: 'brand' });
   const tSeo = await getTranslations({ locale, namespace: 'seo' });
 
-  const images = await getSlides<{
-    bannerUrl: string;
-    firstUrl: string;
-  }>();
+  const { hero, rest } = splitHeroSlide(await getSlides());
   const categories = await getCategories({
     queries: { IsShowInLanding: true },
   });
@@ -76,8 +74,8 @@ export default async function Home({ params }: Props) {
     '@id': `${absoluteUrl(locale, '')}#organization`,
     name: 'لوکا',
     url: absoluteUrl(locale, ''),
-    logo: absoluteUrl(locale, 'logo.png'),
-    image: absoluteUrl(locale, 'og-image.jpg'),
+    // Root-absolute asset (never locale-prefixed). TODO(luca): add `logo` once a logo file exists in /public.
+    image: `${siteBaseUrl}/og-image.jpg`,
     // TODO(luca): replace contact details and social profiles with the brand's real ones.
     email: 'info@rooshak.ir',
     telephone: '+98-935-4042013',
@@ -117,9 +115,9 @@ export default async function Home({ params }: Props) {
       <JsonLd data={[organizationLd, websiteLd]} />
       <Header />
       <main className="flex flex-col min-h-screen">
-        <LandingHero />
+        <LandingHero slide={hero} />
         <TheMostProducts />
-        <LandingSlider images={images} />
+        <LandingSlider images={rest} />
         <LandingCategory categories={categories?.data.records ?? []} />
         <LandingFeatures />
         <LandingSpecialOffer />

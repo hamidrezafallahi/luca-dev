@@ -8,6 +8,11 @@ namespace Application.Commands
     public class CreateSlideCommand : IRequest<ServiceResult<IdDto>>
     {
         public IFormFile BannerUrl { get; set; }
+        /// <summary>Optional hero video (mp4/webm, max ~30 MB).</summary>
+        public IFormFile? VideoUrl { get; set; }
+        /// <summary>Optional mobile poster / video (fall back to the desktop ones when absent).</summary>
+        public IFormFile? MobileBannerUrl { get; set; }
+        public IFormFile? MobileVideoUrl { get; set; }
         public string BannerTitle { get; set; }
         public string BannerDescription { get; set; }
         public string FirstUrl { get; set; }
@@ -19,6 +24,12 @@ namespace Application.Commands
     {
         public int Id { get; set; }
         public IFormFile? BannerUrl { get; set; }
+        public IFormFile? VideoUrl { get; set; }
+        public bool RemoveVideo { get; set; }
+        public IFormFile? MobileBannerUrl { get; set; }
+        public IFormFile? MobileVideoUrl { get; set; }
+        public bool RemoveMobileBanner { get; set; }
+        public bool RemoveMobileVideo { get; set; }
         public string? BannerTitle { get; set; }
         public string? BannerDescription { get; set; }
         public string? FirstUrl { get; set; }

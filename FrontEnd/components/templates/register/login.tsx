@@ -26,6 +26,14 @@ import { useAppSelector } from '@store/index';
 import { showErrorToast } from '@utils/core';
 
 import {
+  authFooter,
+  authFooterLink,
+  authInput,
+  authLabel,
+  authPrimaryButton,
+  authSubtitle,
+} from './authStyles';
+import {
   ILogin,
   ILoginResponse,
   IProps,
@@ -156,14 +164,14 @@ export function LoginForm({
           handleLogin();
         }}
       >
-        <h5 className="font-body font-normal text-base luca-muted">
+        <h5 className={authSubtitle}>
           {t("register.enterEmail")}
         </h5>
 
         <div>
           <Label
             htmlFor="email"
-            className="luca-label"
+            className={authLabel}
           >
             {t("register.email")}
           </Label>
@@ -176,14 +184,14 @@ export function LoginForm({
             )}
             onChange={handleChange}
             required
-            className="luca-input"
+            className={authInput}
           />
         </div>
 
         <div>
           <Label
             htmlFor="password"
-            className="luca-label"
+            className={authLabel}
           >
             {t("register.password")}
           </Label>
@@ -195,7 +203,7 @@ export function LoginForm({
             name="Password"
             onChange={handleChange}
             required
-            className="luca-input"
+            className={authInput}
           />
         </div>
 
@@ -225,19 +233,19 @@ export function LoginForm({
         <Button
           type="submit"
           disabled={isLoading}
-          className="bg-primary w-full h-14 text-[15px] text-white"
+          className={authPrimaryButton}
         >
           {isLoading
             ? t("common.loading")
             : t("register.enter")}
         </Button>
 
-        <div className="text-sm text-center luca-muted">
+        <div className={authFooter}>
           {t("register.dotHaveAnyAccount")}{" "}
           <button
             type="button"
             onClick={() => setIsLogin(false)}
-            className="text-ink underline underline-offset-[5px]"
+            className={authFooterLink}
           >
             {t("register.signUp")}
           </button>

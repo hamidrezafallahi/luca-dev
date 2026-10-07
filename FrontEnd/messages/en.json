@@ -39,7 +39,6 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "exhibition": "Price Lists",
-    "announcement": "Expert guidance for choosing the right loupes",
     "announcementCta": "Book a consultation",
     "dealers": "Dealers",
     "contact": "Contact us",
@@ -175,7 +174,9 @@
     "ctaProducts": "Shop the collection",
     "ctaDiscounts": "Special offers",
     "heroImageAlt": "Luca dental loupes",
-    "eyebrow": "New collection"
+    "eyebrow": "New collection",
+    "videoPause": "Pause background video",
+    "videoPlay": "Play background video"
   },
   "usp": {
     "sectionTitle": "Why Luca?",
@@ -421,7 +422,8 @@
     "minTwoChars": "Enter at least 2 characters",
     "minTwoCharsShort": "At least 2 characters",
     "registerError": "Registration error",
-    "connectionError": "Connection error"
+    "connectionError": "Connection error",
+    "backToLogin": "Back to sign in"
   },
   "shoppingCart": {
     "header": {
@@ -684,7 +686,10 @@
   },
   "uploader": {
     "placeholder": "Drag and drop or click to select an image",
-    "previousNotFound": "Previous image not found; please upload again"
+    "previousNotFound": "Previous image not found; please upload again",
+    "videoType": "Only MP4 or WebM videos are allowed.",
+    "videoSize": "Video must be 30 MB or smaller.",
+    "videoPlaceholder": "Choose a video (mp4 / webm)"
   },
   "countdown": {
     "expired": "The discount has ended",

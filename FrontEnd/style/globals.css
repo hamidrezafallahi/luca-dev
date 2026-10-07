@@ -32,11 +32,6 @@
   --info-color: #8fa5e8;
 }
 
-/* Alternate accents kept for the theme switcher (same layout, different accent). */
-[data-theme="theme1"] { --primary-color: #0b5d5b; --highlight-color: #0b5d5b; --info-color: #0b5d5b; }
-[data-theme="theme2"] { --primary-color: #5b2a86; --highlight-color: #5b2a86; --info-color: #5b2a86; }
-[data-theme="theme3"] { --primary-color: #8a1c2b; --highlight-color: #8a1c2b; --info-color: #8a1c2b; }
-[data-theme="theme4"] { --primary-color: #111111; --highlight-color: #111111; --info-color: #111111; }
 @layer base {
   :root {
     --sidebar-background: 0 0% 98%;
@@ -454,6 +449,7 @@ html {
   --store-border: #e4e4e0;
   --store-text: #111111;
   --store-text-muted: #5c5c58;
+  --store-border-strong: #111111;
   --store-text-on-dark: #ffffff;
   --store-shadow: none;
   --store-radius: 0;
@@ -469,6 +465,7 @@ html {
   --store-border: #3a3a37;
   --store-text: #f3f3f0;
   --store-text-muted: #a9a9a4;
+  --store-border-strong: #f3f3f0;
   --store-text-on-dark: #ffffff;
   --store-shadow: none;
   --store-placeholder: #262624;

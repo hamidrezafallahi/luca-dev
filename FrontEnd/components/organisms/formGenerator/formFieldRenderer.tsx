@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { Checkbox } from '@components/atoms/defaultElements/customCheckbox';
+import ColorField from '@components/atoms/defaultElements/colorField';
 import CustomDatePicker
   from '@components/atoms/defaultElements/customDatePicker';
 import { Input } from '@components/atoms/defaultElements/customInput';
@@ -11,6 +12,7 @@ import { Select } from '@components/atoms/defaultElements/customSelect';
 import { Textarea } from '@components/atoms/defaultElements/customTextarea';
 import { DynamicSelect } from '@components/atoms/defaultElements/dynamicSelect';
 import Uploader from '@components/atoms/defaultElements/uploader';
+import VideoUploader from '@components/atoms/defaultElements/videoUploader';
 import ImagesInput from '@components/molecules/imagesInput';
 
 import { FormFieldRendererProps } from './type';
@@ -71,6 +73,26 @@ const FormFieldRenderer = ({
       return (
         <FieldShell caption={field.Caption} help={field.Help} error={error}>
           <Uploader
+            placeHolder={field.PlaceHolder}
+            value={watch(field.Name) || ''}
+            onChange={(file) => setValue(field.Name, file)}
+          />
+        </FieldShell>
+      );
+    case 'color':
+      return (
+        <FieldShell caption={field.Caption} help={field.Help} error={error}>
+          <ColorField
+            placeHolder={field.PlaceHolder}
+            value={watch(field.Name) || ''}
+            onChange={(hex) => setValue(field.Name, hex)}
+          />
+        </FieldShell>
+      );
+    case 'video':
+      return (
+        <FieldShell caption={field.Caption} help={field.Help} error={error}>
+          <VideoUploader
             placeHolder={field.PlaceHolder}
             value={watch(field.Name) || ''}
             onChange={(file) => setValue(field.Name, file)}

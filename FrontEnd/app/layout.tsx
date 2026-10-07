@@ -2,14 +2,20 @@ import '../style/globals.css';
 
 import { ReactNode } from 'react';
 
-import type { Metadata } from 'next';
-import Script from 'next/script';
+import type { Metadata, Viewport } from 'next';
 
 import { siteBaseUrl } from '@lib/api';
 import { SITE_NAME } from '@lib/seo';
+import { getActiveTheme, themeToCss } from '@lib/theme';
 
 type Props = {
   children: ReactNode;
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  themeColor: '#ffffff',
 };
 
 export const metadata: Metadata = {
@@ -43,9 +49,10 @@ export const metadata: Metadata = {
   },
 };
 
-const THEME_BOOTSTRAP = `(function(){try{var m=document.cookie.match(/(?:^|; )theme=([^;]*)/);var t=m?decodeURIComponent(m[1]):'';if(t&&t!=='default')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`;
+export default async function RootLayout({ children }: Props) {
+  // Colours come from the active ThemeSetting row; globals.css only holds the fallback palette.
+  const themeCss = themeToCss(await getActiveTheme());
 
-export default function RootLayout({ children }: Props) {
   return (
     <html lang="fa" suppressHydrationWarning>
       <head>
@@ -58,11 +65,11 @@ export default function RootLayout({ children }: Props) {
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;500;600&family=Vazirmatn:wght@300;400;500;600&display=swap"
         />
-        <Script id="theme-bootstrap" strategy="beforeInteractive">
-          {THEME_BOOTSTRAP}
-        </Script>
+        {themeCss ? (
+          <style id="site-theme" dangerouslySetInnerHTML={{ __html: themeCss }} />
+        ) : null}
       </head>
-      <body className="bg-white min-h-screen antialiased">
+      <body className="bg-store-surface min-h-screen text-store-text antialiased">
         {children}
       </body>
     </html>

@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 
 import ShoppingCartTemplate from '@components/templates/shoppingCartTemplate';
+import Footer from '@layout/footer';
+import Header from '@layout/header';
 import { buildPageMetadata } from '@lib/seo';
 
 type Props = {
@@ -24,5 +26,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ShoppingCartPage({ params }: Props) {
   const { locale } = await params;
 
-  return <ShoppingCartTemplate locale={locale} />;
+  return (
+    <>
+      <Header />
+      <ShoppingCartTemplate locale={locale} />
+      <Footer />
+    </>
+  );
 }

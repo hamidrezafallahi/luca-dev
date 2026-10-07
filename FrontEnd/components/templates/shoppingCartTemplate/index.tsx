@@ -4,8 +4,6 @@ import { useEffect } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import Footer from '@layout/footer';
-import Header from '@layout/header';
 import { getCookie } from '@utils/core';
 
 import ClientAddress from './clientAddress';
@@ -28,7 +26,6 @@ export default function ShoppingCartTemplate({ ...props }: IProps) {
   }
   return (
     <>
-      <Header />
       <main className="pt-4 pb-16 md:pb-24 text-ink luca-container">
         <div className="items-start gap-8 lg:gap-14 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_420px]">
           {/* Cart lines and delivery address */}
@@ -41,7 +38,6 @@ export default function ShoppingCartTemplate({ ...props }: IProps) {
           <SummarySideBar locale={locale} />
         </div>
       </main>
-      <Footer />
     </>
   );
 }
