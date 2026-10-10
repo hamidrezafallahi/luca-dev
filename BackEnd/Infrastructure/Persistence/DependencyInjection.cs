@@ -74,7 +74,9 @@ namespace OnlineShop.Infrastructure
             services.AddScoped<HangfireOrderJob>();
             services.AddScoped<IBackgroundJobService, HangfireBackgroundJobService>();
             services.AddScoped<IUploaderService, UploaderService>();
-            services.AddScoped<IBackupService, PostgresBackupService>();
+            // Singleton: backup/restore/schedule share one lock and the scheduler runs outside any request scope.
+            services.AddSingleton<IBackupService, PostgresBackupService>();
+            services.AddHostedService<AutoBackupHostedService>();
             services.AddScoped<ISampleSeedService, SampleSeedService>();
             services.AddHttpClient<IPaymentGateway, ZarinpalPaymentGateway>();
             services.AddScoped<IProductSpecificationRepository, ProductSpecificationRepository>();
