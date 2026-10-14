@@ -76,6 +76,7 @@ jobs:
           build-args: |
             NEXT_PUBLIC_SITE_URL=https://lucaloupe.ir
             NEXT_PUBLIC_SITE_NAME=Luca Loupe
+            NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION=5Xmt0Vj5lqBoAhz7VYIZb6tdXeMt2iFpi9z7wUu05ko
             INTERNAL_SERVER_SIDE_API_URL=http://backend:8080
           cache-from: type=gha
           cache-to: type=gha,mode=max
