@@ -1,0 +1,198 @@
+From 4ad30fbe67efc161d568a1b03feb64e445680d17 Mon Sep 17 00:00:00 2001
+From: root <root@srv9280351549.bitcommand.net>
+Date: Wed, 14 Oct 2026 12:50:09 +0000
+Subject: [PATCH] fix(ci): deploy to the luca server with luca-only images
+
+- main.yml: push images as luca-frontend / luca-backend (no longer shared
+  with Rooshak's shop-* repos)
+- main.yml: deploy into /opt/luca-prod instead of /opt/shop
+- main.yml: add workflow_dispatch (all|frontend|backend) for the first
+  full deploy or a rebuild without code changes; paths-filter v2 -> v3
+- Dockerfile.prod: default site URL/name to lucaloupe.ir / Luca Loupe
+- docs: drop candyRose, /opt/shop and the Rooshak VPS IP
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ .github/workflows/main.yml | 47 ++++++++++++++++++++++++++++++++------
+ FrontEnd/Dockerfile.prod   |  4 ++--
+ ROADMAP.md                 |  2 +-
+ USER_TODO.md               |  8 +++----
+ deploy.sh                  |  8 +++----
+ 5 files changed, 51 insertions(+), 18 deletions(-)
+
+diff --git a/.github/workflows/main.yml b/.github/workflows/main.yml
+index fca4d98..21397db 100644
+--- a/.github/workflows/main.yml
++++ b/.github/workflows/main.yml
+@@ -5,22 +5,55 @@ on:
+     branches:
+       - master
+ 
++  # Manual build + deploy (e.g. first deploy, or rebuild without a code change)
++  workflow_dispatch:
++    inputs:
++      target:
++        description: "What to build & deploy"
++        required: true
++        type: choice
++        options:
++          - all
++          - frontend
++          - backend
++        default: all
++
+ jobs:
+   detect-changes:
+     runs-on: ubuntu-latest
+     outputs:
+-      frontend: ${{ steps.filter.outputs.frontend }}
+-      backend: ${{ steps.filter.outputs.backend }}
++      frontend: ${{ steps.result.outputs.frontend }}
++      backend: ${{ steps.result.outputs.backend }}
+     steps:
+       - uses: actions/checkout@v4
+-      - uses: dorny/paths-filter@v2
++        if: github.event_name == 'push'
++      - uses: dorny/paths-filter@v3
+         id: filter
++        if: github.event_name == 'push'
+         with:
+           filters: |
+             frontend:
+               - 'FrontEnd/**'
+             backend:
+               - 'BackEnd/**'
++      - name: Resolve targets
++        id: result
++        shell: bash
++        run: |
++          set -euo pipefail
++          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
++            case "${{ inputs.target }}" in
++              all)      FE=true;  BE=true  ;;
++              frontend) FE=true;  BE=false ;;
++              backend)  FE=false; BE=true  ;;
++            esac
++          else
++            FE="${{ steps.filter.outputs.frontend }}"
++            BE="${{ steps.filter.outputs.backend }}"
++          fi
++          echo "frontend=${FE}" >> "$GITHUB_OUTPUT"
++          echo "backend=${BE}" >> "$GITHUB_OUTPUT"
++          echo "Resolved frontend=${FE} backend=${BE}"
+ 
+   build-frontend:
+     needs: detect-changes
+@@ -39,7 +72,7 @@ jobs:
+           file: ./FrontEnd/Dockerfile.prod
+           push: true
+           tags: |
+-            ${{ secrets.DOCKER_USERNAME }}/shop-frontend:${{ github.sha }}
++            ${{ secrets.DOCKER_USERNAME }}/luca-frontend:${{ github.sha }}
+           build-args: |
+             NEXT_PUBLIC_SITE_URL=https://lucaloupe.ir
+             NEXT_PUBLIC_SITE_NAME=Luca Loupe
+@@ -66,7 +99,7 @@ jobs:
+           file: ./BackEnd/Dockerfile.prod
+           push: true
+           tags: |
+-            ${{ secrets.DOCKER_USERNAME }}/shop-backend:${{ github.sha }}
++            ${{ secrets.DOCKER_USERNAME }}/luca-backend:${{ github.sha }}
+           cache-from: type=gha
+           cache-to: type=gha,mode=max
+           provenance: false
+@@ -104,9 +137,9 @@ jobs:
+           port: ${{ secrets.VPS_PORT }}
+           script: |
+             set -euo pipefail
+-            cd /opt/shop
++            cd /opt/luca-prod
+ 
+-            # Keep infra (candyRose) current before pulling new app images
++            # Keep infra (luca-prod) current before pulling new app images
+             git fetch --all --prune
+             git pull --ff-only origin master || true
+ 
+diff --git a/FrontEnd/Dockerfile.prod b/FrontEnd/Dockerfile.prod
+index 443bc4d..11f9d57 100644
+--- a/FrontEnd/Dockerfile.prod
++++ b/FrontEnd/Dockerfile.prod
+@@ -29,8 +29,8 @@ COPY --from=deps /app/node_modules ./node_modules
+ COPY . .
+ 
+ ARG INTERNAL_SERVER_SIDE_API_URL=http://backend:8080
+-ARG NEXT_PUBLIC_SITE_URL=https://rooshakshop.ir
+-ARG NEXT_PUBLIC_SITE_NAME=Rooshak
++ARG NEXT_PUBLIC_SITE_URL=https://lucaloupe.ir
++ARG NEXT_PUBLIC_SITE_NAME=Luca Loupe
+ ENV INTERNAL_SERVER_SIDE_API_URL=$INTERNAL_SERVER_SIDE_API_URL
+ ENV NEXT_PUBLIC_SITE_URL=$NEXT_PUBLIC_SITE_URL
+ ENV NEXT_PUBLIC_SITE_NAME=$NEXT_PUBLIC_SITE_NAME
+diff --git a/ROADMAP.md b/ROADMAP.md
+index c1461df..abc35d1 100644
+--- a/ROADMAP.md
++++ b/ROADMAP.md
+@@ -1,7 +1,7 @@
+ # ROADMAP.md — Luca Loupe Owner Catalog Automation
+ 
+ > **وضعیت سند:** برنامهٔ اجرایی فازبندی‌شده  
+-> **هم‌تراز با:** کد `BackEnd/` + اتوماسیون `luca-prod` (`/opt/shop` روی VPS)  
++> **هم‌تراز با:** کد `BackEnd/` + اتوماسیون `luca-prod` (`/opt/luca-prod` روی VPS)  
+ > **ممیزی سرور:** 2026-08-14 — `ubuntu-4gb-hel1-2`  
+ > **فرض تیم:** ۱ مهندس + مالک فروشگاه لوپ دندان‌پزشکی  
+ > **قانون معماری:** Telegram → Hermes محدود → n8n فقط برای write چندمرحله‌ای → ASP.NET موجود → PostgreSQL  
+diff --git a/USER_TODO.md b/USER_TODO.md
+index 03758c6..0ed72ce 100644
+--- a/USER_TODO.md
++++ b/USER_TODO.md
+@@ -4,7 +4,7 @@
+ نقشهٔ فازها: `ROADMAP.md` · وضعیت: `EXECUTION_REPORT.md`  
+ آخرین به‌روزرسانی Agent: 2026-08-16
+ 
+-VPS فعلی: `65.109.212.237` (`/opt/shop`) · فروشگاه: `lucaloupe.ir`
++VPS فعلی: `188.212.97.124` (`/opt/luca-prod`) · فروشگاه: `lucaloupe.ir`
+ 
+ ---
+ 
+@@ -40,10 +40,10 @@ Gate C ساخته شد؛ productId=N را verify کن.
+ 
+ ## امنیت (P002 — Deferred در توسعه؛ قبل از prod اجباری)
+ 
+-- [ ] رمز SSH root روی `65.109.212.237` را عوض کن (`passwd`)؛ **هرگز** رمز را در چت نگذار
++- [ ] رمز SSH root روی `188.212.97.124` را عوض کن (`passwd`)؛ **هرگز** رمز را در چت نگذار
+ - [ ] ورود با SSH Key؛ بعداً PasswordAuthentication را محدود کن
+-- [ ] در `/opt/shop/.env` بچرخان: `HERMES_DASHBOARD_BASIC_AUTH_*` و `API_SERVER_KEY` (مقادیر را در چت ننویس)
+-- [ ] بعد از چرخش Hermes: `cd /opt/shop && ./deploy.sh automation recreate`
++- [ ] در `/opt/luca-prod/.env` بچرخان: `HERMES_DASHBOARD_BASIC_AUTH_*` و `API_SERVER_KEY` (مقادیر را در چت ننویس)
++- [ ] بعد از چرخش Hermes: `cd /opt/luca-prod && ./deploy.sh automation recreate`
+ - [ ] PAT/توکن‌های لو‌رفتهٔ قدیمی GitHub را Revoke کن (اگر هنوز فعال‌اند)
+ - [ ] رمز، توکن تلگرام، JWT، OpenRouter، Hermes را در چت نفرست
+ 
+diff --git a/deploy.sh b/deploy.sh
+index 1a58dbc..c78af44 100644
+--- a/deploy.sh
++++ b/deploy.sh
+@@ -1,6 +1,6 @@
+ #!/bin/bash
+ # Mirror docs for CI operators.
+-# Real production script lives in candyRose and on the VPS at /opt/shop/deploy.sh
++# Real production script lives in luca-prod and on the VPS at /opt/luca-prod/deploy.sh
+ #
+ # Usage:
+ #   ./deploy.sh {frontend|backend|all} <git-sha>
+@@ -8,9 +8,9 @@
+ #   ./deploy.sh rollback {frontend|backend|all}
+ #
+ # GitHub Actions passes github.sha so compose pulls:
+-#   hamidrezafalahi/shop-frontend:<sha>
+-#   hamidrezafalahi/shop-backend:<sha>
+-echo "Production deploy scripts live in the candyRose repo on the VPS (/opt/shop)."
++#   hamidrezafalahi/luca-frontend:<sha>
++#   hamidrezafalahi/luca-backend:<sha>
++echo "Production deploy scripts live in the luca-prod repo on the VPS (/opt/luca-prod)."
+ echo "Use: ./deploy.sh {frontend|backend|all} <git-sha>"
+ echo "     ./deploy.sh nginx"
+ echo "     ./deploy.sh rollback {frontend|backend|all}"
+-- 
+2.53.0
+
