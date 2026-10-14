@@ -1,7 +1,7 @@
 # ROADMAP.md — Luca Loupe Owner Catalog Automation
 
 > **وضعیت سند:** برنامهٔ اجرایی فازبندی‌شده  
-> **هم‌تراز با:** کد `BackEnd/` + اتوماسیون `luca-prod` (`/opt/shop` روی VPS)  
+> **هم‌تراز با:** کد `BackEnd/` + اتوماسیون `luca-prod` (`/opt/luca-prod` روی VPS)  
 > **ممیزی سرور:** 2026-08-14 — `ubuntu-4gb-hel1-2`  
 > **فرض تیم:** ۱ مهندس + مالک فروشگاه لوپ دندان‌پزشکی  
 > **قانون معماری:** Telegram → Hermes محدود → n8n فقط برای write چندمرحله‌ای → ASP.NET موجود → PostgreSQL  

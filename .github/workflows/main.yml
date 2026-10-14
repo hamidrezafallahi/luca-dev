@@ -5,22 +5,55 @@ on:
     branches:
       - master
 
+  # Manual build + deploy (e.g. first deploy, or rebuild without a code change)
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "What to build & deploy"
+        required: true
+        type: choice
+        options:
+          - all
+          - frontend
+          - backend
+        default: all
+
 jobs:
   detect-changes:
     runs-on: ubuntu-latest
     outputs:
-      frontend: ${{ steps.filter.outputs.frontend }}
-      backend: ${{ steps.filter.outputs.backend }}
+      frontend: ${{ steps.result.outputs.frontend }}
+      backend: ${{ steps.result.outputs.backend }}
     steps:
       - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v2
+        if: github.event_name == 'push'
+      - uses: dorny/paths-filter@v3
         id: filter
+        if: github.event_name == 'push'
         with:
           filters: |
             frontend:
               - 'FrontEnd/**'
             backend:
               - 'BackEnd/**'
+      - name: Resolve targets
+        id: result
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            case "${{ inputs.target }}" in
+              all)      FE=true;  BE=true  ;;
+              frontend) FE=true;  BE=false ;;
+              backend)  FE=false; BE=true  ;;
+            esac
+          else
+            FE="${{ steps.filter.outputs.frontend }}"
+            BE="${{ steps.filter.outputs.backend }}"
+          fi
+          echo "frontend=${FE}" >> "$GITHUB_OUTPUT"
+          echo "backend=${BE}" >> "$GITHUB_OUTPUT"
+          echo "Resolved frontend=${FE} backend=${BE}"
 
   build-frontend:
     needs: detect-changes
@@ -39,7 +72,7 @@ jobs:
           file: ./FrontEnd/Dockerfile.prod
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/shop-frontend:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/luca-frontend:${{ github.sha }}
           build-args: |
             NEXT_PUBLIC_SITE_URL=https://lucaloupe.ir
             NEXT_PUBLIC_SITE_NAME=Luca Loupe
@@ -66,7 +99,7 @@ jobs:
           file: ./BackEnd/Dockerfile.prod
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/shop-backend:${{ github.sha }}
+            ${{ secrets.DOCKER_USERNAME }}/luca-backend:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           provenance: false
@@ -104,9 +137,9 @@ jobs:
           port: ${{ secrets.VPS_PORT }}
           script: |
             set -euo pipefail
-            cd /opt/shop
+            cd /opt/luca-prod
 
-            # Keep infra (candyRose) current before pulling new app images
+            # Keep infra (luca-prod) current before pulling new app images
             git fetch --all --prune
             git pull --ff-only origin master || true
 

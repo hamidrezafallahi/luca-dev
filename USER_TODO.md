@@ -4,7 +4,7 @@
 نقشهٔ فازها: `ROADMAP.md` · وضعیت: `EXECUTION_REPORT.md`  
 آخرین به‌روزرسانی Agent: 2026-08-16
 
-VPS فعلی: `65.109.212.237` (`/opt/shop`) · فروشگاه: `lucaloupe.ir`
+VPS فعلی: `188.212.97.124` (`/opt/luca-prod`) · فروشگاه: `lucaloupe.ir`
 
 ---
 
@@ -40,10 +40,10 @@ Gate C ساخته شد؛ productId=N را verify کن.
 
 ## امنیت (P002 — Deferred در توسعه؛ قبل از prod اجباری)
 
-- [ ] رمز SSH root روی `65.109.212.237` را عوض کن (`passwd`)؛ **هرگز** رمز را در چت نگذار
+- [ ] رمز SSH root روی `188.212.97.124` را عوض کن (`passwd`)؛ **هرگز** رمز را در چت نگذار
 - [ ] ورود با SSH Key؛ بعداً PasswordAuthentication را محدود کن
-- [ ] در `/opt/shop/.env` بچرخان: `HERMES_DASHBOARD_BASIC_AUTH_*` و `API_SERVER_KEY` (مقادیر را در چت ننویس)
-- [ ] بعد از چرخش Hermes: `cd /opt/shop && ./deploy.sh automation recreate`
+- [ ] در `/opt/luca-prod/.env` بچرخان: `HERMES_DASHBOARD_BASIC_AUTH_*` و `API_SERVER_KEY` (مقادیر را در چت ننویس)
+- [ ] بعد از چرخش Hermes: `cd /opt/luca-prod && ./deploy.sh automation recreate`
 - [ ] PAT/توکن‌های لو‌رفتهٔ قدیمی GitHub را Revoke کن (اگر هنوز فعال‌اند)
 - [ ] رمز، توکن تلگرام، JWT، OpenRouter، Hermes را در چت نفرست
 
