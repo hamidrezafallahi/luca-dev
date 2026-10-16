@@ -51,7 +51,7 @@ namespace Application.Handler.CommandHandler
                 };
                 var logoUrl = await _uploaderService.UploadAsWebp(uploadDto);
                 if (UploadPaths.IsStoredPath(logoUrl))
-                    brand.Update(userId.Value, null, logoUrl, null, false);
+                    brand.Update(userId.Value, null, logoUrl, null, null);
             }
 
             await _repo.SaveChangesAsync(cancellationToken);

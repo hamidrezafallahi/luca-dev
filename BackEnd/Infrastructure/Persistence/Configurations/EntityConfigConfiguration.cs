@@ -192,7 +192,7 @@ namespace OnlineShop.Infrastructure.Configurations
                             new ValidationRule { Rule = "minLength", Condition = "2", Message = "حداقل دو کاراکتر وارد کنید" }
                         }
                     },
-                    new FormFieldDefinition { Name = "logoFile", Caption = "لوگو", Type = "file", PlaceHolder = "لوگوی برند را انتخاب کنید", Help = "فرمت‌های مجاز: jpg, png, svg" },
+                    new FormFieldDefinition { Name = "logoFile", Caption = "لوگو", Type = "file", PlaceHolder = "لوگوی برند را انتخاب کنید", Help = "فرمت‌های مجاز: jpg, png, webp" },
                     new FormFieldDefinition { Name = "description", Caption = "توضیحات", Type = "textarea", PlaceHolder = "توضیح کوتاهی درباره برند بنویسید..." },
                     new FormFieldDefinition { Name = "slug", Caption = "Slug", Type = "text", PlaceHolder = "brand-slug", Help = "آدرس یکتای برند در URL" },
                     new FormFieldDefinition { Name = "seoTitleFa", Caption = "عنوان سئو فارسی", Type = "text", PlaceHolder = "عنوان نمایش در گوگل" },
