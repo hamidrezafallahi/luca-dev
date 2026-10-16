@@ -164,7 +164,6 @@ export async function GET() {
     { path: 'categories', priority: 0.8, changeFrequency: 'weekly' },
     { path: 'suppliers', priority: 0.8, changeFrequency: 'weekly' },
     { path: 'tags', priority: 0.7, changeFrequency: 'weekly' },
-    { path: 'exhibition', priority: 0.8, changeFrequency: 'weekly' },
     { path: 'discounts', priority: 0.8, changeFrequency: 'daily' },
     { path: 'faq', priority: 0.6, changeFrequency: 'weekly' },
     { path: 'cooperation', priority: 0.5, changeFrequency: 'monthly' },
@@ -227,10 +226,6 @@ export async function GET() {
         'monthly',
         item.lastmod || fallbackLastmod,
       ),
-    ),
-    // Hard-coded exhibition photo sheets.
-    ...['lab-tala', 'carameli', 'icy', 'smoky', 'saria', 'all'].map((slug) =>
-      buildUrlXml(`exhibition/${slug}`, 0.7, 'weekly', fallbackLastmod),
     ),
     ...discounts.map((item) =>
       buildUrlXml(
