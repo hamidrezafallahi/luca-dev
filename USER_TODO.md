@@ -2,7 +2,7 @@
 
 فقط کارهایی که **شما** باید دستی انجام دهید.  
 نقشهٔ فازها: `ROADMAP.md` · وضعیت: `EXECUTION_REPORT.md`  
-آخرین به‌روزرسانی Agent: 2026-08-16
+آخرین به‌روزرسانی Agent: 2026-10-16
 
 VPS فعلی: `188.212.97.124` (`/opt/luca-prod`) · فروشگاه: `lucaloupe.ir`
 
@@ -35,6 +35,16 @@ Gate C ساخته شد؛ productId=N را verify کن.
 | 5 | | | |
 | 6 | | | |
 | 7 | | | |
+
+---
+
+## فرانت‌اند — قبل از لانچ (باقی‌ماندهٔ مهاجرت از روشاک)
+
+- [ ] پوشهٔ `FrontEnd/public/images` وجود ندارد ولی کد این عکس‌ها را می‌خواهد؛ نسخهٔ لوکا را بگذار: `images/landingPage/11.jpg` (هیروی صفحهٔ اصلی و صفحهٔ ثبت‌نام)، `images/default-product.jpg`، `images/user-placeholder.png`
+- [ ] عکس‌های تحریریه را بده (ویژگی‌های صفحهٔ اصلی، کارت‌های تجربه، صفحهٔ داستان، پنل ورود)؛ تا آن موقع علامت جای‌خالی نشان داده می‌شود
+- [ ] ایمیل و لینک شبکه‌های اجتماعی واقعی لوکا را بده تا جای مقادیر روشاک بنشیند: `FrontEnd/lib/api.ts` (`DEFAULT_SITE_URL`)، `FrontEnd/next.config.ts` (hostname عکس‌ها)، `FrontEnd/.env.production.example`، JSON-LD سازمان در `FrontEnd/app/[locale]/page.tsx` (ایمیل `info@rooshak.ir` و شبکه‌های اجتماعی)
+- [ ] متن‌های داخل `[...]` در `FrontEnd/messages/fa.json` و `en.json` (۲۸ مورد در هر فایل) را با اطلاعات واقعی جایگزین کن: روش پرداخت، گارانتی، پرداخت در محل، مهلت مرجوعی، نظر و نقل‌قول مشتری‌ها، شرط ارسال رایگان، متن بنر مناسبتی، صفحهٔ داستان (سال تأسیس، تعداد، نقل‌قول)
+- [ ] (اختیاری) اگر سرور یا کاربران به Google Fonts دسترسی ندارند، فونت‌های Markazi Text و Vazirmatn را در `FrontEnd/public/fonts` بگذار و `<link>` در `FrontEnd/app/layout.tsx` را با `@font-face` عوض کن
 
 ---
 
