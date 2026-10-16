@@ -570,10 +570,6 @@
     "yourRate": "امتیاز شما"
   },
   "product": {
-    "width": "عرض",
-    "height": "ارتفاع",
-    "depth": "عمق",
-    "weight": "وزن",
     "suppliersTitle": "تأمین‌کنندگان این محصول",
     "suppliersCount": "{count} تأمین‌کننده",
     "userReviews": "نظرات کاربران",

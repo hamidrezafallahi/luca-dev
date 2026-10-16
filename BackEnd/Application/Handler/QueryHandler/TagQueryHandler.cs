@@ -280,13 +280,6 @@ public class TagQueryHandler(ITagRepository _repo, IProductOfferTagRepository _p
                 Magnification = SpecValue(product, LoupeCatalogSpecs.MagnificationKey),
                 WorkingDistance = SpecValue(product, LoupeCatalogSpecs.WorkingDistanceKey),
                 FieldOfView = SpecValue(product, LoupeCatalogSpecs.FieldOfViewKey),
-                Dimensions = product.Dimensions == null ? null : new ProductDimensionsDto
-                {
-                    Width = product.Dimensions.Width,
-                    Height = product.Dimensions.Height,
-                    Depth = product.Dimensions.Depth,
-                    Weight = product.Dimensions.Weight,
-                },
             });
         }
 

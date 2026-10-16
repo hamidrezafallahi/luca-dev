@@ -80,15 +80,6 @@ public class ProductQueryHandler(IProductRepository _repo,
             CategoryId = x.CategoryId,
             CategoryName= $"{x.Category.PersianName} _ {x.Category.EnglishName}",
             IsActive =x.IsActive,
-            Dimentions = x.Dimensions != null
-        ? new ProductDimensionsDto
-        {
-            Width = x.Dimensions.Width,
-            Height = x.Dimensions.Height,
-            Depth = x.Dimensions.Depth,
-            Weight = x.Dimensions.Weight
-        }
-        : null,
             MainImage = x.Images.Where(i => i.IsMain && !i.IsDeleted).Select(i => i.ImageUrl).FirstOrDefault()
         }).ToList();
 
@@ -165,13 +156,6 @@ public class ProductQueryHandler(IProductRepository _repo,
                     .Where(i => !i.IsDeleted)
                     .Select(i => i.ImageUrl.TrimStart('/'))
                     .ToList(),
-                Dimensions = x.Dimensions == null ? null : new ProductDimensionsDto
-                {
-                    Width = x.Dimensions.Width,
-                    Height = x.Dimensions.Height,
-                    Depth = x.Dimensions.Depth,
-                    Weight = x.Dimensions.Weight
-                },
 
 
             };
@@ -254,17 +238,6 @@ public class ProductQueryHandler(IProductRepository _repo,
                 .Select(i => i.ImageUrl.TrimStart('/'))
                 .FirstOrDefault(),
 
-            Width = product.Dimensions?.Width,
-            Height = product.Dimensions?.Height,
-            Depth = product.Dimensions?.Depth,
-            Weight = product.Dimensions?.Weight,
-            Dimensions = product.Dimensions == null ? null : new ProductDimensionsDto
-            {
-                Width = product.Dimensions.Width,
-                Height = product.Dimensions.Height,
-                Depth = product.Dimensions.Depth,
-                Weight = product.Dimensions.Weight,
-            },
             Price = bestOffer?.BasePrice,
             FinalPrice = bestOffer?.GetFinalPrice(now),
             DiscountIsPercent = activeDiscount?.IsPercent,

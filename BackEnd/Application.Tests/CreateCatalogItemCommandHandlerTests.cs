@@ -333,7 +333,6 @@ public class CreateCatalogItemCommandHandlerTests
         public Task<IEnumerable<Product>> SearchByNameAsync(string keyword) => throw new NotImplementedException();
         public Task AddSpecificationAsync(int productId, string key, string value, int userId) => throw new NotImplementedException();
         public Task RemoveSpecificationAsync(int productId, string key, int userId) => throw new NotImplementedException();
-        public Task SetDimensionsAsync(int productId, decimal width, decimal height, decimal depth, decimal weight, int userId) => throw new NotImplementedException();
     }
 
     private sealed class FakeProductOfferRepository(FakeCatalogStore store) : IProductOfferRepository

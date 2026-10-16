@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using OnlineShop.Domain.Entities;
-using OnlineShop.Domain.ValueObjects;
 
 namespace OnlineShop.Infrastructure.Persistence.Configurations
 {
@@ -68,17 +67,6 @@ namespace OnlineShop.Infrastructure.Persistence.Configurations
                    .WithOne(s => s.Product)
                    .HasForeignKey(s => s.ProductId)
                    .OnDelete(DeleteBehavior.Cascade);
-
-            // ===== Dimensions (Value Object) =====
-            // Required owned type avoids optional-dependent table-sharing ambiguity.
-            builder.OwnsOne(p => p.Dimensions, d =>
-            {
-                d.Property(x => x.Width).HasColumnType("decimal(10,2)");
-                d.Property(x => x.Height).HasColumnType("decimal(10,2)");
-                d.Property(x => x.Depth).HasColumnType("decimal(10,2)");
-                d.Property(x => x.Weight).HasColumnType("decimal(10,2)");
-            });
-            builder.Navigation(p => p.Dimensions).IsRequired();
         }
     }
 }

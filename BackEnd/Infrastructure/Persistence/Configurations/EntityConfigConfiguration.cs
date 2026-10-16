@@ -521,40 +521,6 @@ namespace OnlineShop.Infrastructure.Configurations
                         PlaceHolder = "برند محصول را انتخاب کنید",
                         Help = "محصول به کدام برند تعلق دارد",
                         Rules = new List<ValidationRule>()
-                    },
-                    new FormFieldDefinition
-                    {
-                        Name = "width",
-                        Caption = "عرض",
-                        Type = "number",
-                        PlaceHolder = "عرض محصول را وارد کنید",
-                        Help = "می‌تواند خالی باشد",
-                        Rules = new List<ValidationRule>()
-                    },
-                    new FormFieldDefinition
-                    {
-                        Name = "height",
-                        Caption = "طول یا ارتفاع",
-                        Type = "number",
-                        PlaceHolder = "طول یا ارتفاع را وارد کنید",
-                        Help = "می‌تواند خالی باشد",
-                        Rules = new List<ValidationRule>()
-                    }, new FormFieldDefinition
-                    {
-                        Name = "depth",
-                        Caption = "عمق",
-                        Type = "number",
-                        PlaceHolder = "عمق را وارد کنید",
-                        Help = "می‌تواند خالی باشد",
-                        Rules = new List<ValidationRule>()
-                    }, new FormFieldDefinition
-                    {
-                        Name = "weight",
-                        Caption = "وزن",
-                        Type = "number",
-                        PlaceHolder = "وزن را وارد کنید",
-                        Help = "می‌تواند خالی باشد",
-                        Rules = new List<ValidationRule>()
                     }
                 }),
                 IsActive = true,

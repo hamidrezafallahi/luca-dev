@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 
 namespace Application.Commands
 {
-    public class CreateCatalogItemCommand : ProductDimensionsDto, IRequest<ServiceResult<CatalogItemIdsDto>>
+    public class CreateCatalogItemCommand : IRequest<ServiceResult<CatalogItemIdsDto>>
     {
         public string Name { get; set; } = default!;
         public string? Slug { get; set; }

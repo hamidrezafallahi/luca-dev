@@ -7,7 +7,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using OnlineShop.Domain.Entities;
 using OnlineShop.Domain.Interfaces;
-using OnlineShop.Domain.ValueObjects;
 using Services.Services.Uploader.DTO;
 
 namespace Application.Handler.CommandHandler
@@ -39,18 +38,11 @@ namespace Application.Handler.CommandHandler
             await using var transaction = await unitOfWork.BeginTransactionAsync(cancellationToken);
             try
             {
-                var dimensions = new ProductDimensions(
-                    request.Width ?? 0,
-                    request.Height ?? 0,
-                    request.Depth ?? 0,
-                    request.Weight ?? 0);
-
                 var product = Product.Create(
                     name: request.Name,
                     description: request.Description,
                     categoryId: request.CategoryId,
                     brandId: request.BrandId,
-                    dimensions: dimensions,
                     currentUserId: userId.Value,
                     slug: request.Slug,
                     seoTitleFa: request.SeoTitleFa,

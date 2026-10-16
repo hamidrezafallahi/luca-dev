@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OnlineShop.Domain.Entities;
 using OnlineShop.Domain.Interfaces;
-using OnlineShop.Domain.ValueObjects;
 using OnlineShop.Infrastructure.Persistence;
 
 namespace OnlineShop.Infrastructure.Repositories
@@ -105,23 +104,6 @@ namespace OnlineShop.Infrastructure.Repositories
                 throw new KeyNotFoundException("Product not found");
 
             product.RemoveSpecification(key, userId);
-            await UpdateAsync(product);
-        }
-
-        // ===================== Dimensions =====================
-
-        public async Task SetDimensionsAsync(int productId,
-                                             decimal width,
-                                             decimal height,
-                                             decimal depth,
-                                             decimal weight,
-                                             int userId)
-        {
-            var product = await GetProductByIdAsync(productId);
-            if (product == null)
-                throw new KeyNotFoundException("Product not found");
-
-            product.SetDimensions(new ProductDimensions(width, height, depth, weight));
             await UpdateAsync(product);
         }
 

@@ -570,10 +570,6 @@
     "yourRate": "Your rate"
   },
   "product": {
-    "width": "Width",
-    "height": "Height",
-    "depth": "Depth",
-    "weight": "Weight",
     "suppliersTitle": "Suppliers for this product",
     "suppliersCount": "{count} suppliers",
     "userReviews": "Customer reviews",

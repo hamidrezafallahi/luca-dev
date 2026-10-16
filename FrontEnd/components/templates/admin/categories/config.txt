@@ -213,11 +213,7 @@
 {"Name":"name","Caption":"نام محصول","Type":"text","PlaceHolder":"نام محصول را وارد کنید","Help":"","Order":0,"FetchConfig":null,"Options":null,"Rules":[{"Rule":"required","Condition":"true","Message":"نام محصول الزامی است"}]},
 {"Name":"description","Caption":"توضیحات محصول","Type":"textarea","PlaceHolder":"در باره محصول توضیح دهید","Help":"","Order":0,"FetchConfig":null,"Options":null,"Rules":[{"Rule":"required","Condition":"true","Message":"توضیحات محصول الزامی است"}]},
 {"Name":"categoryId","Caption":"دسته بندی","Type":"select","FetchConfig":{"api":"api/Categories/selectOption","fetchFilters":[]},"PlaceHolder":"دسته بندی محصول را وارد کنید","Help":"","Order":0,"FetchConfig":null,"Options":null,"Rules":[{"Rule":"required","Condition":"true","Message":"دسته بندی محصول الزامی است"}]},
-{"Name":"brandId","Caption":"برند","Type":"dynamic","FetchConfig":{"api":"api/Brands/selectOption","fetchFilters":[]},"PlaceHolder":"برند محصول را وارد کنید","Help":"","Order":0,"FetchConfig":null,"Options":null,"Rules":[{"Rule":"required","Condition":"true","Message":"برند محصول الزامی است"}]},
-{"Name":"width","Caption":"عرض","Type":"number","PlaceHolder":"عرض محصول را وارد کنید","Help":"","Order":0,"FetchConfig":null,"Options":null,"Rules":[]},
-{"Name":"height","Caption":"طول یا ارتفاع","Type":"number","PlaceHolder":"طول یا ارتفاع را وارد کنید","Help":"","Order":0,"FetchConfig":null,"Options":null,"Rules":[]},
-{"Name":"depth","Caption":"عمق","Type":"number","PlaceHolder":"عمق را وارد کنید","Help":"","Order":0,"FetchConfig":null,"Options":null,"Rules":[]},
-{"Name":"weight","Caption":"وزن","Type":"number","PlaceHolder":"وزن را وارد کنید","Help":"","Order":0,"FetchConfig":null,"Options":null,"Rules":[]}
+{"Name":"brandId","Caption":"برند","Type":"dynamic","FetchConfig":{"api":"api/Brands/selectOption","fetchFilters":[]},"PlaceHolder":"برند محصول را وارد کنید","Help":"","Order":0,"FetchConfig":null,"Options":null,"Rules":[{"Rule":"required","Condition":"true","Message":"برند محصول الزامی است"}]}
 ]
 [
   {
@@ -264,41 +260,7 @@
     "Rules": [
       { "Rule": "required", "Condition": true, "Message": "برند الزامی است" }
     ]
-  },
-    {
-    "Name": "width",
-    "Caption": "عرض",
-    "Type": "number",
-    "PlaceHolder": "عرض محصول را وارد کنید",
-    "Help":"می‌تواند خالی باشد",
-    "Order": 0,
-    "Rules": []
-  },
-  {
-    "Name": "height",
-    "Caption": "طول یا ارتفاع",
-    "Type": "number",
-    "PlaceHolder": "طول یا ارتفاع را وارد کنید",
-    "Help":"می‌تواند خالی باشد",
-    "Order": 0,
-    "Rules": []
-  },{
-    "Name": "depth",
-    "Caption": "عمق",
-    "Type": "number",
-    "PlaceHolder": "عمق را وارد کنید",
-    "Help":"می‌تواند خالی باشد",
-    "Order": 0,
-    "Rules": []
-  },{
-    "Name": "weight",
-    "Caption": "وزن",
-    "Type": "number",
-    "PlaceHolder": "وزن را وارد کنید",
-    "Help":"می‌تواند خالی باشد",
-    "Order": 0,
-    "Rules": []
-  }  
+  }
 ]
 
 //productImage

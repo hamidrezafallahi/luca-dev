@@ -9,7 +9,7 @@ namespace OnlineShop.Domain.Interfaces
         Task<Product?> GetProductByIdAsync(int productId);
 
         Task<Product?> GetProductWithDetailsAsync(int productId);
-        // ↑ شامل Specs + Images + Brand + Category + Dimensions
+        // ↑ شامل Specs + Images + Brand + Category
 
         Task<IEnumerable<Product>> GetAllProductsAsync();
         Task<IEnumerable<Product>> GetProductsByCategoryIdAsync(int categoryId);
@@ -34,15 +34,6 @@ namespace OnlineShop.Domain.Interfaces
             string key,
             int userId);
 
-        // ===== Dimensions =====
-
-        Task SetDimensionsAsync(
-            int productId,
-            decimal width,
-            decimal height,
-            decimal depth,
-            decimal weight,
-            int userId);
     }
 
 }

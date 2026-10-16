@@ -53,7 +53,5 @@ namespace Application.Dtos
         public string? Magnification { get; set; }
         public string? WorkingDistance { get; set; }
         public string? FieldOfView { get; set; }
-
-        public ProductDimensionsDto? Dimensions { get; set; }
     }
 }

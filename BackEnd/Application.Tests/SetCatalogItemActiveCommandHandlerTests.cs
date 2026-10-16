@@ -7,7 +7,6 @@ using Application.Handler.CommandHandler;
 using Microsoft.AspNetCore.Http;
 using OnlineShop.Domain.Entities;
 using OnlineShop.Domain.Interfaces;
-using OnlineShop.Domain.ValueObjects;
 using Xunit;
 
 namespace Application.Tests;
@@ -110,7 +109,6 @@ public class SetCatalogItemActiveCommandHandlerTests
             "test",
             categoryId: 3,
             brandId: 2,
-            new ProductDimensions(0, 0, 0, 0),
             currentUserId: 9);
         SetId(product, 7);
         product.SetActive(false, 9);
@@ -196,7 +194,6 @@ public class SetCatalogItemActiveCommandHandlerTests
         public Task<IEnumerable<Product>> SearchByNameAsync(string keyword) => throw new NotImplementedException();
         public Task AddSpecificationAsync(int productId, string key, string value, int userId) => throw new NotImplementedException();
         public Task RemoveSpecificationAsync(int productId, string key, int userId) => throw new NotImplementedException();
-        public Task SetDimensionsAsync(int productId, decimal width, decimal height, decimal depth, decimal weight, int userId) => throw new NotImplementedException();
     }
 
     private sealed class FakeOffers(CatalogStore store) : IProductOfferRepository

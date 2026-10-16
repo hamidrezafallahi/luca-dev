@@ -2,7 +2,6 @@ import { IBrand } from './brand';
 import { ICategory } from './category';
 import { ITag } from './tag';
 
-export type TDimensions = { width: number, height: number, depth: number, weight: number }
 export interface ISpecification {
     key: string;
     value: string;
@@ -25,7 +24,6 @@ export interface IDetailedProduct {
     brandId: number;
     brandName?: string | null;
     imageUrls: string[];
-    dimensions: TDimensions;
     price?: number | null;
     finalPrice?: number | null;
     discountIsPercent?: boolean | null;

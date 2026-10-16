@@ -23,7 +23,6 @@ namespace Application.Dtos
         public bool IsActive { get; set; }
 
         public string? MainImage { get; set; }
-        public ProductDimensionsDto? Dimentions { get; set; }
 
     }
 
@@ -40,11 +39,6 @@ namespace Application.Dtos
         public string? BrandName { get; set; }
         public List<string> ImageUrls { get; set; } = new List<string>();
         public string? MainImage { get; set; }
-        public ProductDimensionsDto? Dimensions { get; set; }
-        public decimal? Width { get; set; } = 0;
-        public decimal? Height { get; set; } = 0;
-        public decimal? Depth { get; set; } = 0;
-        public decimal? Weight { get; set; } = 0;
 
         /// <summary>Best (lowest) active offer base price.</summary>
         public decimal? Price { get; set; }
@@ -101,7 +95,6 @@ namespace Application.Dtos
         public double AverageRate { get; set; }
         public int RateCount { get; set; }
         public SpecialOffersDto specialOfferData { get; set; }
-        public ProductDimensionsDto? Dimensions { get; set; }
         public UserDto SupplierExtended { get; set; }
 
 
@@ -157,13 +150,6 @@ namespace Application.Dtos
         public bool IsMain { get; set; }
     }
 
-    public class ProductDimensionsDto
-    {
-        public decimal? Width { get; set; } = 0;
-        public decimal? Height { get; set; } = 0;
-        public decimal? Depth { get; set; } = 0;
-        public decimal? Weight { get; set; } = 0;
-    }
     public class ProductSpecificationDto
     {
         public string Key { get; set; } = string.Empty;

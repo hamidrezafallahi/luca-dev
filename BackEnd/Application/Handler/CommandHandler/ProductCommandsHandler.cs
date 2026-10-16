@@ -6,7 +6,6 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using OnlineShop.Domain.Entities;
 using OnlineShop.Domain.Interfaces;
-using OnlineShop.Domain.ValueObjects;
  
 
 namespace Application.Handler.CommandHandler
@@ -28,13 +27,11 @@ namespace Application.Handler.CommandHandler
                 return ServiceResult<IdDto>.Failed("A product with the same name and brand already exists.");
             }
 
-            ProductDimensions dim= new ProductDimensions(request.Width??0, request.Height ?? 0, request.Depth ?? 0, request.Weight ?? 0);
             var product = Product.Create(
                 name: request.Name,
                 description: request.Description,
                 categoryId: request.CategoryId,
                 brandId: request.BrandId,
-                dimensions: dim,
                 currentUserId: userId.Value,
                 slug: request.Slug,
                 seoTitleFa: request.SeoTitleFa,
@@ -123,15 +120,8 @@ namespace Application.Handler.CommandHandler
             //        images.Add(productImage);
             //    }
             //}
-            //var dim = new ProductDimensions(request.Dimensions.Width, request.Dimensions.Height, request.Dimensions.Depth, request.Dimensions.Weight);
             //var specifications = request.Specifications?.Select(dto =>
             //ProductSpecification.Create(product.Id, dto.Key, dto.Value)).ToList() ?? new List<ProductSpecification>();
-
-            ProductDimensions dim = new ProductDimensions(
-                request.Width ?? product.Dimensions.Width,
-                request.Height ?? product.Dimensions.Height,
-                request.Depth ?? product.Dimensions.Depth,
-                request.Weight ?? product.Dimensions.Weight);
 
             product.Update(
                 currentUserId: userId.Value,
@@ -139,7 +129,6 @@ namespace Application.Handler.CommandHandler
                 description: request.Description,
                 categoryId: request.CategoryId,
                 brandId: request.BrandId,
-                dimensions: dim,
                 slug: request.Slug,
                 seoTitleFa: request.SeoTitleFa,
                 seoTitleEn: request.SeoTitleEn,

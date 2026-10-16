@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Application.Commands
 {
-    public class CreateProductCommand : ProductDimensionsDto, IRequest<ServiceResult<IdDto>>
+    public class CreateProductCommand : IRequest<ServiceResult<IdDto>>
     {
 
         public string Name { get; set; } = default!;
@@ -28,7 +28,7 @@ namespace Application.Commands
         //public int? DiscountId { get; set; }
         //public List<ProductImageDto>? Images { get; set; } = new();
     }
-    public class UpdateProductCommand : ProductDimensionsDto, IRequest<ServiceResult<IdDto>>
+    public class UpdateProductCommand : IRequest<ServiceResult<IdDto>>
     {
         public int Id { get; set; }
         public string? Name { get; set; } = default!;
@@ -42,7 +42,6 @@ namespace Application.Commands
         public int? BrandId { get; set; }
         //public int? DiscountId { get; set; }
         //public List<ProductImageDto>? Images { get; set; } = new();
-        //public ProductDimensionsDto? Dimensions { get; set; }
         //public List<ProductSpecificationDto>? Specifications { get; set; } = new();
     };
     //public class UpdateProductImageCommand : IRequest<ServiceResult<IdDto>>
