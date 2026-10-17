@@ -94,7 +94,8 @@ public class BlogCommandHandler(
             await _blogRepository.AddAsync(blog);
             await _blogRepository.SaveChangesAsync(cancellationToken);
         }
-        catch (Exception ex)
+        // Field length errors go to ExceptionHandlingMiddleware, which reports the fields.
+        catch (Exception ex) when (ex is not OnlineShop.Domain.Common.FieldLengthExceededException)
         {
             return ServiceResult<IdDto>.Failed($"خطا: {ex.Message}");
         }

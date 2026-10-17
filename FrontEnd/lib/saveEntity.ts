@@ -13,6 +13,18 @@ import { SimpleResponse } from '@models/base';
  * calling a Server Action here previously surfaced "Failed to fetch" into the
  * locale error boundary when the action hop failed.
  */
+/** Sent by the backend's ExceptionHandlingMiddleware when values exceed column limits. */
+export interface FieldLengthError {
+  field: string;
+  maxLength: number;
+  actualLength: number;
+}
+
+export type SaveEntityResponse = SimpleResponse<any> & {
+  errorCode?: string;
+  fieldErrors?: FieldLengthError[];
+};
+
 export async function saveEntity({
   endPoint,
   body,
@@ -21,7 +33,7 @@ export async function saveEntity({
   endPoint: string;
   body: FormData | Record<string, unknown>;
   method: 'POST' | 'PUT';
-}): Promise<SimpleResponse<any>> {
+}): Promise<SaveEntityResponse> {
   try {
     const path = endPoint.replace(/^\/+/, '');
     const isFormData =
@@ -37,7 +49,7 @@ export async function saveEntity({
       cache: 'no-store',
     });
 
-    let data: SimpleResponse<any>;
+    let data: SaveEntityResponse;
     try {
       data = await response.json();
     } catch {
@@ -55,6 +67,8 @@ export async function saveEntity({
         error:
           data?.error ||
           `HTTP ${response.status}: ${response.statusText}`,
+        errorCode: data?.errorCode,
+        fieldErrors: data?.fieldErrors,
       };
     }
 

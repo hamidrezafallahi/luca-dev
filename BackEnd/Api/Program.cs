@@ -160,6 +160,7 @@ public class Program
         }
 
         app.InitializeDatabase();
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
         app.UseStaticFiles();
         app.UseMiddleware<BlacklistMiddleware>();
         app.UseMiddleware<WhitelistMiddleware>();

@@ -18,7 +18,10 @@ import {
 } from 'react-hook-form';
 
 import { Button } from '@components/atoms/defaultElements/customButton';
-import { saveEntity } from '@lib/saveEntity';
+import {
+  saveEntity,
+  SaveEntityResponse,
+} from '@lib/saveEntity';
 
 import FormFieldRenderer from './formFieldRenderer';
 import FormHeader from './formHeader';
@@ -46,6 +49,7 @@ export default function FormGenerator({
     reset,
     watch,
     trigger,
+    setError,
   } = useForm({ mode: "onBlur", defaultValues });
 
   let formFields: FormField[] = [];
@@ -108,6 +112,32 @@ export default function FormGenerator({
     }
     if (typeof raw === "string" && raw.length === 0) return undefined;
     return raw;
+  };
+
+  // Marks each too-long field under its input and names them in the toast,
+  // instead of surfacing the raw backend/HTTP message.
+  const describeSaveError = (res: SaveEntityResponse | undefined) => {
+    if (res?.fieldErrors?.length) {
+      const captions = res.fieldErrors.map((fe) => {
+        const field = formFields.find(
+          (f) => f.Name.toLowerCase() === fe.field.toLowerCase(),
+        );
+        if (field) {
+          setError(field.Name, {
+            type: 'server',
+            message: t('common.fieldTooLong', {
+              max: fe.maxLength,
+              actual: fe.actualLength,
+            }),
+          });
+        }
+        return field?.Caption ?? fe.field;
+      });
+      return t('common.fieldsTooLong', { fields: captions.join('، ') });
+    }
+    if (res?.errorCode === 'FIELD_TOO_LONG') return t('common.fieldTooLongGeneric');
+    if (res?.errorCode === 'INTERNAL_ERROR') return t('common.saveFailed');
+    return res?.error || t('common.saveFailed');
   };
 
   const handleAddOrUpdateRecord: SubmitHandler<any> = async (data) => {
@@ -180,11 +210,7 @@ export default function FormGenerator({
             route.refresh();
           } else {
             const { showErrorToast } = await import('@utils/core');
-            showErrorToast(
-              res?.error || t('common.saveFailed'),
-              '',
-              5000,
-            );
+            showErrorToast(describeSaveError(res), '', 5000);
           }
         } catch (err) {
           const { showErrorToast } = await import('@utils/core');

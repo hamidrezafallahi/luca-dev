@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using OnlineShop.Domain.Common;
 using OnlineShop.Domain.Entities;
 
 namespace OnlineShop.Infrastructure.Persistence
@@ -49,6 +50,51 @@ namespace OnlineShop.Infrastructure.Persistence
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
             base.OnModelCreating(modelBuilder);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        {
+            EnsureStringLengths();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            EnsureStringLengths();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        // PostgreSQL rejects an over-length varchar with a bare 22001 error that names no
+        // column, so check against the model's HasMaxLength values first and report the fields.
+        private void EnsureStringLengths()
+        {
+            var violations = new List<FieldLengthViolation>();
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                if (entry.State is not (EntityState.Added or EntityState.Modified))
+                    continue;
+
+                foreach (var property in entry.Properties)
+                {
+                    if (property.CurrentValue is not string value)
+                        continue;
+                    if (entry.State == EntityState.Modified && !property.IsModified)
+                        continue;
+
+                    var maxLength = property.Metadata.GetMaxLength();
+                    if (maxLength.HasValue && value.Length > maxLength.Value)
+                    {
+                        var name = property.Metadata.Name;
+                        violations.Add(new FieldLengthViolation(
+                            char.ToLowerInvariant(name[0]) + name[1..],
+                            maxLength.Value,
+                            value.Length));
+                    }
+                }
+            }
+
+            if (violations.Count > 0)
+                throw new FieldLengthExceededException(violations);
         }
     }
 }
