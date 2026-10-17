@@ -117,15 +117,43 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
             RefreshToken = refreshTokenString
         });
     }
+    // Parallel requests that all saw an expired access token present the same refresh token.
+    // The first one rotates it; the others arrive within this window and get the replacement.
+    private static readonly TimeSpan RefreshRotationGracePeriod = TimeSpan.FromSeconds(30);
+
     public async Task<ServiceResult<LoginDto>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
-        // ===== پیدا کردن توکن فعال =====
-        var existingToken = await _refreshTokenRepo.GetByTokensAsync(request.AccessToken, request.RefreshToken);
-        if (existingToken == null || !existingToken.IsActive())
+        if (string.IsNullOrWhiteSpace(request.RefreshToken))
             return ServiceResult<LoginDto>.Failed("Invalid or expired refresh token");
 
-        // ===== revoke توکن قبلی و rotate =====
-        existingToken.Revoke(replacedByToken: null, currentUserId: existingToken.UserId);
+        // ===== پیدا کردن توکن =====
+        var existingToken = await _refreshTokenRepo.GetByTokenAsync(request.RefreshToken);
+        if (existingToken == null)
+            return ServiceResult<LoginDto>.Failed("Invalid or expired refresh token");
+
+        // ===== توکنی که همین الان rotate شده: جایگزینش را برگردان =====
+        if (existingToken.IsRevoked)
+        {
+            var revokedAt = existingToken.UpdatedAt;
+            if (existingToken.ReplacedByToken != null
+                && revokedAt.HasValue
+                && DateTime.UtcNow - revokedAt.Value <= RefreshRotationGracePeriod)
+            {
+                var replacement = await _refreshTokenRepo.GetByTokenAsync(existingToken.ReplacedByToken);
+                if (replacement != null && replacement.IsActive())
+                {
+                    return ServiceResult<LoginDto>.Ok(new LoginDto
+                    {
+                        AccessToken = replacement.AccessToken,
+                        RefreshToken = replacement.Token
+                    });
+                }
+            }
+            return ServiceResult<LoginDto>.Failed("Invalid or expired refresh token");
+        }
+
+        if (!existingToken.IsActive())
+            return ServiceResult<LoginDto>.Failed("Invalid or expired refresh token");
 
         // ===== Claims =====
         var claims = new List<Claim>
@@ -149,6 +177,9 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
             createdByUserAgent: request.UserAgent,
             currentUserId: existingToken.UserId
         );
+
+        // ===== revoke توکن قبلی و rotate =====
+        existingToken.Revoke(replacedByToken: newRefreshTokenString, currentUserId: existingToken.UserId);
 
         await _refreshTokenRepo.AddAsync(newRefreshToken);
         await _refreshTokenRepo.SaveChangesAsync(cancellationToken);

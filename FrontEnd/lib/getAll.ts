@@ -80,6 +80,8 @@ export async function getAll<T>(
 
 
 export async function getById(entity: string, id: string): Promise<Record<string, any>> {
+  // An expired candyAccess is refreshed in middleware.ts before this render,
+  // because a Server Component cannot write the rotated cookies itself.
   const cookieStore = await cookies();
   const token = cookieStore.get('candyAccess')?.value;
   const res = await fetch(`${serverApiBaseUrl}/${entity}/${id}`, {

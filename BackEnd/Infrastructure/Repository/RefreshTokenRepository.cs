@@ -13,12 +13,15 @@ namespace OnlineShop.Infrastructure.Repositories
         }
 
         // پیدا کردن توکن با مقدار رشته‌ای آن
-        public async Task<RefreshToken?> GetByTokensAsync(string accessToken, string refreshToken)
+        // The refresh token is a 64-byte random secret, so it identifies the row on its own.
+        // It must not also require the access token: by the time a refresh is needed the
+        // candyAccess cookie has usually expired and the browser no longer sends it.
+        public async Task<RefreshToken?> GetByTokenAsync(string refreshToken)
         {
             return await _context.RefreshTokens
         .Include(rt => rt.User)
             .ThenInclude(u => u.Role)
-        .FirstOrDefaultAsync(rt => rt.Token == refreshToken && rt.AccessToken == accessToken);
+        .FirstOrDefaultAsync(rt => rt.Token == refreshToken);
         }
 
         // گرفتن تمام توکن‌های فعال یک کاربر

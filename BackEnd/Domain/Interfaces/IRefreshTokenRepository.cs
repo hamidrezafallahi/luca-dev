@@ -6,7 +6,7 @@ namespace OnlineShop.Domain.Interfaces
     public interface IRefreshTokenRepository : IRepository<RefreshToken>
     {
         // پیدا کردن توکن با مقدار رشته‌ای آن
-        Task<RefreshToken?> GetByTokensAsync(string AccessToken, string RefreshToken);
+        Task<RefreshToken?> GetByTokenAsync(string refreshToken);
 
         // گرفتن تمام توکن‌های فعال یک کاربر
         Task<List<RefreshToken>> GetActiveTokensByUserIdAsync(int userId);
