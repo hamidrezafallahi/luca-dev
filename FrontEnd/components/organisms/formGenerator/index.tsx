@@ -135,6 +135,26 @@ export default function FormGenerator({
       });
       return t('common.fieldsTooLong', { fields: captions.join('، ') });
     }
+    if (res?.validationErrors?.length) {
+      const captions = res.validationErrors.map((ve) => {
+        // Keys come as "CategoryCover", "$.price" or "command.Price".
+        const key = ve.field.replace(/^\$\.?/, '').split('.').pop() ?? ve.field;
+        const field = formFields.find(
+          (f) => f.Name.toLowerCase() === key.toLowerCase(),
+        );
+        if (field) {
+          const raw = ve.messages[0] ?? '';
+          const message = /is required/i.test(raw)
+            ? t('common.fieldRequired')
+            : /could not be converted|is not valid/i.test(raw)
+              ? t('common.fieldInvalid')
+              : raw;
+          setError(field.Name, { type: 'server', message });
+        }
+        return field?.Caption ?? (key || ve.messages[0] || ve.field);
+      });
+      return t('common.fieldsInvalid', { fields: captions.join('، ') });
+    }
     if (res?.errorCode === 'FIELD_TOO_LONG') return t('common.fieldTooLongGeneric');
     if (res?.errorCode === 'INTERNAL_ERROR') return t('common.saveFailed');
     return res?.error || t('common.saveFailed');

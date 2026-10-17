@@ -12,7 +12,7 @@ namespace Application.Commands
         public string PersianName { get; set; } 
         public string EnglishName { get; set; }
         public string? Slug { get; set; }
-        public IFormFile CategoryCover { get; set; }  
+        public IFormFile? CategoryCover { get; set; }
         public string CategoryPersianDesc { get; set; }
         public string CategoryEnglishDesc { get; set; }
         public bool IsShowInLanding { get; set; }

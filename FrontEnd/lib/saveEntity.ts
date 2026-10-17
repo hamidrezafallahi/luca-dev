@@ -1,6 +1,39 @@
 import { browserApiBaseUrl } from '@/lib/api';
 import { SimpleResponse } from '@models/base';
 
+/** Sent by the backend's ExceptionHandlingMiddleware when values exceed column limits. */
+export interface FieldLengthError {
+  field: string;
+  maxLength: number;
+  actualLength: number;
+}
+
+/** One entry of ASP.NET's automatic model-validation 400 (ProblemDetails `errors`). */
+export interface FieldValidationError {
+  field: string;
+  messages: string[];
+}
+
+export type SaveEntityResponse = SimpleResponse<any> & {
+  errorCode?: string;
+  fieldErrors?: FieldLengthError[];
+  validationErrors?: FieldValidationError[];
+};
+
+type ProblemDetails = {
+  title?: string;
+  errors?: Record<string, string[] | string>;
+};
+
+function readValidationErrors(data: ProblemDetails | null | undefined) {
+  if (!data?.errors || typeof data.errors !== 'object') return undefined;
+  const entries = Object.entries(data.errors).map(([field, messages]) => ({
+    field,
+    messages: Array.isArray(messages) ? messages : [String(messages)],
+  }));
+  return entries.length ? entries : undefined;
+}
+
 /**
  * Persist an admin entity.
  *
@@ -13,18 +46,6 @@ import { SimpleResponse } from '@models/base';
  * calling a Server Action here previously surfaced "Failed to fetch" into the
  * locale error boundary when the action hop failed.
  */
-/** Sent by the backend's ExceptionHandlingMiddleware when values exceed column limits. */
-export interface FieldLengthError {
-  field: string;
-  maxLength: number;
-  actualLength: number;
-}
-
-export type SaveEntityResponse = SimpleResponse<any> & {
-  errorCode?: string;
-  fieldErrors?: FieldLengthError[];
-};
-
 export async function saveEntity({
   endPoint,
   body,
@@ -49,7 +70,7 @@ export async function saveEntity({
       cache: 'no-store',
     });
 
-    let data: SaveEntityResponse;
+    let data: SaveEntityResponse & ProblemDetails;
     try {
       data = await response.json();
     } catch {
@@ -66,9 +87,11 @@ export async function saveEntity({
         isSuccess: false,
         error:
           data?.error ||
+          data?.title ||
           `HTTP ${response.status}: ${response.statusText}`,
         errorCode: data?.errorCode,
         fieldErrors: data?.fieldErrors,
+        validationErrors: readValidationErrors(data),
       };
     }
 
