@@ -227,6 +227,7 @@ public class ProductQueryHandler(IProductRepository _repo,
             BrandSlug = product.Brand?.Slug,
             CategoryId = product.CategoryId,
             CategoryName = product.Category?.PersianName,
+            CategoryEnglishName = product.Category?.EnglishName,
             CategorySlug = product.Category?.Slug,
             ImageUrls = product.Images
                 .Where(i => !i.IsDeleted)

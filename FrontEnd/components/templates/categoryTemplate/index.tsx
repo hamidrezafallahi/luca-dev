@@ -13,6 +13,7 @@ import {
   CategorySupplierExtended,
   SubCategories,
 } from '@components/organisms/categoryOrganisms';
+import { pickLocalized } from '@lib/utils';
 import { ICategory } from '@models/category';
 
 export default async function CategoryTemplate({
@@ -27,7 +28,7 @@ export default async function CategoryTemplate({
     return null;
   }
 
-  const name = locale == 'fa' ? category.persianName : category.englishName;
+  const name = pickLocalized(locale, category.persianName, category.englishName);
 
   return (
     <div className="flex flex-col gap-12 md:gap-16 w-full">
@@ -44,11 +45,11 @@ export default async function CategoryTemplate({
           ) : null}
           <h1 className="luca-h1">{name}</h1>
           <CategoryDescription
-            desc={
-              locale == 'fa'
-                ? category.categoryPersianDesc
-                : category.categoryEnglishDesc
-            }
+            desc={pickLocalized(
+              locale,
+              category.categoryPersianDesc,
+              category.categoryEnglishDesc
+            )}
           />
         </header>
         <Banner src={category.categoryCover} name={name} />

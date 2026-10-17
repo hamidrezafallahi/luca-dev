@@ -19,6 +19,16 @@ import {
 
 const mutex = new Mutex();
 
+// Runs outside React (no next-intl hooks), so pick the copy from the URL locale.
+function forbiddenMessage(): string {
+  const isEn =
+    typeof window !== 'undefined' &&
+    /^\/en(\/|$)/.test(window.location.pathname);
+  return isEn
+    ? 'You do not have permission to do this.'
+    : 'شما دسترسی لازم برای انجام این کار را ندارید';
+}
+
 export async function baseQueryByToken(
   args: string | FetchArgs,
   api: BaseQueryApi,
@@ -88,9 +98,7 @@ async function baseQueryWithAuth(
   );
 
   if (result.error?.status === 403) {
-    showErrorToast(
-      "شما دسترسی لازم برای انجام این کار را ندارید"
-    );
+    showErrorToast(forbiddenMessage());
   }
 
   return result;

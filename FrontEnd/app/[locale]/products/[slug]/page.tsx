@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 import { permanentRedirect } from 'next/navigation';
 
@@ -16,6 +16,7 @@ import StoreBreadcrumbs from '@components/molecules/storefront/StoreBreadcrumbs'
 import { serverApiBaseUrl, siteBaseUrl } from '@lib/api';
 import { safeFetchJson } from '@lib/safeFetch';
 import { absoluteUrl, buildPageMetadata } from '@lib/seo';
+import { pickLocalized } from '@lib/utils';
 import { fetchStaticSlugParams } from '@lib/staticParams';
 import { SimpleResponse } from '@models/base';
 import { IDetailedProduct } from '@models/product';
@@ -81,7 +82,7 @@ export async function generateMetadata({
     return buildPageMetadata({
       locale,
       path: `products/${slug}`,
-      title: 'Product',
+      title: tStore('productFallbackTitle'),
       description: '',
       noIndex: true,
     });
@@ -91,7 +92,7 @@ export async function generateMetadata({
   const seoTitle =
     (locale === 'fa' ? product.seoTitleFa : product.seoTitleEn) ||
     product.name ||
-    (locale === 'fa' ? 'محصول' : 'Product');
+    tStore('productFallbackTitle');
   const description =
     (locale === 'fa' ? product.metaDescriptionFa : product.metaDescriptionEn) ||
     product.description ||
@@ -113,6 +114,8 @@ export default async function ProductPage({
   params: Promise<{ slug: string; locale: string }>;
 }) {
   const { slug, locale } = await params;
+  setRequestLocale(locale);
+  const tNav = await getTranslations({ locale, namespace: 'header' });
   const tStore = await getTranslations({ locale, namespace: 'store' });
   const { status, product } = await fetchProduct(slug);
 
@@ -153,6 +156,11 @@ export default async function ProductPage({
     (locale === 'fa' ? product.metaDescriptionFa : product.metaDescriptionEn) ||
     null;
   const categoryKey = product.categorySlug || product.categoryId;
+  const categoryName = pickLocalized(
+    locale,
+    product.categoryName,
+    product.categoryEnglishName
+  );
   const images = (product.imageUrls?.length
     ? product.imageUrls
     : [product.mainImage]
@@ -173,7 +181,7 @@ export default async function ProductPage({
     image: images.length ? images : undefined,
     url: productUrl,
     sku: String(product.id),
-    category: product.categoryName || undefined,
+    category: categoryName || undefined,
     brand: product.brandName
       ? { '@type': 'Brand', name: product.brandName }
       : undefined,
@@ -200,8 +208,8 @@ export default async function ProductPage({
     };
   }
 
-  const homeLabel = locale === 'fa' ? 'خانه' : 'Home';
-  const productsLabel = locale === 'fa' ? 'محصولات' : 'Products';
+  const homeLabel = tNav('home');
+  const productsLabel = tNav('products');
 
   return (
     <article className="store-page !pt-6">
@@ -211,10 +219,10 @@ export default async function ProductPage({
         items={[
           { name: homeLabel, path: '' },
           { name: productsLabel, path: 'products' },
-          ...(product.categoryName
+          ...(categoryName
             ? [
                 {
-                  name: product.categoryName as string,
+                  name: categoryName,
                   path: `categories/${categoryKey}`,
                 },
               ]
@@ -234,13 +242,13 @@ export default async function ProductPage({
         links={[
           {
             href: `/${locale}/products`,
-            label: locale === 'fa' ? 'همه محصولات' : 'All products',
+            label: tStore('allProducts'),
           },
-          ...(product.categoryName
+          ...(categoryName
             ? [
                 {
                   href: `/${locale}/categories/${product.categorySlug || product.categoryId}`,
-                  label: product.categoryName as string,
+                  label: categoryName,
                 },
               ]
             : []),
@@ -254,7 +262,7 @@ export default async function ProductPage({
             : []),
           {
             href: `/${locale}/blog`,
-            label: locale === 'fa' ? 'راهنماهای بلاگ' : 'Blog guides',
+            label: tStore('blogGuides'),
           },
         ]}
       />

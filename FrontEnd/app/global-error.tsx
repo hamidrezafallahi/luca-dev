@@ -1,14 +1,36 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 type Props = {
   error: Error & { digest?: string };
   reset: () => void;
 };
 
+// Rendered outside the locale layout (no next-intl provider), so the copy
+// lives here and the language is taken from the URL prefix.
+const COPY = {
+  fa: {
+    title: 'خطای بحرانی',
+    message: 'برنامه با مشکل غیرمنتظره روبه‌رو شد.',
+    retry: 'تلاش مجدد',
+  },
+  en: {
+    title: 'Critical error',
+    message: 'The app ran into an unexpected problem.',
+    retry: 'Try again',
+  },
+} as const;
+
 /** Root-level boundary — must define its own html/body. */
 export default function GlobalError({ error, reset }: Props) {
+  const [locale, setLocale] = useState<'fa' | 'en'>('fa');
+  const copy = COPY[locale];
+
+  useEffect(() => {
+    if (/^\/en(\/|$)/.test(window.location.pathname)) setLocale('en');
+  }, []);
+
   useEffect(() => {
     const payload = {
       level: 'error',
@@ -30,7 +52,7 @@ export default function GlobalError({ error, reset }: Props) {
   }, [error]);
 
   return (
-    <html lang="fa">
+    <html lang={locale} dir={locale === 'fa' ? 'rtl' : 'ltr'}>
       <body
         style={{
           margin: 0,
@@ -44,11 +66,11 @@ export default function GlobalError({ error, reset }: Props) {
         }}
       >
         <div style={{ maxWidth: 420, textAlign: 'center' }}>
-          <h1 style={{ fontSize: 22, marginBottom: 12 }}>خطای بحرانی</h1>
+          <h1 style={{ fontSize: 22, marginBottom: 12 }}>{copy.title}</h1>
           <p style={{ opacity: 0.85, fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
             {process.env.NODE_ENV === 'development'
               ? error.message
-              : 'برنامه با مشکل غیرمنتظره روبه‌رو شد.'}
+              : copy.message}
           </p>
           <button
             type="button"
@@ -63,7 +85,7 @@ export default function GlobalError({ error, reset }: Props) {
               fontWeight: 600,
             }}
           >
-            تلاش مجدد
+            {copy.retry}
           </button>
         </div>
       </body>

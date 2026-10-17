@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import {
   BlogContent,
@@ -94,6 +94,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug, locale } = await params;
+  setRequestLocale(locale);
+  const tNav = await getTranslations({ locale, namespace: 'header' });
   const blog = await getBlogBySlug({ params: { slug } });
 
   const title =
@@ -128,8 +130,8 @@ export default async function Page({ params }: Props) {
       <StoreBreadcrumbs
         locale={locale}
         items={[
-          { name: locale === 'fa' ? 'خانه' : 'Home', path: '' },
-          { name: locale === 'fa' ? 'بلاگ' : 'Blog', path: 'blog' },
+          { name: tNav('home'), path: '' },
+          { name: tNav('blogs'), path: 'blog' },
           { name: title },
         ]}
       />

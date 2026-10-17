@@ -61,7 +61,8 @@ export default async function Page({ params, searchParams }: Props) {
     <PaymentFailed
       searchParams={{
         errorCode: errorCode || 'unknown_error',
-        errorMessage: errorMessage || 'پرداخت ناموفق بود',
+        // PaymentFailed falls back to the translated 'payment.paymentFailed'.
+        errorMessage: errorMessage || '',
         orderId: orderId || '',
       }}
     />

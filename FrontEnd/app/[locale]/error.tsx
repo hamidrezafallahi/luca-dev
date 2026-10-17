@@ -2,6 +2,8 @@
 
 import { useEffect } from 'react';
 
+import { useTranslations } from 'next-intl';
+
 import { reportClientError } from '@components/organisms/runtimeErrorBridge';
 
 type Props = {
@@ -10,6 +12,7 @@ type Props = {
 };
 
 export default function LocaleError({ error, reset }: Props) {
+  const t = useTranslations('store');
   useEffect(() => {
     reportClientError(error.message, error, {
       scope: 'app/[locale]/error',
@@ -25,19 +28,17 @@ export default function LocaleError({ error, reset }: Props) {
       >
         ×
       </span>
-      <h1 className="luca-h2">
-        خطا در بارگذاری
-      </h1>
+      <h1 className="luca-h2">{t('loadError')}</h1>
       <p className="leading-loose luca-muted">
         {process.env.NODE_ENV === 'development'
           ? error.message
-          : 'لطفاً دوباره تلاش کنید. اگر مشکل ادامه داشت با پشتیبانی تماس بگیرید.'}
+          : t('loadErrorRetryHint')}
       </p>
       {process.env.NODE_ENV === 'development' && error.digest ? (
         <p className="opacity-70 font-mono text-xs">digest: {error.digest}</p>
       ) : null}
       <button type="button" className="store-btn store-btn-primary" onClick={reset}>
-        تلاش مجدد
+        {t('retry')}
       </button>
     </div>
   );

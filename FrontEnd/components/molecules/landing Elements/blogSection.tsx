@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import MediaImage from '@components/atoms/MediaImage';
 import { getAll } from '@lib/getAll';
+import { pickLocalized } from '@lib/utils';
 import { IBlog } from '@models/Blog';
 
 function formatBlogDate(value: Date | string | null | undefined, locale: string) {
@@ -51,8 +52,8 @@ export default async function BlogSection() {
 
       <div className="gap-x-4 lg:gap-x-6 gap-y-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => {
-          const title = locale === 'fa' ? post.titleFa : post.titleEn;
-          const excerpt = locale === 'fa' ? post.excerptFa : post.excerptEn;
+          const title = pickLocalized(locale, post.titleFa, post.titleEn);
+          const excerpt = pickLocalized(locale, post.excerptFa, post.excerptEn);
           const dateLabel = formatBlogDate(
             post.updatedAt || post.createdAt,
             locale,

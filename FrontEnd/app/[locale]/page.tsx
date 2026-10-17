@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import BlogSection from '@components/molecules/landing Elements/blogSection';
 import LandingFaq from '@components/molecules/landing Elements/landingFaq';
@@ -60,6 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Home({ params }: Props) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const tBrand = await getTranslations({ locale, namespace: 'brand' });
   const tSeo = await getTranslations({ locale, namespace: 'seo' });
 
@@ -72,7 +73,7 @@ export default async function Home({ params }: Props) {
     '@context': 'https://schema.org',
     '@type': 'OnlineStore',
     '@id': `${absoluteUrl(locale, '')}#organization`,
-    name: 'لوکا',
+    name: tBrand('name'),
     url: absoluteUrl(locale, ''),
     // Root-absolute asset (never locale-prefixed). TODO(luca): add `logo` once a logo file exists in /public.
     image: `${siteBaseUrl}/og-image.jpg`,

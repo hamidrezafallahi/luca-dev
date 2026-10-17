@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import ShoppingCartTemplate from '@components/templates/shoppingCartTemplate';
 import Footer from '@layout/footer';
@@ -26,6 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ShoppingCartPage({ params }: Props) {
   const { locale } = await params;
 
+  setRequestLocale(locale);
   return (
     <>
       <Header />

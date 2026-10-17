@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 
 import CustomPagination from '@components/molecules/pagination';
@@ -45,6 +45,7 @@ export async function generateMetadata({
 
 export default async function Page({ params, searchParams }: Props) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const resolvedSearch = searchParams ? await searchParams : {};
   const pageNumber = parseInt(
     (Array.isArray(resolvedSearch.page)

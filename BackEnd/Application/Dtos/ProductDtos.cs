@@ -35,6 +35,8 @@ namespace Application.Dtos
         public string Description { get; set; } = default!;
         public int CategoryId { get; set; }
         public string? CategoryName { get; set; }
+        /// <summary>English name of the category (CategoryName is the Persian one).</summary>
+        public string? CategoryEnglishName { get; set; }
         public int? BrandId { get; set; }
         public string? BrandName { get; set; }
         public List<string> ImageUrls { get; set; } = new List<string>();

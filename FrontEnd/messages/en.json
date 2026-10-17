@@ -115,7 +115,15 @@
     "notFoundHint": "The requested item does not exist or was removed.",
     "loadError": "Loading error",
     "loadErrorHint": "Something went wrong while loading this page.",
-    "backHome": "Back to home"
+    "backHome": "Back to home",
+    "productFallbackTitle": "Product",
+    "allProducts": "All products",
+    "blogGuides": "Blog guides",
+    "retry": "Try again",
+    "loadErrorRetryHint": "Please try again. If the problem persists, contact support.",
+    "genericError": "Something went wrong",
+    "pageNotFound": "Page not found",
+    "viewProducts": "View products"
   },
   "productsPage": {
     "title": "Loupes and headlights",
@@ -863,5 +871,11 @@
       "title": "Talk to a specialist",
       "link": "Book a consultation"
     }
+  },
+  "categoryFaq": {
+    "whatQuestion": "What can I find in {name}?",
+    "whatAnswer": "A curated selection of Luca products in this category.",
+    "authenticQuestion": "Are products in this category authentic?",
+    "authenticAnswer": "Luca sells authentic products only; each product page lists detailed specs."
   }
 }

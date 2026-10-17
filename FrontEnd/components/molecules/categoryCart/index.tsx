@@ -4,6 +4,7 @@ import { getLocale } from 'next-intl/server';
 import Link from 'next/link';
 
 import MediaImage from '@components/atoms/MediaImage';
+import { pickLocalized } from '@lib/utils';
 import { ICategory } from '@models/category';
 
 export default async function CategoryCard({ category }: { category: ICategory}) {
@@ -16,8 +17,8 @@ export default async function CategoryCard({ category }: { category: ICategory})
     categoryEnglishDesc,
   } = category;
   const locale = await getLocale()
-  const name = locale == "fa" ? persianName : englishName;
-  const desc = locale == "fa" ? categoryPersianDesc : categoryEnglishDesc;
+  const name = pickLocalized(locale, persianName, englishName);
+  const desc = pickLocalized(locale, categoryPersianDesc, categoryEnglishDesc);
   return (
     <Link
       href={`/${locale}/categories/${category.slug || id}`}

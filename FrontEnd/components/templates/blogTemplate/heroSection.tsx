@@ -1,13 +1,13 @@
 import React from 'react';
 
 import MediaImage from '@components/atoms/MediaImage';
+import { pickLocalized } from '@lib/utils';
 
 import { IProps } from './type';
 
 export async function HeroSection({ ...props }: IProps) {
   const { blog, locale } = props;
-  const isRTL = locale == "fa";
-  const title = isRTL ? blog.titleFa : blog.titleEn;
+  const title = pickLocalized(locale, blog.titleFa, blog.titleEn);
 
   return (
     <section className="flex flex-col">
@@ -21,7 +21,7 @@ export async function HeroSection({ ...props }: IProps) {
         </time>
         <h1 className="max-w-[860px] luca-h1">{title}</h1>
         <p className="max-w-[640px] line-clamp-2 leading-loose luca-muted">
-          {isRTL ? blog.excerptFa : blog.excerptEn}
+          {pickLocalized(locale, blog.excerptFa, blog.excerptEn)}
         </p>
       </div>
 

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import CategoryCard from '@components/molecules/categoryCart';
 import CustomPagination from '@components/molecules/pagination';
@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params, searchParams }: Props) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const resolvedSearchParams = searchParams ? await searchParams : {};
   const t = await getTranslations({ locale, namespace: 'categoriesPage' });
 

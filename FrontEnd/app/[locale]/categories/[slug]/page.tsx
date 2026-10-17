@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { permanentRedirect } from 'next/navigation';
 
 import SeoHighlight from '@components/molecules/storefront/SeoHighlight';
@@ -9,6 +9,7 @@ import CategoryTemplate from '@components/templates/categoryTemplate';
 import { serverApiBaseUrl } from '@lib/api';
 import { safeFetchJson } from '@lib/safeFetch';
 import { buildPageMetadata } from '@lib/seo';
+import { pickLocalized } from '@lib/utils';
 import { fetchStaticSlugParams } from '@lib/staticParams';
 import { SimpleResponse } from '@models/base';
 import type { ICategory } from '@models/category';
@@ -52,12 +53,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const canonical = category.slug || String(category.id);
   const title =
     (locale === 'fa' ? category.seoTitleFa : category.seoTitleEn) ||
-    (locale === 'fa' ? category.persianName : category.englishName);
+    pickLocalized(locale, category.persianName, category.englishName);
   const description =
     (locale === 'fa' ? category.metaDescriptionFa : category.metaDescriptionEn) ||
-    (locale === 'fa'
-      ? category.categoryPersianDesc
-      : category.categoryEnglishDesc);
+    pickLocalized(locale, category.categoryPersianDesc, category.categoryEnglishDesc);
 
   return buildPageMetadata({
     locale,
@@ -70,7 +69,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug, locale } = await params;
+  setRequestLocale(locale);
   const tStore = await getTranslations({ locale, namespace: 'store' });
+  const tNav = await getTranslations({ locale, namespace: 'header' });
+  const tFaq = await getTranslations({ locale, namespace: 'categoryFaq' });
   const category = await fetchCategory(slug);
 
   if (!category) {
@@ -88,8 +90,7 @@ export default async function Page({ params }: Props) {
     permanentRedirect(`/${locale}/categories/${category.slug}`);
   }
 
-  const title =
-    locale === 'fa' ? category.persianName : category.englishName;
+  const title = pickLocalized(locale, category.persianName, category.englishName);
   const seoTitle =
     (locale === 'fa' ? category.seoTitleFa : category.seoTitleEn) || null;
   const seoDescription =
@@ -102,27 +103,17 @@ export default async function Page({ params }: Props) {
       ? faqItems
       : [
           {
-            question:
-              locale === 'fa'
-                ? `در دسته ${title} چه محصولاتی پیدا می‌کنم؟`
-                : `What can I find in ${title}?`,
+            question: tFaq('whatQuestion', { name: title }),
             answer:
-              (locale === 'fa'
-                ? category.categoryPersianDesc
-                : category.categoryEnglishDesc) ||
-              (locale === 'fa'
-                ? 'مجموعه‌ای از محصولات منتخب لوکا در این دسته قرار دارد.'
-                : 'A curated selection of Luca products in this category.'),
+              pickLocalized(
+                locale,
+                category.categoryPersianDesc,
+                category.categoryEnglishDesc
+              ) || tFaq('whatAnswer'),
           },
           {
-            question:
-              locale === 'fa'
-                ? 'آیا محصولات این دسته اصل هستند؟'
-                : 'Are products in this category authentic?',
-            answer:
-              locale === 'fa'
-                ? 'لوکا فقط محصولات اصل را عرضه می‌کند و مشخصات هر محصول در صفحه همان کالا آمده است.'
-                : 'Luca sells authentic products only; each product page lists detailed specs.',
+            question: tFaq('authenticQuestion'),
+            answer: tFaq('authenticAnswer'),
           },
         ];
 
@@ -131,11 +122,8 @@ export default async function Page({ params }: Props) {
       <StoreBreadcrumbs
         locale={locale}
         items={[
-          { name: locale === 'fa' ? 'خانه' : 'Home', path: '' },
-          {
-            name: locale === 'fa' ? 'دسته‌بندی‌ها' : 'Categories',
-            path: 'categories',
-          },
+          { name: tNav('home'), path: '' },
+          { name: tNav('categories'), path: 'categories' },
           { name: title },
         ]}
       />

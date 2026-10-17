@@ -2,6 +2,7 @@ import * as React from 'react';
 
 import { useLocale } from 'next-intl';
 
+import { pickLocalized } from '@lib/utils';
 import { DataResponse } from '@models/base';
 import { useGetData } from '@services/base';
 
@@ -57,7 +58,7 @@ const DynamicSelect = React.forwardRef<HTMLDivElement, DynamicSelectProps>(
     React.useEffect(() => {
       if (data && data.isSuccess) {
         const newOptions = data.data.records.map((opt) => ({
-          label: locale == "fa" ? opt.persianLabel : opt.englishLabel,
+          label: pickLocalized(locale, opt.persianLabel, opt.englishLabel),
           value: opt.id,
         }));
         setOptions((prev) => {

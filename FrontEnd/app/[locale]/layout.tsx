@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { getMessages, setRequestLocale } from 'next-intl/server';
 import localFont from 'next/font/local';
 
 import CustomLayout from '@layout/index';
@@ -32,6 +32,9 @@ export async function generateStaticParams() {
 
 export default async function BaseLayout({ children, params }: IProps) {
   const { locale } = await params;
+  // Lets nested server components call getLocale()/getTranslations() without
+  // a locale argument while staying statically renderable.
+  setRequestLocale(locale);
   const messages = await getMessages({ locale });
 
   // Theme is applied client-side / via cookie bootstrap — avoid cookies() here

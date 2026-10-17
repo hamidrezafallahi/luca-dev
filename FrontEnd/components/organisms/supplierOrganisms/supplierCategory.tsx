@@ -4,6 +4,7 @@ import { getLocale } from 'next-intl/server';
 import Link from 'next/link';
 
 import MediaImage from '@components/atoms/MediaImage';
+import { pickLocalized } from '@lib/utils';
 import { ICategory } from '@models/category';
 
 export async function SupplierCategory(props: {
@@ -28,7 +29,7 @@ export async function SupplierCategory(props: {
           <span className="block relative w-full aspect-[31/28] overflow-hidden luca-ph">
             <MediaImage
               src={cat.categoryCover}
-              alt={cat.persianName}
+              alt={pickLocalized(locale, cat.persianName, cat.englishName)}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
               width={320}
@@ -37,12 +38,14 @@ export async function SupplierCategory(props: {
           </span>
           <span className="flex flex-col justify-center items-center px-2 min-h-[72px] text-center">
             <h3 className="font-body font-normal text-[15px] group-hover:underline underline-offset-4">
-              {locale == "fa" ? cat.persianName : cat.englishName}
+              {pickLocalized(locale, cat.persianName, cat.englishName)}
             </h3>
             <span className="text-xs line-clamp-1 luca-muted">
-              {locale == "fa"
-                ? cat.categoryPersianDesc
-                : cat.categoryEnglishDesc}
+              {pickLocalized(
+                locale,
+                cat.categoryPersianDesc,
+                cat.categoryEnglishDesc
+              )}
             </span>
           </span>
         </Link>

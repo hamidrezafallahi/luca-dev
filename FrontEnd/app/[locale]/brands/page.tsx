@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 
 import MediaImage from '@components/atoms/MediaImage';
@@ -34,6 +34,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 
 export default async function Page({ searchParams, params }: Props) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const t = await getTranslations({ locale, namespace: 'brandsPage' });
   const tStore = await getTranslations({ locale, namespace: 'store' });

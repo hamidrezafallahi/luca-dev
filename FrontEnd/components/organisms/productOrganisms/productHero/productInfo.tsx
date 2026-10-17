@@ -3,6 +3,7 @@ import {
   getTranslations,
 } from 'next-intl/server';
 
+import { pickLocalized } from '@lib/utils';
 import { IDetailedProduct } from '@models/product';
 
 import ProductPrice from './productPrice';
@@ -11,13 +12,18 @@ import ProductRate from './productRate';
 export default async function ProductInfo({ product }: { product: IDetailedProduct }) {
   const locale = await getLocale();
   const t = await getTranslations();
+  const categoryName = pickLocalized(
+    locale,
+    product.categoryName,
+    product.categoryEnglishName
+  );
 
   return (
     <div className="flex flex-col gap-6 lg:pt-4 w-full max-w-[600px] lg:max-w-none text-start">
       <div className="flex flex-col gap-1.5">
-        {(product.brandName || product.categoryName) && (
+        {(product.brandName || categoryName) && (
           <span className="luca-eyebrow">
-            {[product.brandName, product.categoryName].filter(Boolean).join(' · ')}
+            {[product.brandName, categoryName].filter(Boolean).join(' · ')}
           </span>
         )}
         <h1 className="luca-h2">{product.name}</h1>

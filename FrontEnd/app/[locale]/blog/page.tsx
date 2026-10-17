@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import { BlogCard } from '@components/molecules/blog';
 import CustomPagination from '@components/molecules/pagination';
@@ -32,6 +32,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
 
 export default async function Page({ params, searchParams }: Props) {
   const { locale } = await params;
+  setRequestLocale(locale);
   const query = searchParams ? await searchParams : undefined;
   const t = await getTranslations({ locale, namespace: 'blog' });
   const page = parseInt((query?.page as string) ?? '1');

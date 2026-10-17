@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { getTranslations } from 'next-intl/server';
+import { getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound, permanentRedirect } from 'next/navigation';
 
 import StoreBreadcrumbs from '@components/molecules/storefront/StoreBreadcrumbs';
@@ -60,6 +60,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { slug, locale } = await params;
+  setRequestLocale(locale);
+  const tNav = await getTranslations({ locale, namespace: 'header' });
   const data = await fetchSupplier(slug);
 
   if (!data) {
@@ -75,9 +77,9 @@ export default async function Page({ params }: Props) {
       <StoreBreadcrumbs
         locale={locale}
         items={[
-          { name: locale === 'fa' ? 'خانه' : 'Home', path: '' },
+          { name: tNav('home'), path: '' },
           {
-            name: locale === 'fa' ? 'تأمین‌کنندگان' : 'Suppliers',
+            name: tNav('suppliers'),
             path: 'suppliers',
           },
           { name: data.fullName || slug },

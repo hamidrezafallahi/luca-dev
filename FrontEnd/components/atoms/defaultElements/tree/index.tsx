@@ -11,6 +11,8 @@ import {
   ChevronUpIcon,
 } from '@components/atoms/iconComponents';
 
+import { pickLocalized } from '@lib/utils';
+
 import TreeActions from './treeActions';
 
 export interface ITreeContext {
@@ -102,7 +104,7 @@ export const Tree: React.FC<TreeProps> = ({
         >
           <div className="flex flex-1 justify-start items-center gap-2 min-w-0 text-sm">
             <div className="truncate">
-              {locale == "fa" ? node.persianName : node.englishName}
+              {pickLocalized(locale, node.persianName, node.englishName)}
             </div>
             {hasChildren ? (
               <button

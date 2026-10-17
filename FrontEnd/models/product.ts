@@ -21,6 +21,8 @@ export interface IDetailedProduct {
     mainImage: string;
     categoryId: number;
     categoryName?: string | null;
+    /** English category name; categoryName is the Persian one. */
+    categoryEnglishName?: string | null;
     brandId: number;
     brandName?: string | null;
     imageUrls: string[];
