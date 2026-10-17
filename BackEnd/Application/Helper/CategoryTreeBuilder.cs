@@ -17,6 +17,12 @@ public static class CategoryTreeBuilder
                 CategoryEnglishDesc=c.CategoryEnglishDesc,
                 CategoryPersianDesc=c.CategoryPersianDesc,
                 ParentCategoryId = c.ParentCategoryId,
+                Slug = c.Slug,
+                SeoTitleFa = c.SeoTitleFa,
+                SeoTitleEn = c.SeoTitleEn,
+                MetaDescriptionFa = c.MetaDescriptionFa,
+                MetaDescriptionEn = c.MetaDescriptionEn,
+                FaqJson = c.FaqJson,
                 SubCategories = BuildTree(allCategories, c.Id)
             })
             .ToList();

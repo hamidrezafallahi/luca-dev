@@ -23,6 +23,12 @@ export interface ITreeContext {
   isShowInLanding: boolean;
   isActive: boolean;
   persianName: string;
+  slug?: string;
+  seoTitleFa?: string | null;
+  seoTitleEn?: string | null;
+  metaDescriptionFa?: string | null;
+  metaDescriptionEn?: string | null;
+  faqJson?: string | null;
   subCategories: ITreeContext[];
 }
 

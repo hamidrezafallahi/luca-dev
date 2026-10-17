@@ -28,6 +28,12 @@ export default function AdminCategoryTemplate({ ...props }: IProps) {
     categoryCover: cat.categoryCover,
     isShowInLanding: cat.isShowInLanding,
     isActive: cat.isActive,
+    slug: cat.slug,
+    seoTitleFa: cat.seoTitleFa,
+    seoTitleEn: cat.seoTitleEn,
+    metaDescriptionFa: cat.metaDescriptionFa,
+    metaDescriptionEn: cat.metaDescriptionEn,
+    faqJson: cat.faqJson,
     subCategories: cat.subCategories?.map(mapCategoryToContext) ?? [],
   });
   const t = useTranslations();
