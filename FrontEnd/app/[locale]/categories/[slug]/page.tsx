@@ -98,6 +98,11 @@ export default async function Page({ params }: Props) {
     permanentRedirect(`/${locale}/categories/${category.slug}`);
   }
 
+  // The parent may be inactive or deleted; only link to it when it resolves.
+  const parent = category.parentCategoryId
+    ? (await fetchCategory(String(category.parentCategoryId))).category
+    : null;
+
   const title = pickLocalized(locale, category.persianName, category.englishName);
   const seoTitle =
     (locale === 'fa' ? category.seoTitleFa : category.seoTitleEn) || null;
@@ -136,7 +141,7 @@ export default async function Page({ params }: Props) {
         ]}
       />
       <SeoHighlight locale={locale} title={seoTitle} description={seoDescription} />
-      <CategoryTemplate category={category} />
+      <CategoryTemplate category={category} parent={parent} />
       <FaqSection locale={locale} items={fallbackFaq} />
     </div>
   );

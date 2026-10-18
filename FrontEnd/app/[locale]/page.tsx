@@ -1,18 +1,21 @@
 import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import {
+  getTranslations,
+  setRequestLocale,
+} from 'next-intl/server';
 
 import BlogSection from '@components/molecules/landing Elements/blogSection';
-import LandingFaq from '@components/molecules/landing Elements/landingFaq';
 import LandingBrands
   from '@components/molecules/landing Elements/landingBrands';
+import LandingCategory
+  from '@components/molecules/landing Elements/landingCategory';
 import LandingContactBand
   from '@components/molecules/landing Elements/landingContactBand';
 import LandingExperience
   from '@components/molecules/landing Elements/landingExperience';
+import LandingFaq from '@components/molecules/landing Elements/landingFaq';
 import LandingFeatures
   from '@components/molecules/landing Elements/landingFeatures';
-import LandingCategory
-  from '@components/molecules/landing Elements/landingCategory';
 import LandingSlider
   from '@components/molecules/landing Elements/landingSlider';
 import LandingSpecialOffer
@@ -28,9 +31,12 @@ import AdminDock from '@components/organisms/adminDock';
 import LandingHero from '@components/organisms/landingHero';
 import Footer from '@layout/footer';
 import Header from '@layout/header';
-import { getCategories } from '@lib/category';
 import { siteBaseUrl } from '@lib/api';
-import { getSlides, splitHeroSlide } from '@lib/landing';
+import { getCategories } from '@lib/category';
+import {
+  getSlides,
+  splitHeroSlide,
+} from '@lib/landing';
 import {
   absoluteUrl,
   buildPageMetadata,
@@ -69,22 +75,22 @@ export default async function Home({ params }: Props) {
     queries: { IsShowInLanding: true },
   });
 
-  const organizationLd = {
+const organizationLd = {
     '@context': 'https://schema.org',
     '@type': 'OnlineStore',
     '@id': `${absoluteUrl(locale, '')}#organization`,
     name: tBrand('name'),
     url: absoluteUrl(locale, ''),
-    // Root-absolute asset (never locale-prefixed). TODO(luca): add `logo` once a logo file exists in /public.
+    // Root-absolute assets (never locale-prefixed).
+    logo: `${siteBaseUrl}/logo.png`,
     image: `${siteBaseUrl}/og-image.jpg`,
     // TODO(luca): replace contact details and social profiles with the brand's real ones.
-    email: 'info@rooshak.ir',
-    telephone: '+98-935-4042013',
+    email: 'info@lucaloupe.ir',
+    telephone: '+98-935-5716386',
   
     sameAs: [
-      'https://instagram.com/roshak_kitchenware',
-      'https://t.me/Arash71tj',
-      // 'https://x.com/rooshak',
+      'https://instagram.com/lucaloupe.ir',
+      'https://wa.me/989355716386',
     ],
   
     address: {

@@ -41,12 +41,12 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "rooshakshop.ir",
+        hostname: "lucaloupe.ir",
         pathname: "/uploads/**",
       },
       {
         protocol: "https",
-        hostname: "www.rooshakshop.ir",
+        hostname: "www.lucaloupe.ir",
         pathname: "/uploads/**",
       },
       {

@@ -3,28 +3,9 @@ import '../style/globals.css';
 import { ReactNode } from 'react';
 
 import type { Metadata, Viewport } from 'next';
-import { Markazi_Text, Vazirmatn } from 'next/font/google';
 
 import { siteBaseUrl } from '@lib/api';
 import { SITE_NAME } from '@lib/seo';
-import { getActiveTheme, themeToCss } from '@lib/theme';
-
-// Luca typefaces: Markazi Text (display) + Vazirmatn (UI). next/font downloads
-// them at build time and serves them from /_next/static/media, so the CSP's
-// style-src/font-src 'self' allows them and no request goes to Google Fonts.
-const displayFont = Markazi_Text({
-  subsets: ['arabic', 'latin'],
-  weight: ['400', '500', '600'],
-  display: 'swap',
-  variable: '--font-markazi',
-});
-
-const bodyFont = Vazirmatn({
-  subsets: ['arabic', 'latin'],
-  weight: ['300', '400', '500', '600'],
-  display: 'swap',
-  variable: '--font-vazirmatn',
-});
 
 type Props = {
   children: ReactNode;
@@ -67,24 +48,11 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function RootLayout({ children }: Props) {
-  // Colours come from the active ThemeSetting row; globals.css only holds the fallback palette.
-  const themeCss = themeToCss(await getActiveTheme());
-
-  return (
-    <html
-      lang="fa"
-      className={`${displayFont.variable} ${bodyFont.variable}`}
-      suppressHydrationWarning
-    >
-      <head>
-        {themeCss ? (
-          <style id="site-theme" dangerouslySetInnerHTML={{ __html: themeCss }} />
-        ) : null}
-      </head>
-      <body className="bg-store-surface min-h-screen text-store-text antialiased">
-        {children}
-      </body>
-    </html>
-  );
+/**
+ * <html> lives in app/[locale]/layout.tsx so lang/dir follow the URL locale
+ * without making every page dynamic. Routes outside [locale] that render UI
+ * (app/not-found.tsx) provide their own <html>.
+ */
+export default function RootLayout({ children }: Props) {
+  return children;
 }
