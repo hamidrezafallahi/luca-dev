@@ -165,12 +165,23 @@ namespace OnlineShop.Domain.Entities
 
         public void Delete(int currentUserId)
         {
+            // Sub-categories survive their parent's deletion and become roots.
             foreach (var sub in _subCategories)
             {
-                sub.Delete(currentUserId);
+                sub.DetachFromParent(currentUserId);
             }
 
             MarkDeleted(currentUserId);
+        }
+
+        public void DetachFromParent(int currentUserId)
+        {
+            if (ParentCategoryId is null)
+                return;
+
+            ParentCategoryId = null;
+            ParentCategory = null;
+            MarkUpdated(currentUserId);
         }
 
         private static string? NullIfWhiteSpace(string? value)

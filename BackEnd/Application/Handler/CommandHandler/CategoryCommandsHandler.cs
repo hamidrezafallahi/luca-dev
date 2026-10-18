@@ -157,6 +157,10 @@ public class CategoryCommandHandler(
             category.ImageUrl,
             UploadPaths.Categories(category.Id));
 
+        // GetByIdAsync does not load SubCategories, so detach the children here.
+        foreach (var sub in await _repo.GetSubCategoriesAsync(category.Id))
+            sub.DetachFromParent(userId.Value);
+
         category.Delete(userId.Value);
         await _repo.SaveChangesAsync(cancellationToken);
         return ServiceResult<IdDto>.Ok(new IdDto { Id = category.Id });
