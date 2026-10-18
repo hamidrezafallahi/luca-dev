@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { IcPlus } from '@components/atoms/lucaIcons';
@@ -129,9 +130,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="flex md:flex-row flex-col justify-between items-center gap-3 pt-7">
-          <span className="text-[30px] luca-wordmark" lang="en">
-            LUCA
-          </span>
+          <Image src="/logo.png" alt={tBrand('name')} width={56} height={56} className="w-14 h-14" />
           <p className="max-w-md text-[13px] text-center luca-muted">{t('tagline')}</p>
           <p className="text-[13px] luca-muted">
             {t('copyright', { year, brand: tBrand('name') })}

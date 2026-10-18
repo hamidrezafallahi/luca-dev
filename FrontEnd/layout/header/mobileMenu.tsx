@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { createPortal } from 'react-dom';
@@ -138,8 +139,8 @@ function MobileMenu() {
               >
                 <IcClose />
               </button>
-              <p id="mobile-nav-title" className="text-[26px] luca-wordmark">
-                LUCA
+              <p id="mobile-nav-title">
+                <Image src="/logo.png" alt="LUCA" width={40} height={40} className="w-10 h-10" />
               </p>
               <div className="flex justify-end w-11">
                 <LangSwitcher />

@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { IcPin, IcSearch, IcUser } from '@components/atoms/lucaIcons';
@@ -66,9 +67,16 @@ export default function HeaderClient({ announcement = null }: HeaderProps) {
         <Link
           href={`/${locale}`}
           aria-label={tBrand('homeLink')}
-          className="luca-wordmark text-[30px] md:text-[36px] xl:text-[42px]"
+          className="inline-flex items-center"
         >
-          LUCA
+          <Image
+            src="/logo.png"
+            alt={tBrand('name')}
+            width={64}
+            height={64}
+            priority
+            className="w-11 md:w-[52px] xl:w-16 h-11 md:h-[52px] xl:h-16"
+          />
         </Link>
 
         <div className="flex justify-end items-center gap-1">
