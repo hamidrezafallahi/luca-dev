@@ -12,7 +12,7 @@ export default function LocaleNotFound() {
       <div className="flex justify-center items-center border-b h-16 md:h-[88px] luca-line">
         <Link
           href={`/${locale}`}
-          aria-label={tBrand('name')}
+          aria-label={tBrand('homeLink')}
           className="text-[30px] md:text-[42px] luca-wordmark"
         >
           LUCA

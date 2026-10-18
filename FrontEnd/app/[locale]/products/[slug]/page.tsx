@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import Link from 'next/link';
-import { permanentRedirect } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 
 import ProductBrand from '@components/organisms/productOrganisms/productBrand';
 import ProductCategory from '@components/organisms/productOrganisms/productCategory';
@@ -68,17 +67,13 @@ export async function generateMetadata({
   const tStore = await getTranslations({ locale, namespace: 'store' });
   const { status, product } = await fetchProduct(slug);
 
-  if (!product || status === 404) {
-    return buildPageMetadata({
-      locale,
-      path: `products/${slug}`,
-      title: tStore('notFound'),
-      description: tStore('notFoundHint'),
-      noIndex: true,
-    });
+  // Metadata resolves before the response status is sent; calling notFound()
+  // here (not only in the page) is what makes the response a real 404.
+  if (!product && (status === 404 || status === 200)) {
+    notFound();
   }
 
-  if (status >= 400) {
+  if (!product || status >= 400) {
     return buildPageMetadata({
       locale,
       path: `products/${slug}`,
@@ -119,29 +114,15 @@ export default async function ProductPage({
   const tStore = await getTranslations({ locale, namespace: 'store' });
   const { status, product } = await fetchProduct(slug);
 
-  if (!product && status === 404) {
-    return (
-      <div className="store-page">
-        <div className="store-empty">
-          <h1 className="store-empty-title">{tStore('notFound')}</h1>
-          <p className="store-empty-desc">{tStore('notFoundHint')}</p>
-          <Link href={`/${locale}/products`} className="store-btn store-btn-primary mt-4">
-            {tStore('backHome')}
-          </Link>
-        </div>
-      </div>
-    );
+  // Unknown slug → real HTTP 404 via app/[locale]/not-found.tsx.
+  if (!product && (status === 404 || status === 200)) {
+    notFound();
   }
 
+  // API down / 5xx: throw so the response is an error status (and ISR keeps
+  // the last good page) instead of a 200 "load error" page Google could index.
   if (!product) {
-    return (
-      <div className="store-page">
-        <div className="store-empty">
-          <h1 className="store-empty-title">{tStore('loadError')}</h1>
-          <p className="store-empty-desc">{tStore('loadErrorHint')}</p>
-        </div>
-      </div>
-    );
+    throw new Error(`Product ${slug} could not be loaded (API status ${status})`);
   }
 
   // Legacy numeric URLs → permanent SEO slug (must not be inside a broad try/catch).

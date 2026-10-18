@@ -6,7 +6,7 @@ export default function NotFound() {
   return (
     <div dir="rtl" lang="fa" className="flex flex-col bg-white min-h-screen text-ink">
       <div className="flex justify-center items-center border-b h-16 md:h-[88px] luca-line">
-        <Link href="/fa" aria-label="لوکا" className="text-[30px] md:text-[42px] luca-wordmark">
+        <Link href="/fa" aria-label="LUCA — صفحه اصلی لوکا" className="text-[30px] md:text-[42px] luca-wordmark">
           LUCA
         </Link>
       </div>
