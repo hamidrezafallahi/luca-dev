@@ -1,6 +1,7 @@
 {
   "brand": {
     "name": "Luca",
+    "homeLink": "LUCA — Luca home page",
     "icon": "icon"
   },
   "blog": {
@@ -687,7 +688,6 @@
     },
     "experience": {
       "title": "The Luca experience",
-      "more": "Learn more",
       "appointment": {
         "title": "Book a consultation",
         "body": "In person or online, a Luca specialist recommends the magnification, working distance and frame that suit you.",
@@ -695,11 +695,13 @@
       },
       "fitting": {
         "title": "Measurement and custom build",
-        "body": "Your pupillary distance and viewing angle are measured so the loupes are built exactly for your face."
+        "body": "Your pupillary distance and viewing angle are measured so the loupes are built exactly for your face.",
+        "cta": "FAQ on measuring and building your loupes"
       },
       "contact": {
         "title": "Contact us",
-        "body": "Get in touch for buying advice, order tracking or after-sales service."
+        "body": "Get in touch for buying advice, order tracking or after-sales service.",
+        "cta": "Ways to contact and work with Luca"
       }
     },
     "contactBand": {

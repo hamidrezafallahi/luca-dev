@@ -35,7 +35,7 @@ export default async function LandingExperience() {
               <h3 className="luca-h3">{t(`${card.key}.title`)}</h3>
               <p className="text-[15px] leading-loose luca-muted">{t(`${card.key}.body`)}</p>
               <Link href={`/${locale}/${card.href}`} className="luca-link">
-                {t('more')}
+                {t(`${card.key}.cta`)}
               </Link>
             </div>
           </div>

@@ -129,7 +129,7 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="flex md:flex-row flex-col justify-between items-center gap-3 pt-7">
-          <span className="text-[30px] luca-wordmark" aria-label={tBrand('name')}>
+          <span className="text-[30px] luca-wordmark" lang="en">
             LUCA
           </span>
           <p className="max-w-md text-[13px] text-center luca-muted">{t('tagline')}</p>

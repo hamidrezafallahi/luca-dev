@@ -65,7 +65,7 @@ export default function HeaderClient({ announcement = null }: HeaderProps) {
 
         <Link
           href={`/${locale}`}
-          aria-label={tBrand('name')}
+          aria-label={tBrand('homeLink')}
           className="luca-wordmark text-[30px] md:text-[36px] xl:text-[42px]"
         >
           LUCA

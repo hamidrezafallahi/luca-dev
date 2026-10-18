@@ -33,17 +33,12 @@ async function fetchBrand(slug: string): Promise<IBrand | null> {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug, locale } = await params;
-  const tStore = await getTranslations({ locale, namespace: 'store' });
   const brand = await fetchBrand(slug);
 
+  // Metadata resolves before the response status is sent; calling notFound()
+  // here (not only in the page) is what makes the response a real 404.
   if (!brand) {
-    return buildPageMetadata({
-      locale,
-      path: `brands/${slug}`,
-      title: tStore('notFound'),
-      description: tStore('notFoundHint'),
-      noIndex: true,
-    });
+    notFound();
   }
 
   const canonical = brand.slug || String(brand.id);

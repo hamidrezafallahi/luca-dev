@@ -15,8 +15,8 @@
   --error-color: #a3262e;
   --warning-color: #8a5a00;
   --info-color: #1e3a8a;
-  --font-display: 'Markazi Text', 'Noto Naskh Arabic', Georgia, serif;
-  --font-body: 'Vazirmatn', var(--IRANSans-font, 'IRANSans'), Tahoma, sans-serif;
+  --font-display: var(--font-markazi), 'Noto Naskh Arabic', Georgia, serif;
+  --font-body: var(--font-vazirmatn), var(--IRANSans-font, 'IRANSans'), Tahoma, sans-serif;
 }
 
 /* ================== Dark theme ================== */

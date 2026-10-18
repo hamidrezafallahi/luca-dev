@@ -19,11 +19,12 @@ using OnlineShop.Domain.Entities;
             int pageNumber = request.page ?? 1;
             int pageSize = request.pageSize ?? 10;
             IQueryable<Category> query;
+            // Landing is a storefront list: inactive categories must not show there.
             if (request.IsShowInLanding.HasValue && request.IsShowInLanding == true) {
-                query = _repo.Query(c => c.IsShowInLanding);
-            } else if (request.IsShowInLanding.HasValue && request.IsShowInLanding == false) 
+                query = _repo.Query(c => c.IsActive && c.IsShowInLanding);
+            } else if (request.IsShowInLanding.HasValue && request.IsShowInLanding == false)
             {
-                query = _repo.Query(c => !c.IsShowInLanding);
+                query = _repo.Query(c => c.IsActive && !c.IsShowInLanding);
             } else if (request.Q is not null && request.Q.Length > 0)
             {
                 query = _repo.Query(b => b.IsActive && (b.CategoryEnglishDesc.Contains(request.Q) || b.CategoryPersianDesc.Contains(request.Q) || b.EnglishName.Contains(request.Q) || b.PersianName.Contains(request.Q)));
@@ -40,12 +41,12 @@ using OnlineShop.Domain.Entities;
             
 
 
-            int totalCount = await query.CountAsync(cancellationToken);
-            var pagedCategories = await query
-        .Skip((pageNumber - 1) * pageSize).Take(pageSize)
-                .ToListAsync(cancellationToken);
+            // The tree is built from the full matching set and only the roots are
+            // paged; paging the flat rows first would drop children whose parent
+            // landed on another page.
+            var allCategories = await query.OrderBy(c => c.Id).ToListAsync(cancellationToken);
 
-            var flatDtos = pagedCategories.Select(c => new CategoryDto
+            var flatDtos = allCategories.Select(c => new CategoryDto
             {
                 Id = c.Id,
                 PersianName=c.PersianName,
@@ -65,7 +66,11 @@ using OnlineShop.Domain.Entities;
             }).ToList();
 
 
-            var categoryTree = request.IsShowInLanding.HasValue ? flatDtos: CategoryTreeBuilder.BuildTree(flatDtos);
+            var allRecords = request.IsShowInLanding.HasValue ? flatDtos : CategoryTreeBuilder.BuildForest(flatDtos);
+            int totalCount = allRecords.Count;
+            var categoryTree = allRecords
+                .Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                .ToList();
 
             dynamic? config = null;
 
