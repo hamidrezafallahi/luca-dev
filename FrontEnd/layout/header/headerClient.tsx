@@ -2,11 +2,17 @@
 
 import React from 'react';
 
-import { useLocale, useTranslations } from 'next-intl';
-import Image from 'next/image';
+import {
+  useLocale,
+  useTranslations,
+} from 'next-intl';
 import Link from 'next/link';
 
-import { IcPin, IcSearch, IcUser } from '@components/atoms/lucaIcons';
+import {
+  IcPin,
+  IcSearch,
+  IcUser,
+} from '@components/atoms/lucaIcons';
 import LangSwitcher from '@components/molecules/lang';
 
 import MobileMenu from './mobileMenu';
@@ -44,7 +50,7 @@ export default function HeaderClient({ announcement = null }: HeaderProps) {
       {announcement ? <AnnouncementStrip bar={announcement} /> : null}
 
       {/* Main row: utilities · wordmark · actions */}
-      <div className="store-nav-bar items-center grid grid-cols-[1fr_auto_1fr] px-2 md:px-10 xl:px-16 h-16 md:h-[72px] xl:h-[88px] border-b md:border-b-0 luca-line">
+      <div className="items-center grid grid-cols-[1fr_auto_1fr] px-2 md:px-10 xl:px-16 border-b md:border-b-0 h-16 md:h-[72px] xl:h-[88px] store-nav-bar luca-line">
         <div className="flex items-center gap-6 text-[13px]">
           <div className="md:hidden flex">
             <MobileMenu />
@@ -64,19 +70,12 @@ export default function HeaderClient({ announcement = null }: HeaderProps) {
           </Link>
         </div>
 
-        <Link
+         <Link
           href={`/${locale}`}
           aria-label={tBrand('homeLink')}
-          className="inline-flex items-center"
+          className="text-[30px] md:text-[36px] xl:text-[42px] luca-wordmark"
         >
-          <Image
-            src="/logo.png"
-            alt={tBrand('name')}
-            width={64}
-            height={64}
-            priority
-            className="w-11 md:w-[52px] xl:w-16 h-11 md:h-[52px] xl:h-16"
-          />
+          LUCA
         </Link>
 
         <div className="flex justify-end items-center gap-1">
