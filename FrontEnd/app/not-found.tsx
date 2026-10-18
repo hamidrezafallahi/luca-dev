@@ -1,10 +1,17 @@
 // app/not-found.tsx
 import Link from 'next/link';
 
-/** Global 404. Rendered outside the locale layout, so copy is static (fa). */
+import { fontVariables } from '@lib/fonts';
+
+/**
+ * Global 404. Rendered outside the locale layout, so copy is static (fa) and,
+ * because the root layout only returns children, it renders its own <html>.
+ */
 export default function NotFound() {
   return (
-    <div dir="rtl" lang="fa" className="flex flex-col bg-white min-h-screen text-ink">
+    <html lang="fa" dir="rtl" className={fontVariables}>
+      <body className="bg-store-surface min-h-screen text-store-text antialiased">
+    <div className="flex flex-col bg-white min-h-screen text-ink">
       <div className="flex justify-center items-center border-b h-16 md:h-[88px] luca-line">
         <Link href="/fa" aria-label="LUCA — صفحه اصلی لوکا" className="text-[30px] md:text-[42px] luca-wordmark">
           LUCA
@@ -28,5 +35,7 @@ export default function NotFound() {
         </div>
       </main>
     </div>
+      </body>
+    </html>
   );
 }

@@ -3,6 +3,7 @@ import { getTranslations, setRequestLocale } from 'next-intl/server';
 import Link from 'next/link';
 
 import { LoupeMark } from '@components/atoms/lucaIcons';
+import { isPlaceholder } from '@lib/placeholder';
 import { buildPageMetadata } from '@lib/seo';
 
 type Props = {
@@ -29,6 +30,13 @@ const CHAPTERS = [
 
 const FACTS = ['1', '2', '3'] as const;
 
+// Literal class names so Tailwind keeps them; the fact count varies.
+const MD_COLS: Record<number, string> = {
+  1: 'md:grid-cols-1',
+  2: 'md:grid-cols-2',
+  3: 'md:grid-cols-3',
+};
+
 /** Image slot. Replace the mark with <MediaImage> / <Image> once brand photography exists. */
 function Placeholder({ className = '', dark = false }: { className?: string; dark?: boolean }) {
   return (
@@ -47,6 +55,12 @@ export default async function Page({ params }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'story' });
 
+  // Founding year, founder quote and facts are owner-supplied; until then
+  // their template placeholders stay off the page.
+  const showIntroEyebrow = !isPlaceholder(t('introEyebrow'));
+  const showQuote = !isPlaceholder(t('quote')) && !isPlaceholder(t('quoteBy'));
+  const facts = FACTS.filter((id) => !isPlaceholder(t(`facts.${id}.value`)));
+
   return (
     <article className="flex flex-col text-ink">
       {/* Hero */}
@@ -61,7 +75,7 @@ export default async function Page({ params }: Props) {
 
       {/* Statement */}
       <section className="flex flex-col justify-center items-center gap-6 py-14 md:py-24 text-center luca-container">
-        <span className="luca-eyebrow">{t('introEyebrow')}</span>
+        {showIntroEyebrow && <span className="luca-eyebrow">{t('introEyebrow')}</span>}
         <p className="max-w-[820px] text-[26px] md:text-[32px] xl:text-[36px] leading-normal luca-display">
           {t('intro')}
         </p>
@@ -93,6 +107,7 @@ export default async function Page({ params }: Props) {
       ))}
 
       {/* Quote */}
+      {showQuote && (
       <section
         className="flex flex-col justify-center items-center gap-5 px-5 md:px-10 py-14 min-h-[340px] xl:min-h-[380px] text-white text-center"
         style={{ background: 'var(--primary-color)' }}
@@ -102,11 +117,13 @@ export default async function Page({ params }: Props) {
         </blockquote>
         <span className="text-sm">{t('quoteBy')}</span>
       </section>
+      )}
 
       {/* Facts */}
+      {facts.length > 0 && (
       <section className="py-12 md:py-20 luca-container">
-        <dl className="grid grid-cols-1 md:grid-cols-3 m-0">
-          {FACTS.map((id) => (
+        <dl className={`grid grid-cols-1 ${MD_COLS[facts.length] ?? 'md:grid-cols-3'} m-0`}>
+          {facts.map((id) => (
             <div key={id} className="flex flex-col-reverse justify-center items-center gap-0.5 min-h-[130px] text-center">
               <dt className="text-sm luca-muted">{t(`facts.${id}.label`)}</dt>
               <dd className="m-0 text-[44px] md:text-[48px] xl:text-[60px] leading-tight luca-display">
@@ -116,6 +133,7 @@ export default async function Page({ params }: Props) {
           ))}
         </dl>
       </section>
+      )}
 
       {/* Closing tiles */}
       <section className="gap-8 md:gap-4 xl:gap-6 grid grid-cols-1 md:grid-cols-2 pb-12 md:pb-16 xl:pb-[88px] luca-container">

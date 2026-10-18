@@ -7,6 +7,7 @@ import {
   ResetIcon,
   ShieldCheckIcon,
 } from '@components/atoms/iconComponents';
+import { isPlaceholder } from '@lib/placeholder';
 
 import { IProps } from '../type';
 import PaymentMethod from './PaymentMethod';
@@ -38,10 +39,12 @@ function SummarySideBar({ ...props }: IProps) {
 
       {/* Features */}
       <div className="flex flex-wrap justify-between gap-2 luca-muted">
-        <div className="flex items-center gap-1 text-xs">
-          <ResetIcon />
-          <span>{t("shoppingCart.freeReturns")}</span>
-        </div>
+        {!isPlaceholder(t("shoppingCart.freeReturns")) && (
+          <div className="flex items-center gap-1 text-xs">
+            <ResetIcon />
+            <span>{t("shoppingCart.freeReturns")}</span>
+          </div>
+        )}
         <div className="flex items-center gap-1 text-xs">
           <ShieldCheckIcon />
           <span>{t("shoppingCart.securePayment")}</span>

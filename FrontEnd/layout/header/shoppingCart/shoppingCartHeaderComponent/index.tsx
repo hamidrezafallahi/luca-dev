@@ -15,6 +15,7 @@ import {
 } from 'react-redux';
 
 import { RialIcon } from '@components/atoms/iconComponents';
+import { isPlaceholder } from '@lib/placeholder';
 import { IShippingMethod } from '@models/shippingMethod';
 import { useGetData } from '@services/base';
 import { setShippingMethod } from '@slice/shoppingCartSlice';
@@ -111,9 +112,11 @@ function ShoppingCartHeaderComponent({ ...props }: IProps) {
           </div>
         </div>
 
-        <p className="mb-3 text-xs text-center luca-muted">
-          {t("shoppingCart.header.freeShippingOver")}
-        </p>
+        {!isPlaceholder(t("shoppingCart.header.freeShippingOver")) && (
+          <p className="mb-3 text-xs text-center luca-muted">
+            {t("shoppingCart.header.freeShippingOver")}
+          </p>
+        )}
 
         <div className="flex flex-col items-center gap-1">
           <Link

@@ -18,8 +18,11 @@ import { ICategory } from '@models/category';
 
 export default async function CategoryTemplate({
   category,
+  parent = null,
 }: {
   category: ICategory;
+  /** Resolved parent category; null when there is none or it is not published. */
+  parent?: ICategory | null;
 }) {
   const locale = await getLocale();
   const t = await getTranslations();
@@ -35,10 +38,10 @@ export default async function CategoryTemplate({
       {/* Category head: title, description, cover */}
       <section className="flex flex-col gap-8">
         <header className="flex flex-col items-center gap-2.5 py-4 md:py-8 text-center">
-          {category.parentCategoryId ? (
+          {parent ? (
             <Link
               className="text-[13px] luca-link luca-muted"
-              href={`/${locale}/categories/${category.parentCategoryId}`}
+              href={`/${locale}/categories/${parent.slug || parent.id}`}
             >
               {t('category.goToParent')}
             </Link>
