@@ -1,0 +1,1420 @@
+{
+  "url": "https://lucaloupe.ir",
+  "psi": {
+    "mobile": {
+      "url": "https://lucaloupe.ir",
+      "strategy": "mobile",
+      "lighthouse_version": "13.5.0",
+      "lighthouse_scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "lab_metrics": {
+        "first-contentful-paint": {
+          "value": 1260,
+          "display": "1.3\u00a0s",
+          "score": 0.98
+        },
+        "largest-contentful-paint": {
+          "value": 1425,
+          "display": "1.4\u00a0s",
+          "score": 1
+        },
+        "total-blocking-time": {
+          "value": 2,
+          "display": "0\u00a0ms",
+          "score": 1
+        },
+        "cumulative-layout-shift": {
+          "value": 0.044762256262236906,
+          "display": "0.045",
+          "score": 0.99
+        },
+        "speed-index": {
+          "value": 1804.8562617707694,
+          "display": "1.8\u00a0s",
+          "score": 1
+        },
+        "interactive": {
+          "value": 4300.25,
+          "display": "4.3\u00a0s",
+          "score": 0.84
+        }
+      },
+      "field_metrics": {},
+      "opportunities": [
+        {
+          "id": "redirects",
+          "title": "Avoid multiple page redirects",
+          "savings_ms": 775,
+          "description": "Redirects introduce additional delays before the page can be loaded. [Learn how to avoid page redirects](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+        },
+        {
+          "id": "server-response-time",
+          "title": "Initial server response time was short",
+          "savings_ms": 61,
+          "description": "Keep the server response time for the main document short because all other requests depend on it. [Learn more about the Time to First Byte metric](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "id": "total-byte-weight",
+          "title": "Avoids enormous network payloads",
+          "display": "Total size was 1,493\u00a0KiB",
+          "score": 1,
+          "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/)."
+        },
+        {
+          "id": "mainthread-work-breakdown",
+          "title": "Minimizes main-thread work",
+          "display": "0.5\u00a0s",
+          "score": 1,
+          "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to minimize main-thread work](https://developer.chrome.com/docs/lighthouse/performance/mainthread-work-breakdown/)"
+        },
+        {
+          "id": "bootup-time",
+          "title": "JavaScript execution time",
+          "display": "0.2\u00a0s",
+          "score": 1,
+          "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://developer.chrome.com/docs/lighthouse/performance/bootup-time/)."
+        },
+        {
+          "id": "layout-shifts",
+          "title": "Avoid large layout shifts",
+          "display": "3 layout shifts found",
+          "score": 1,
+          "description": "These are the largest layout shifts observed on the page. Each table item represents a single layout shift, and shows the element that shifted the most. Below each item are possible root causes that led to the layout shift. Some of these layout shifts may not be included in the CLS metric value due to [windowing](https://web.dev/articles/cls#what_is_cls). [Learn how to improve CLS](https://web.dev/articles/optimize-cls)"
+        },
+        {
+          "id": "long-tasks",
+          "title": "Avoid long main-thread tasks",
+          "display": "1 long task found",
+          "score": 1,
+          "description": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn how to avoid long main-thread tasks](https://web.dev/articles/optimize-long-tasks)"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "display": "",
+          "score": 1,
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/)."
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "display": "Est savings of 14\u00a0KiB",
+          "score": 0.5,
+          "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/)."
+        }
+      ],
+      "failed_audits": [
+        {
+          "id": "forced-reflow-insight",
+          "title": "Forced reflow",
+          "score": 0,
+          "display": "",
+          "description": "A forced reflow occurs when JavaScript queries geometric properties (such as `offsetWidth`) after styles have been invalidated by a change to the DOM state. This can result in poor performance. Learn more about [forced reflows](https://developer.chrome.com/docs/performance/insights/forced-reflow) and possible mitigations."
+        },
+        {
+          "id": "errors-in-console",
+          "title": "Browser errors were logged to the console",
+          "score": 0,
+          "display": "",
+          "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more about this errors in console diagnostic audit](https://developer.chrome.com/docs/lighthouse/best-practices/errors-in-console/)"
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "display": "",
+          "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load."
+        },
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0,
+          "display": "Est savings of 410\u00a0ms",
+          "description": "Your first network request is the most important. [Reduce its latency](https://developer.chrome.com/docs/performance/insights/document-latency) by avoiding redirects, ensuring a fast server response, and enabling text compression."
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0.5,
+          "display": "Est savings of 8\u00a0KiB",
+          "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/performance/insights/image-delivery)"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0.5,
+          "display": "Est savings of 14\u00a0KiB",
+          "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/)."
+        },
+        {
+          "id": "interactive",
+          "title": "Time to Interactive",
+          "score": 0.84,
+          "display": "4.3\u00a0s",
+          "description": "Time to Interactive is the amount of time it takes for the page to become fully interactive. [Learn more about the Time to Interactive metric](https://developer.chrome.com/docs/lighthouse/performance/interactive/)."
+        }
+      ],
+      "passed_audits_count": 83,
+      "seo_audits": [
+        {
+          "id": "is-crawlable",
+          "title": "Page isn\u2019t blocked from indexing",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "document-title",
+          "title": "Document has a `<title>` element",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "meta-description",
+          "title": "Document has a meta description",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "http-status-code",
+          "title": "Page has successful HTTP status code",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "link-text",
+          "title": "Links have descriptive text",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "crawlable-anchors",
+          "title": "Links are crawlable",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "robots-txt",
+          "title": "robots.txt is valid",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "image-alt",
+          "title": "Image elements have `[alt]` attributes",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "hreflang",
+          "title": "Document has a valid `hreflang`",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "canonical",
+          "title": "Document has a valid `rel=canonical`",
+          "score": 1,
+          "pass": true
+        }
+      ],
+      "accessibility_audits": [],
+      "audit_details": {
+        "total-byte-weight": {
+          "title": "Avoids enormous network payloads",
+          "headings": [
+            "url",
+            "totalBytes"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/uploads/landingslides/1/5047cc8586b94352bbd87aca33af9866_hero.mp4",
+              "totalBytes": 1007317
+            },
+            {
+              "url": "https://lucaloupe.ir/fa",
+              "totalBytes": 62464
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/chunks/4bd1b696-223acfa09453497a.js",
+              "totalBytes": 55244
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/media/1abbc144918f74fd-s.p.woff2",
+              "totalBytes": 47241
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/chunks/5964-ebb77daa389f7c8e.js",
+              "totalBytes": 44192
+            }
+          ],
+          "total_items": 10
+        },
+        "resource-summary": {
+          "title": "Resources Summary",
+          "headings": [
+            "label",
+            "requestCount",
+            "transferSize"
+          ],
+          "items": [
+            {
+              "label": "Total",
+              "requestCount": 35,
+              "transferSize": 1528894
+            },
+            {
+              "label": "Media",
+              "requestCount": 1,
+              "transferSize": 1007317
+            },
+            {
+              "label": "Script",
+              "requestCount": 18,
+              "transferSize": 204253
+            },
+            {
+              "label": "Font",
+              "requestCount": 5,
+              "transferSize": 189777
+            },
+            {
+              "label": "Document",
+              "requestCount": 1,
+              "transferSize": 62464
+            }
+          ],
+          "total_items": 9
+        },
+        "bootup-time": {
+          "title": "JavaScript execution time",
+          "headings": [
+            "url",
+            "total",
+            "scripting",
+            "scriptParseCompile"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/fa",
+              "total": 173.85119999999995,
+              "scripting": 4.023599999999992,
+              "scriptParseCompile": 8.603999999999989
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/chunks/5964-ebb77daa389f7c8e.js",
+              "total": 163.10040000000006,
+              "scripting": 149.14920000000006,
+              "scriptParseCompile": 7.992
+            },
+            {
+              "url": "Unattributable",
+              "total": 84.91200000000002,
+              "scripting": 4.857599999999999,
+              "scriptParseCompile": 0
+            }
+          ],
+          "total_items": 3
+        },
+        "server-response-time": {
+          "title": "Initial server response time was short",
+          "headings": [
+            "url",
+            "responseTime"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/fa",
+              "responseTime": 161
+            }
+          ],
+          "total_items": 1
+        },
+        "baseline": {
+          "title": "Baseline Features",
+          "headings": [
+            "featureId",
+            "displayStatus",
+            "source"
+          ],
+          "items": [
+            {
+              "featureId": "https://webstatus.dev/features/marker",
+              "displayStatus": "{'type': 'baseline-status', 'displayString': 'Limited Availability', 'status': 'limited'}",
+              "source": "https://lucaloupe.ir/fa"
+            },
+            {
+              "featureId": "https://webstatus.dev/features/font-metric-overrides",
+              "displayStatus": "{'status': 'limited', 'displayString': 'Limited Availability', 'type': 'baseline-status'}",
+              "source": "https://lucaloupe.ir/fa"
+            },
+            {
+              "featureId": "https://webstatus.dev/features/referencetarget",
+              "displayStatus": "{'status': 'limited', 'displayString': 'Limited Availability', 'type': 'baseline-status'}",
+              "source": "https://lucaloupe.ir/_next/static/chunks/5964-ebb77daa389f7c8e.js"
+            },
+            {
+              "featureId": "https://webstatus.dev/features/scrollend",
+              "displayStatus": "{'status': 'low', 'displayString': 'Newly Available (2025-12-12)', 'type': 'baseline-status'}",
+              "source": "https://lucaloupe.ir/_next/static/chunks/4bd1b696-223acfa09453497a.js"
+            },
+            {
+              "featureId": "https://webstatus.dev/features/scrollbar-width",
+              "displayStatus": "{'status': 'low', 'type': 'baseline-status', 'displayString': 'Newly Available (2024-12-11)'}",
+              "source": "https://lucaloupe.ir/fa"
+            }
+          ],
+          "total_items": 32
+        },
+        "network-rtt": {
+          "title": "Network Round Trip Times",
+          "headings": [
+            "origin",
+            "rtt"
+          ],
+          "items": [
+            {
+              "origin": "https://lucaloupe.ir",
+              "rtt": 4.623870000000002
+            }
+          ],
+          "total_items": 1
+        },
+        "network-requests": {
+          "title": "Network Requests",
+          "headings": [
+            "url",
+            "protocol",
+            "networkRequestTime",
+            "networkEndTime",
+            "transferSize",
+            "resourceSize",
+            "statusCode",
+            "mimeType",
+            "resourceType"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/",
+              "protocol": "http/1.1",
+              "networkRequestTime": 0.8459999561309814,
+              "networkEndTime": 411.84500002861023,
+              "transferSize": 848,
+              "resourceSize": 0,
+              "statusCode": 307,
+              "mimeType": "text/plain"
+            },
+            {
+              "url": "https://lucaloupe.ir/fa",
+              "protocol": "h2",
+              "networkRequestTime": 413.18499994277954,
+              "networkEndTime": 700.8589999675751,
+              "transferSize": 62464,
+              "resourceSize": 322089,
+              "statusCode": 200,
+              "mimeType": "text/html",
+              "resourceType": "Document"
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/media/1abbc144918f74fd-s.p.woff2",
+              "protocol": "h2",
+              "networkRequestTime": 745.1539998054504,
+              "networkEndTime": 1319.3129999637604,
+              "transferSize": 47241,
+              "resourceSize": 46272,
+              "statusCode": 200,
+              "mimeType": "font/woff2",
+              "resourceType": "Font"
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/media/8c96cc4bd2a39381-s.p.woff2",
+              "protocol": "h2",
+              "networkRequestTime": 745.2809998989105,
+              "networkEndTime": 1319.9509999752045,
+              "transferSize": 35421,
+              "resourceSize": 34444,
+              "statusCode": 200,
+              "mimeType": "font/woff2",
+              "resourceType": "Font"
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/media/8e15b29115c34cdc-s.p.woff2",
+              "protocol": "h2",
+              "networkRequestTime": 745.345999956131,
+              "networkEndTime": 952.1039998531342,
+              "transferSize": 26544,
+              "resourceSize": 25572,
+              "statusCode": 200,
+              "mimeType": "font/woff2",
+              "resourceType": "Font"
+            }
+          ],
+          "total_items": 35
+        },
+        "viewport-insight": {
+          "title": "Optimize viewport for mobile",
+          "headings": [
+            "node"
+          ],
+          "items": [
+            {
+              "node": "{'boundingRect': {'left': 0, 'height': 0, 'width': 0, 'top': 0, 'bottom': 0, 'right': 0}, 'path': '1,HTML,0,HEAD,1,META', 'nodeLabel': 'head > meta', 'type': 'node', 'snippet': '<meta name=\"viewport\" "
+            }
+          ],
+          "total_items": 1
+        },
+        "redirects": {
+          "title": "Avoid multiple page redirects",
+          "headings": [
+            "url",
+            "wastedMs"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/",
+              "wastedMs": 775
+            },
+            {
+              "url": "https://lucaloupe.ir/fa",
+              "wastedMs": 0
+            }
+          ],
+          "total_items": 2
+        },
+        "layout-shifts": {
+          "title": "Avoid large layout shifts",
+          "headings": [
+            "node",
+            "score"
+          ],
+          "items": [
+            {
+              "node": "{'selector': 'main.flex > section.relative > div.z-10 > div.flex', 'boundingRect': {'width': 224, 'height': 44, 'right': 318, 'left': 94, 'top': 536, 'bottom': 580}, 'lhId': 'page-3-DIV', 'snippet': '",
+              "score": 0.03537808353362631
+            },
+            {
+              "node": "{'nodeLabel': '\u0632\u06cc\u0631\u0627 \u0686\u0634\u0645\u0627\u0646 \u0634\u0645\u0627 \u0644\u0627\u06cc\u0642 \u0628\u0647\u062a\u0631\u06cc\u0646 \u062f\u0642\u062a \u0627\u0633\u062a\\n\u062f\u0642\u062a\u060c \u062f\u0631 \u0627\u0645\u062a\u062f\u0627\u062f \u0646\u06af\u0627\u0647 \u0634\u0645\u0627\\n\\nbecause your eye de\u2026', 'path': '1,HTML,1,BODY,0,DIV,3,MAIN,0,SECTION,1,DIV', 'type': 'node', 'snippet': '<div class=\"z-10 ",
+              "score": 0.008315429508256783
+            },
+            {
+              "node": "{'snippet': '<div class=\"z-10 relative flex flex-col items-center gap-2.5\">', 'type': 'node', 'nodeLabel': '\u0632\u06cc\u0631\u0627 \u0686\u0634\u0645\u0627\u0646 \u0634\u0645\u0627 \u0644\u0627\u06cc\u0642 \u0628\u0647\u062a\u0631\u06cc\u0646 \u062f\u0642\u062a \u0627\u0633\u062a\\n\u062f\u0642\u062a\u060c \u062f\u0631 \u0627\u0645\u062a\u062f\u0627\u062f \u0646\u06af\u0627\u0647 \u0634\u0645\u0627\\n\\nbecause your eye de\u2026', 'path'",
+              "score": 0.001068743220353815
+            }
+          ],
+          "total_items": 3
+        },
+        "errors-in-console": {
+          "title": "Browser errors were logged to the console",
+          "headings": [
+            "sourceLocation",
+            "description"
+          ],
+          "items": [
+            {
+              "sourceLocation": "https://lucaloupe.ir/fa/products/1?_rsc=6kvow",
+              "description": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+            }
+          ],
+          "total_items": 1
+        },
+        "long-tasks": {
+          "title": "Avoid long main-thread tasks",
+          "headings": [
+            "url",
+            "startTime",
+            "duration"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/_next/static/chunks/5964-ebb77daa389f7c8e.js",
+              "startTime": 4325,
+              "duration": 54
+            }
+          ],
+          "total_items": 1
+        },
+        "main-thread-tasks": {
+          "title": "Tasks",
+          "headings": [
+            "startTime",
+            "duration"
+          ],
+          "items": [
+            {
+              "startTime": 727.667,
+              "duration": 19.982
+            },
+            {
+              "startTime": 749.515,
+              "duration": 10.357
+            },
+            {
+              "startTime": 759.887,
+              "duration": 32.355
+            },
+            {
+              "startTime": 795.417,
+              "duration": 10.676
+            },
+            {
+              "startTime": 856.468,
+              "duration": 8.361
+            }
+          ],
+          "total_items": 24
+        },
+        "network-server-latency": {
+          "title": "Server Backend Latencies",
+          "headings": [
+            "origin",
+            "serverResponseTime"
+          ],
+          "items": [
+            {
+              "origin": "https://lucaloupe.ir",
+              "serverResponseTime": 25
+            }
+          ],
+          "total_items": 1
+        },
+        "dom-size-insight": {
+          "title": "Optimize DOM size",
+          "headings": [
+            "statistic",
+            "node",
+            "value"
+          ],
+          "items": [
+            {
+              "statistic": "Total elements",
+              "value": "{'value': 569, 'granularity': 1, 'type': 'numeric'}"
+            },
+            {
+              "statistic": "DOM depth",
+              "node": "{'lhId': 'page-11-path', 'nodeLabel': 'div.hidden > button.flex > svg > path', 'snippet': '<path d=\"M14 6l-6 6 6 6\">', 'path': '1,HTML,1,BODY,0,DIV,3,MAIN,1,SECTION,0,DIV,1,DIV,0,DIV,1,DIV,0,BUTTON,0,",
+              "value": "{'type': 'numeric', 'granularity': 1, 'value': 11}"
+            },
+            {
+              "statistic": "Most children",
+              "node": "{'snippet': '<body class=\"bg-store-surface min-h-screen text-store-text antialiased\">', 'boundingRect': {'width': 412, 'height': 8482, 'left': 0, 'right': 412, 'top': 0, 'bottom': 8482}, 'lhId': 'page",
+              "value": "{'type': 'numeric', 'value': 39, 'granularity': 1}"
+            }
+          ],
+          "total_items": 3
+        },
+        "mainthread-work-breakdown": {
+          "title": "Minimizes main-thread work",
+          "headings": [
+            "groupLabel",
+            "duration"
+          ],
+          "items": [
+            {
+              "groupLabel": "Script Evaluation",
+              "duration": 197.6159999999998
+            },
+            {
+              "groupLabel": "Other",
+              "duration": 103.83960000000012
+            },
+            {
+              "groupLabel": "Style & Layout",
+              "duration": 101.5932
+            },
+            {
+              "groupLabel": "Script Parsing & Compilation",
+              "duration": 51.619199999999985
+            },
+            {
+              "groupLabel": "Rendering",
+              "duration": 27.5316
+            }
+          ],
+          "total_items": 7
+        },
+        "image-delivery-insight": {
+          "title": "Improve image delivery",
+          "headings": [
+            "node",
+            "url",
+            "totalBytes",
+            "wastedBytes"
+          ],
+          "items": [
+            {
+              "node": "{'snippet': '<video src=\"/uploads/landingslides/1/5047cc8586b94352bbd87aca33af9866_hero.mp4\" poster=\"/uploads/landingslides/1/7c49c1d4cdb94280bed65c08102939b4_luca-hero-mobile\u2026\" autoplay=\"\" loop=\"\" pl",
+              "url": "https://lucaloupe.ir/uploads/landingslides/1/7c49c1d4cdb94280bed65c08102939b4_luca-hero-mobile-1080x1440-poster.webp",
+              "totalBytes": 14778,
+              "wastedBytes": 7812
+            }
+          ],
+          "total_items": 1
+        },
+        "unused-css-rules": {
+          "title": "Reduce unused CSS",
+          "headings": [
+            "url",
+            "totalBytes",
+            "wastedBytes"
+          ],
+          "items": [
+            {
+              "url": "*,::backdrop,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw\u2026",
+              "totalBytes": 17162,
+              "wastedBytes": 14659
+            }
+          ],
+          "total_items": 1
+        },
+        "csp-xss": {
+          "title": "Ensure CSP is effective against XSS attacks",
+          "headings": [
+            "description",
+            "directive",
+            "severity"
+          ],
+          "items": [
+            {
+              "description": "`'unsafe-inline'` allows the execution of unsafe in-page scripts and event handlers. Consider using CSP nonces or hashes to allow scripts individually.",
+              "directive": "script-src",
+              "severity": "High"
+            }
+          ],
+          "total_items": 1
+        },
+        "trusted-types-xss": {
+          "title": "Mitigate DOM-based XSS with Trusted Types",
+          "headings": [
+            "description",
+            "severity"
+          ],
+          "items": [
+            {
+              "description": "No `Content-Security-Policy` header with Trusted Types directive found",
+              "severity": "High"
+            }
+          ],
+          "total_items": 1
+        }
+      },
+      "analysis_timestamp": "2026-10-18T07:05:55.120Z",
+      "error": null
+    },
+    "desktop": {
+      "url": "https://lucaloupe.ir",
+      "strategy": "desktop",
+      "lighthouse_version": "13.5.0",
+      "lighthouse_scores": {
+        "performance": 99,
+        "accessibility": 100,
+        "best-practices": 96,
+        "seo": 100
+      },
+      "lab_metrics": {
+        "first-contentful-paint": {
+          "value": 382,
+          "display": "0.4\u00a0s",
+          "score": 1
+        },
+        "largest-contentful-paint": {
+          "value": 729.25,
+          "display": "0.7\u00a0s",
+          "score": 0.99
+        },
+        "total-blocking-time": {
+          "value": 75,
+          "display": "80\u00a0ms",
+          "score": 0.99
+        },
+        "cumulative-layout-shift": {
+          "value": 0.005180226388553609,
+          "display": "0.005",
+          "score": 1
+        },
+        "speed-index": {
+          "value": 986.2750719874093,
+          "display": "1.0\u00a0s",
+          "score": 0.97
+        },
+        "interactive": {
+          "value": 993.9000000000001,
+          "display": "1.0\u00a0s",
+          "score": 1
+        }
+      },
+      "field_metrics": {},
+      "opportunities": [
+        {
+          "id": "redirects",
+          "title": "Avoid multiple page redirects",
+          "savings_ms": 202.5,
+          "description": "Redirects introduce additional delays before the page can be loaded. [Learn how to avoid page redirects](https://developer.chrome.com/docs/lighthouse/performance/redirects/)."
+        },
+        {
+          "id": "server-response-time",
+          "title": "Initial server response time was short",
+          "savings_ms": 71,
+          "description": "Keep the server response time for the main document short because all other requests depend on it. [Learn more about the Time to First Byte metric](https://developer.chrome.com/docs/lighthouse/performance/time-to-first-byte/)."
+        }
+      ],
+      "diagnostics": [
+        {
+          "id": "total-byte-weight",
+          "title": "Avoids enormous network payloads",
+          "display": "Total size was 1,597\u00a0KiB",
+          "score": 1,
+          "description": "Large network payloads cost users real money and are highly correlated with long load times. [Learn how to reduce payload sizes](https://developer.chrome.com/docs/lighthouse/performance/total-byte-weight/)."
+        },
+        {
+          "id": "mainthread-work-breakdown",
+          "title": "Minimizes main-thread work",
+          "display": "0.8\u00a0s",
+          "score": 1,
+          "description": "Consider reducing the time spent parsing, compiling and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to minimize main-thread work](https://developer.chrome.com/docs/lighthouse/performance/mainthread-work-breakdown/)"
+        },
+        {
+          "id": "bootup-time",
+          "title": "JavaScript execution time",
+          "display": "0.3\u00a0s",
+          "score": 1,
+          "description": "Consider reducing the time spent parsing, compiling, and executing JS. You may find delivering smaller JS payloads helps with this. [Learn how to reduce Javascript execution time](https://developer.chrome.com/docs/lighthouse/performance/bootup-time/)."
+        },
+        {
+          "id": "layout-shifts",
+          "title": "Avoid large layout shifts",
+          "display": "3 layout shifts found",
+          "score": 1,
+          "description": "These are the largest layout shifts observed on the page. Each table item represents a single layout shift, and shows the element that shifted the most. Below each item are possible root causes that led to the layout shift. Some of these layout shifts may not be included in the CLS metric value due to [windowing](https://web.dev/articles/cls#what_is_cls). [Learn how to improve CLS](https://web.dev/articles/optimize-cls)"
+        },
+        {
+          "id": "long-tasks",
+          "title": "Avoid long main-thread tasks",
+          "display": "1 long task found",
+          "score": 1,
+          "description": "Lists the longest tasks on the main thread, useful for identifying worst contributors to input delay. [Learn how to avoid long main-thread tasks](https://web.dev/articles/optimize-long-tasks)"
+        },
+        {
+          "id": "unused-javascript",
+          "title": "Reduce unused JavaScript",
+          "display": "",
+          "score": 1,
+          "description": "Reduce unused JavaScript and defer loading scripts until they are required to decrease bytes consumed by network activity. [Learn how to reduce unused JavaScript](https://developer.chrome.com/docs/lighthouse/performance/unused-javascript/)."
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "display": "Est savings of 14\u00a0KiB",
+          "score": 0.5,
+          "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/)."
+        }
+      ],
+      "failed_audits": [
+        {
+          "id": "document-latency-insight",
+          "title": "Document request latency",
+          "score": 0,
+          "display": "Est savings of 300\u00a0ms",
+          "description": "Your first network request is the most important. [Reduce its latency](https://developer.chrome.com/docs/performance/insights/document-latency) by avoiding redirects, ensuring a fast server response, and enabling text compression."
+        },
+        {
+          "id": "network-dependency-tree-insight",
+          "title": "Network dependency tree",
+          "score": 0,
+          "display": "",
+          "description": "[Avoid chaining critical requests](https://developer.chrome.com/docs/performance/insights/network-dependency-tree) by reducing the length of chains, reducing the download size of resources, or deferring the download of unnecessary resources to improve page load."
+        },
+        {
+          "id": "errors-in-console",
+          "title": "Browser errors were logged to the console",
+          "score": 0,
+          "display": "",
+          "description": "Errors logged to the console indicate unresolved problems. They can come from network request failures and other browser concerns. [Learn more about this errors in console diagnostic audit](https://developer.chrome.com/docs/lighthouse/best-practices/errors-in-console/)"
+        },
+        {
+          "id": "unused-css-rules",
+          "title": "Reduce unused CSS",
+          "score": 0.5,
+          "display": "Est savings of 14\u00a0KiB",
+          "description": "Reduce unused rules from stylesheets and defer CSS not used for above-the-fold content to decrease bytes consumed by network activity. [Learn how to reduce unused CSS](https://developer.chrome.com/docs/lighthouse/performance/unused-css-rules/)."
+        },
+        {
+          "id": "image-delivery-insight",
+          "title": "Improve image delivery",
+          "score": 0.5,
+          "display": "Est savings of 5\u00a0KiB",
+          "description": "Reducing the download time of images can improve the perceived load time of the page and LCP. [Learn more about optimizing image size](https://developer.chrome.com/docs/performance/insights/image-delivery)"
+        },
+        {
+          "id": "max-potential-fid",
+          "title": "Max Potential First Input Delay",
+          "score": 0.88,
+          "display": "130\u00a0ms",
+          "description": "The maximum potential First Input Delay that your users could experience is the duration of the longest task. [Learn more about the Maximum Potential First Input Delay metric](https://developer.chrome.com/docs/lighthouse/performance/lighthouse-max-potential-fid/)."
+        }
+      ],
+      "passed_audits_count": 86,
+      "seo_audits": [
+        {
+          "id": "is-crawlable",
+          "title": "Page isn\u2019t blocked from indexing",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "document-title",
+          "title": "Document has a `<title>` element",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "meta-description",
+          "title": "Document has a meta description",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "http-status-code",
+          "title": "Page has successful HTTP status code",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "link-text",
+          "title": "Links have descriptive text",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "crawlable-anchors",
+          "title": "Links are crawlable",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "robots-txt",
+          "title": "robots.txt is valid",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "image-alt",
+          "title": "Image elements have `[alt]` attributes",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "hreflang",
+          "title": "Document has a valid `hreflang`",
+          "score": 1,
+          "pass": true
+        },
+        {
+          "id": "canonical",
+          "title": "Document has a valid `rel=canonical`",
+          "score": 1,
+          "pass": true
+        }
+      ],
+      "accessibility_audits": [],
+      "audit_details": {
+        "redirects": {
+          "title": "Avoid multiple page redirects",
+          "headings": [
+            "url",
+            "wastedMs"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/",
+              "wastedMs": 202.5
+            },
+            {
+              "url": "https://lucaloupe.ir/fa",
+              "wastedMs": 0
+            }
+          ],
+          "total_items": 2
+        },
+        "csp-xss": {
+          "title": "Ensure CSP is effective against XSS attacks",
+          "headings": [
+            "description",
+            "directive",
+            "severity"
+          ],
+          "items": [
+            {
+              "description": "`'unsafe-inline'` allows the execution of unsafe in-page scripts and event handlers. Consider using CSP nonces or hashes to allow scripts individually.",
+              "directive": "script-src",
+              "severity": "High"
+            }
+          ],
+          "total_items": 1
+        },
+        "mainthread-work-breakdown": {
+          "title": "Minimizes main-thread work",
+          "headings": [
+            "groupLabel",
+            "duration"
+          ],
+          "items": [
+            {
+              "groupLabel": "Script Evaluation",
+              "duration": 314.54899999999947
+            },
+            {
+              "groupLabel": "Style & Layout",
+              "duration": 206.778
+            },
+            {
+              "groupLabel": "Other",
+              "duration": 173.50499999999963
+            },
+            {
+              "groupLabel": "Script Parsing & Compilation",
+              "duration": 83.03800000000004
+            },
+            {
+              "groupLabel": "Rendering",
+              "duration": 34.586
+            }
+          ],
+          "total_items": 7
+        },
+        "layout-shifts": {
+          "title": "Avoid large layout shifts",
+          "headings": [
+            "node",
+            "score"
+          ],
+          "items": [
+            {
+              "node": "{'boundingRect': {'height': 215, 'right': 950, 'top': 545, 'bottom': 760, 'width': 555, 'left': 395}, 'nodeLabel': '\u0632\u06cc\u0631\u0627 \u0686\u0634\u0645\u0627\u0646 \u0634\u0645\u0627 \u0644\u0627\u06cc\u0642 \u0628\u0647\u062a\u0631\u06cc\u0646 \u062f\u0642\u062a \u0627\u0633\u062a\\n\u062f\u0642\u062a\u060c \u062f\u0631 \u0627\u0645\u062a\u062f\u0627\u062f \u0646\u06af\u0627\u0647 \u0634\u0645\u0627\\n\\nbecause your eye de\u2026'",
+              "score": 0.004245358746497688
+            },
+            {
+              "node": "{'nodeLabel': '\u0645\u0634\u0627\u0647\u062f\u0647 \u0645\u062c\u0645\u0648\u0639\u0647\\n\u062a\u062e\u0641\u06cc\u0641\\u200c\u0647\u0627\u06cc \u0648\u06cc\u0698\u0647', 'boundingRect': {'top': 716, 'left': 561, 'height': 44, 'right': 785, 'width': 224, 'bottom': 760}, 'type': 'node', 'selector': 'main.flex > section",
+              "score": 0.0009199460035925076
+            },
+            {
+              "node": "{'snippet': '<span class=\"font-medium text-[#d0d0cb] text-[13px]\">', 'boundingRect': {'height': 23, 'left': 569, 'bottom': 568, 'top': 545, 'width': 208, 'right': 777}, 'path': '1,HTML,1,BODY,0,DIV,3,",
+              "score": 1.492163846341349e-05
+            }
+          ],
+          "total_items": 3
+        },
+        "dom-size-insight": {
+          "title": "Optimize DOM size",
+          "headings": [
+            "statistic",
+            "node",
+            "value"
+          ],
+          "items": [
+            {
+              "statistic": "Total elements",
+              "value": "{'granularity': 1, 'type': 'numeric', 'value': 571}"
+            },
+            {
+              "statistic": "DOM depth",
+              "node": "{'type': 'node', 'selector': 'div.hidden > button.flex > svg > path', 'snippet': '<path d=\"M14 6l-6 6 6 6\">', 'boundingRect': {'right': 88, 'width': 5, 'bottom': 1069, 'left': 83, 'top': 1060, 'height",
+              "value": "{'granularity': 1, 'type': 'numeric', 'value': 11}"
+            },
+            {
+              "statistic": "Most children",
+              "node": "{'type': 'node', 'selector': 'body.bg-store-surface', 'boundingRect': {'right': 1345, 'top': 0, 'width': 1345, 'left': 0, 'bottom': 6753, 'height': 6753}, 'path': '1,HTML,1,BODY', 'lhId': 'page-9-BODY",
+              "value": "{'value': 41, 'granularity': 1, 'type': 'numeric'}"
+            }
+          ],
+          "total_items": 3
+        },
+        "network-server-latency": {
+          "title": "Server Backend Latencies",
+          "headings": [
+            "origin",
+            "serverResponseTime"
+          ],
+          "items": [
+            {
+              "origin": "https://lucaloupe.ir",
+              "serverResponseTime": 2.5
+            }
+          ],
+          "total_items": 1
+        },
+        "main-thread-tasks": {
+          "title": "Tasks",
+          "headings": [
+            "startTime",
+            "duration"
+          ],
+          "items": [
+            {
+              "startTime": 831.572,
+              "duration": 8.975
+            },
+            {
+              "startTime": 843.02,
+              "duration": 39.619
+            },
+            {
+              "startTime": 887.017,
+              "duration": 10.16
+            },
+            {
+              "startTime": 897.187,
+              "duration": 17.486
+            },
+            {
+              "startTime": 919.593,
+              "duration": 10.258
+            }
+          ],
+          "total_items": 37
+        },
+        "unused-css-rules": {
+          "title": "Reduce unused CSS",
+          "headings": [
+            "url",
+            "totalBytes",
+            "wastedBytes"
+          ],
+          "items": [
+            {
+              "url": "*,::backdrop,:after,:before{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw\u2026",
+              "totalBytes": 17176,
+              "wastedBytes": 13959
+            }
+          ],
+          "total_items": 1
+        },
+        "trusted-types-xss": {
+          "title": "Mitigate DOM-based XSS with Trusted Types",
+          "headings": [
+            "description",
+            "severity"
+          ],
+          "items": [
+            {
+              "description": "No `Content-Security-Policy` header with Trusted Types directive found",
+              "severity": "High"
+            }
+          ],
+          "total_items": 1
+        },
+        "long-tasks": {
+          "title": "Avoid long main-thread tasks",
+          "headings": [
+            "url",
+            "startTime",
+            "duration"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/_next/static/chunks/webpack-b59f05a3bf253656.js",
+              "startTime": 868,
+              "duration": 134
+            }
+          ],
+          "total_items": 1
+        },
+        "image-delivery-insight": {
+          "title": "Improve image delivery",
+          "headings": [
+            "node",
+            "url",
+            "totalBytes",
+            "wastedBytes"
+          ],
+          "items": [
+            {
+              "node": "{'type': 'node', 'nodeLabel': 'LucaLoupe', 'snippet': '<img alt=\"LucaLoupe\" loading=\"lazy\" decoding=\"async\" data-nimg=\"fill\" class=\"object-contain\" style=\"position: absolute; height: 100%; width: 100%",
+              "url": "https://lucaloupe.ir/uploads/brands/1/9fb394a02ead4d29a5285c79144efaf0_og-image.webp",
+              "totalBytes": 4860,
+              "wastedBytes": 4782
+            }
+          ],
+          "total_items": 1
+        },
+        "errors-in-console": {
+          "title": "Browser errors were logged to the console",
+          "headings": [
+            "sourceLocation",
+            "description"
+          ],
+          "items": [
+            {
+              "sourceLocation": "https://lucaloupe.ir/fa/products/1?_rsc=6kvow",
+              "description": "Failed to load resource: the server responded with a status of 404 (Not Found)"
+            }
+          ],
+          "total_items": 1
+        },
+        "server-response-time": {
+          "title": "Initial server response time was short",
+          "headings": [
+            "url",
+            "responseTime"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/fa",
+              "responseTime": 171
+            }
+          ],
+          "total_items": 1
+        },
+        "resource-summary": {
+          "title": "Resources Summary",
+          "headings": [
+            "label",
+            "requestCount",
+            "transferSize"
+          ],
+          "items": [
+            {
+              "label": "Total",
+              "requestCount": 44,
+              "transferSize": 1635635
+            },
+            {
+              "label": "Media",
+              "requestCount": 1,
+              "transferSize": 1067797
+            },
+            {
+              "label": "Script",
+              "requestCount": 20,
+              "transferSize": 215104
+            },
+            {
+              "label": "Font",
+              "requestCount": 5,
+              "transferSize": 189777
+            },
+            {
+              "label": "Other",
+              "requestCount": 11,
+              "transferSize": 78104
+            }
+          ],
+          "total_items": 9
+        },
+        "viewport-insight": {
+          "title": "Optimize viewport for mobile",
+          "headings": [
+            "node"
+          ],
+          "items": [
+            {
+              "node": "{'type': 'node', 'snippet': '<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">', 'boundingRect': {'right': 0, 'top': 0, 'width': 0, 'bottom': 0, 'left': 0, 'height': 0}, 'nodeLabel'"
+            }
+          ],
+          "total_items": 1
+        },
+        "bootup-time": {
+          "title": "JavaScript execution time",
+          "headings": [
+            "url",
+            "total",
+            "scripting",
+            "scriptParseCompile"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/fa",
+              "total": 308.506,
+              "scripting": 4.883999999999992,
+              "scriptParseCompile": 13.65200000000001
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/chunks/5964-ebb77daa389f7c8e.js",
+              "total": 177.09300000000005,
+              "scripting": 147.18600000000004,
+              "scriptParseCompile": 17.715
+            },
+            {
+              "url": "Unattributable",
+              "total": 144.71500000000023,
+              "scripting": 15.450999999999999,
+              "scriptParseCompile": 0
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/chunks/webpack-b59f05a3bf253656.js",
+              "total": 140.99000000000004,
+              "scripting": 133.44400000000005,
+              "scriptParseCompile": 1.4549999999999998
+            }
+          ],
+          "total_items": 4
+        },
+        "baseline": {
+          "title": "Baseline Features",
+          "headings": [
+            "featureId",
+            "displayStatus",
+            "source"
+          ],
+          "items": [
+            {
+              "featureId": "https://webstatus.dev/features/marker",
+              "displayStatus": "{'status': 'limited', 'type': 'baseline-status', 'displayString': 'Limited Availability'}",
+              "source": "https://lucaloupe.ir/fa"
+            },
+            {
+              "featureId": "https://webstatus.dev/features/font-metric-overrides",
+              "displayStatus": "{'type': 'baseline-status', 'status': 'limited', 'displayString': 'Limited Availability'}",
+              "source": "https://lucaloupe.ir/fa"
+            },
+            {
+              "featureId": "https://webstatus.dev/features/referencetarget",
+              "displayStatus": "{'displayString': 'Limited Availability', 'type': 'baseline-status', 'status': 'limited'}",
+              "source": "https://lucaloupe.ir/_next/static/chunks/5964-ebb77daa389f7c8e.js"
+            },
+            {
+              "featureId": "https://webstatus.dev/features/scrollend",
+              "displayStatus": "{'type': 'baseline-status', 'displayString': 'Newly Available (2025-12-12)', 'status': 'low'}",
+              "source": "https://lucaloupe.ir/_next/static/chunks/4bd1b696-223acfa09453497a.js"
+            },
+            {
+              "featureId": "https://webstatus.dev/features/scrollbar-width",
+              "displayStatus": "{'displayString': 'Newly Available (2024-12-11)', 'status': 'low', 'type': 'baseline-status'}",
+              "source": "https://lucaloupe.ir/fa"
+            }
+          ],
+          "total_items": 32
+        },
+        "network-requests": {
+          "title": "Network Requests",
+          "headings": [
+            "url",
+            "protocol",
+            "networkRequestTime",
+            "networkEndTime",
+            "transferSize",
+            "resourceSize",
+            "statusCode",
+            "mimeType",
+            "resourceType"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/",
+              "protocol": "http/1.1",
+              "networkRequestTime": 1.7269999980926514,
+              "networkEndTime": 302.7559998035431,
+              "transferSize": 848,
+              "resourceSize": 0,
+              "statusCode": 307,
+              "mimeType": "text/plain"
+            },
+            {
+              "url": "https://lucaloupe.ir/fa",
+              "protocol": "h2",
+              "networkRequestTime": 303.7279999256134,
+              "networkEndTime": 797.5789999961853,
+              "transferSize": 62553,
+              "resourceSize": 322229,
+              "statusCode": 200,
+              "mimeType": "text/html",
+              "resourceType": "Document"
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/media/1abbc144918f74fd-s.p.woff2",
+              "protocol": "h2",
+              "networkRequestTime": 861.6570000648499,
+              "networkEndTime": 1244.848000049591,
+              "transferSize": 47241,
+              "resourceSize": 46272,
+              "statusCode": 200,
+              "mimeType": "font/woff2",
+              "resourceType": "Font"
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/media/8c96cc4bd2a39381-s.p.woff2",
+              "protocol": "h2",
+              "networkRequestTime": 862.2569999694824,
+              "networkEndTime": 1347.7649998664856,
+              "transferSize": 35421,
+              "resourceSize": 34444,
+              "statusCode": 200,
+              "mimeType": "font/woff2",
+              "resourceType": "Font"
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/media/8e15b29115c34cdc-s.p.woff2",
+              "protocol": "h2",
+              "networkRequestTime": 862.3430001735687,
+              "networkEndTime": 979.1889998912811,
+              "transferSize": 26544,
+              "resourceSize": 25572,
+              "statusCode": 200,
+              "mimeType": "font/woff2",
+              "resourceType": "Font"
+            }
+          ],
+          "total_items": 44
+        },
+        "total-byte-weight": {
+          "title": "Avoids enormous network payloads",
+          "headings": [
+            "url",
+            "totalBytes"
+          ],
+          "items": [
+            {
+              "url": "https://lucaloupe.ir/uploads/landingslides/1/cd7b4df8e76c4d83a126c28aef57a3a0_hero.mp4",
+              "totalBytes": 1067797
+            },
+            {
+              "url": "https://lucaloupe.ir/fa",
+              "totalBytes": 62553
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/chunks/4bd1b696-223acfa09453497a.js",
+              "totalBytes": 55244
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/media/1abbc144918f74fd-s.p.woff2",
+              "totalBytes": 47241
+            },
+            {
+              "url": "https://lucaloupe.ir/_next/static/chunks/5964-ebb77daa389f7c8e.js",
+              "totalBytes": 44192
+            }
+          ],
+          "total_items": 10
+        },
+        "network-rtt": {
+          "title": "Network Round Trip Times",
+          "headings": [
+            "origin",
+            "rtt"
+          ],
+          "items": [
+            {
+              "origin": "https://lucaloupe.ir",
+              "rtt": 5.602529999999995
+            }
+          ],
+          "total_items": 1
+        }
+      },
+      "analysis_timestamp": "2026-10-18T07:06:25.529Z",
+      "error": null
+    }
+  },
+  "crux": {
+    "target": "https://lucaloupe.ir",
+    "metrics": {},
+    "collection_period": null,
+    "form_factor": "ALL",
+    "error": "No CrUX data for this origin. The site likely has insufficient Chrome traffic volume for eligibility."
+  },
+  "error": null
+}

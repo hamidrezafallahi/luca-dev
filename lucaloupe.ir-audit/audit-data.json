@@ -1,0 +1,110 @@
+{
+  "summary": {
+    "health_score": 50,
+    "business_type": "E-commerce (dental loupes and headlights, Iran, fa + en)",
+    "audit_date": "2026-10-18",
+    "top_findings": [
+      "Product catalog and blog are empty in the API (totalCount 0); no product or post page exists and the sitemap has none",
+      "Organization JSON-LD carries another business's contacts (info@rooshak.ir, roshak_kitchenware, t.me/Arash71tj) - app/[locale]/page.tsx:81-86",
+      "Template placeholders are live on /fa, /en and /fa/story (warranty, returns, payment, testimonials, founding year)",
+      "Homepage hero CTA links to /fa/products/1 (404); every category's parent-category link goes to /fa/categories/1 (404)",
+      "Consultation CTA lands on a wholesale cooperation form; no phone, address, contact page or e-Namad"
+    ],
+    "quick_wins": [
+      "Change the hero slider URL in admin from products/1 to products",
+      "Remove or replace the rooshak email and sameAs in the Organization schema",
+      "Hide blocks that still contain placeholder text",
+      "Set lang and dir per locale on <html>",
+      "Noindex or remove supplier pages content-admin and the Persian-slug test supplier"
+    ]
+  },
+  "categories": [
+    {
+      "name": "Technical SEO",
+      "score": 65,
+      "what_works": ["HTTPS + HSTS preload and security headers", "Self-referencing canonicals; reciprocal fa/en/x-default hreflang", "SSR content in initial HTML", "Real 404 page; valid robots.txt"],
+      "findings": [
+        {"title": "<html> has fixed lang=fa and no dir", "severity": "High", "description": "app/layout.tsx:76 hardcodes lang=fa; dir only on an inner div (app/[locale]/layout.tsx:43-46). /en served as lang=fa.", "recommendation": "Set lang and dir on <html> from the locale."},
+        {"title": "Parent-category link 404s", "severity": "High", "description": "All four category pages link /fa/categories/1 (categoryTemplate/index.tsx:41).", "recommendation": "Hide the link when there is no parent, or point it to the real parent slug."},
+        {"title": "Dotted paths are soft 404s", "severity": "Medium", "description": "/llms.txt, /foo.txt etc. return 200 with homepage HTML and index,follow.", "recommendation": "Return 404 for unknown file-like paths."},
+        {"title": "Temporary 307 from / to /fa", "severity": "Medium", "description": "Costs ~775 ms on mobile; Link-header x-default points to / while HTML points to /fa.", "recommendation": "Use 308 or a rewrite; align x-default."},
+        {"title": "Empty listing pages are indexable", "severity": "Medium", "description": "Products, blog, FAQ, tags, discounts render empty states with index,follow.", "recommendation": "Noindex until populated."},
+        {"title": "/.well-known/* returns 403", "severity": "Medium", "description": "Whole path blocked, likely nginx or WAF.", "recommendation": "Allow /.well-known/."},
+        {"title": "Weak CSP and legacy defaults", "severity": "Low", "description": "unsafe-inline/unsafe-eval in script-src; obsolete Host: in robots.ts:57; no IndexNow; rooshakshop.ir default in lib/api.ts:1.", "recommendation": "Tighten CSP, clean robots.txt, add IndexNow key, replace default domain."}
+      ]
+    },
+    {
+      "name": "Content Quality",
+      "score": 22,
+      "what_works": ["Clear Persian with correct half-spaces", "Category FAQ answers are direct and useful"],
+      "findings": [
+        {"title": "No products, articles or FAQ entries", "severity": "Critical", "description": "/fa/products, /fa/blog and /fa/faq show empty states.", "recommendation": "Publish products from the official catalog and the pillar guide with sub-articles."},
+        {"title": "Placeholder text is live", "severity": "Critical", "description": "Bracketed placeholders from messages/fa.json shown on /fa and /fa/story.", "recommendation": "Hide placeholder blocks until the owner supplies real data."},
+        {"title": "Weak trust signals", "severity": "High", "description": "No phone, address, e-Namad, dealership proof or real testimonials.", "recommendation": "Add a real contact page and owner-supplied trust content."},
+        {"title": "Unsourced health and spec claims", "severity": "High", "description": "Posture/neck/back claims and '4-6x magnification' have no source.", "recommendation": "Soften and cite health claims; verify specs against the catalog."},
+        {"title": "Thin category pages", "severity": "Medium", "description": "~140-210 words vs ~2,250 for ranking competitors; visible 'SEO summary' box.", "recommendation": "Add 600-1,200 useful words below the product grid; remove the box."}
+      ]
+    },
+    {
+      "name": "On-Page SEO",
+      "score": 48,
+      "what_works": ["Unique titles and meta descriptions"],
+      "findings": [
+        {"title": "Homepage H1 has no keyword", "severity": "Medium", "description": "H1 is a slogan; English tagline is ungrammatical.", "recommendation": "Include 'لوپ دندانپزشکی' in the H1 and fix the tagline."},
+        {"title": "Heading order and footer H2s", "severity": "Low", "description": "H2 before H1 on category/brand pages; five footer H2s on every page.", "recommendation": "Fix heading order; use non-heading elements for footer labels."},
+        {"title": "Misdirected internal links", "severity": "Medium", "description": "Ergonomic-loupes link goes to the empty products list (landingFeatures.tsx:13); footer social links are bare domains.", "recommendation": "Point links at the right pages and real profiles."}
+      ]
+    },
+    {
+      "name": "Schema / Structured Data",
+      "score": 38,
+      "what_works": ["Server-rendered JSON-LD with escaping", "aggregateRating only emitted with real ratings"],
+      "findings": [
+        {"title": "Organization identifies another business", "severity": "Critical", "description": "rooshak email and roshak social profiles in OnlineStore JSON-LD; separate @id per locale.", "recommendation": "Use real Luca data, a logo and one locale-independent @id."},
+        {"title": "Product schema lacks additionalProperty", "severity": "High", "description": "No magnification, working distance, weight; no mpn, seller, priceValidUntil; sku is DB id; currency unit unverified.", "recommendation": "Map catalog specs to PropertyValue and confirm rial vs toman."},
+        {"title": "Article schema incomplete", "severity": "Medium", "description": "No publisher, mainEntityOfPage; image not absolute.", "recommendation": "Complete Article fields."},
+        {"title": "Existing FAQPage on categories", "severity": "Info", "description": "FAQ rich results retired May 2026.", "recommendation": "Keep the visible FAQ; schema is optional."}
+      ]
+    },
+    {
+      "name": "Performance (CWV)",
+      "score": 95,
+      "what_works": ["Lighthouse 100 mobile / 99 desktop", "LCP 1.4 s mobile, CLS 0.045, TBT 0 ms"],
+      "findings": [
+        {"title": "No CrUX field data", "severity": "Info", "description": "Insufficient Chrome traffic; INP unmeasured.", "recommendation": "Re-check as traffic grows."},
+        {"title": "1 MB hero video", "severity": "Low", "description": "Two-thirds of page weight.", "recommendation": "preload=none/metadata and a smaller mobile encode."}
+      ]
+    },
+    {
+      "name": "AI Search Readiness",
+      "score": 40,
+      "what_works": ["AI search and training crawlers allowed", "Fully server-rendered text"],
+      "findings": [
+        {"title": "llms.txt is an HTML soft 404", "severity": "High", "description": "Returns homepage HTML.", "recommendation": "404 now; add a real text/plain llms.txt after approval."},
+        {"title": "Little citable content", "severity": "High", "description": "Only 16 short category FAQ answers; no answers on price, specs, origin, dealer, warranty.", "recommendation": "Pillar guide with question headings and direct answers."},
+        {"title": "Inconsistent brand facts", "severity": "High", "description": "Manufacturer vs dealer, 'made' vs 'designed' in Korea; Iranian dealer unnamed.", "recommendation": "Owner confirms facts; one self-contained statement mirrored in schema."}
+      ]
+    },
+    {
+      "name": "Images",
+      "score": 65,
+      "what_works": ["All homepage images have alt (Lighthouse)"],
+      "findings": [
+        {"title": "Product gallery alt not Persian-descriptive", "severity": "Medium", "description": "'- view N' suffix and 'Product image' fallback (productGallery.tsx:35,54,87).", "recommendation": "Persian alt pattern or per-image alt from admin."},
+        {"title": "Oversized poster/logo; soft category image", "severity": "Low", "description": "5-8 KB waste; category image blurry at 1312 px.", "recommendation": "Serve correctly sized images with sizes."}
+      ]
+    }
+  ],
+  "action_plan": {
+    "phases": [
+      {"name": "Phase 1: Critical Fixes", "timeframe": "Week 1", "items": ["Fix Organization schema contacts", "Hide placeholder blocks", "Repoint hero slider URL", "Fix parent-category link", "Publish real products from the official catalog", "Real consultation/contact page and CTA"]},
+      {"name": "Phase 2: High-Impact Improvements", "timeframe": "Weeks 2-3", "items": ["lang/dir on <html>", "404 for dotted paths", "Product additionalProperty and Offer fields", "Unify Organization @id", "Noindex test suppliers and empty listings; encode sitemap slugs", "Hero H1, CTA and tap targets", "308 or rewrite for / -> /fa", "Remove visible SEO summary box"]},
+      {"name": "Phase 3: Content & Authority", "timeframe": "Month 2", "items": ["Pillar guide", "Sub-articles (TTL vs flip-up, Galilean vs prismatic, working distance, student)", "Category content", "Warranty, dealership, video, real reviews, e-Namad", "Soften and source health claims", "Torob listing", "Link building"]},
+      {"name": "Phase 4: Monitoring & Iteration", "timeframe": "Ongoing", "items": ["Connect Search Console", "Monthly audit", "Drift baseline after phase 1", "IndexNow, robots.txt cleanup, real lastmod, CSP, /.well-known"]}
+    ]
+  },
+  "artifacts": {
+    "findings_dir": "findings/",
+    "screenshots_dir": "screenshots/"
+  }
+}

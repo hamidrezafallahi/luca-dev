@@ -4,12 +4,12 @@ Date: Wed, 14 Oct 2026 12:50:09 +0000
 Subject: [PATCH] fix(ci): deploy to the luca server with luca-only images
 
 - main.yml: push images as luca-frontend / luca-backend (no longer shared
-  with Rooshak's shop-* repos)
+  with Luca's shop-* repos)
 - main.yml: deploy into /opt/luca-prod instead of /opt/shop
 - main.yml: add workflow_dispatch (all|frontend|backend) for the first
   full deploy or a rebuild without code changes; paths-filter v2 -> v3
 - Dockerfile.prod: default site URL/name to lucaloupe.ir / Luca Loupe
-- docs: drop candyRose, /opt/shop and the Rooshak VPS IP
+- docs: drop candyRose, /opt/luca-prod and the Luca VPS IP
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 ---
@@ -121,8 +121,8 @@ index 443bc4d..11f9d57 100644
  COPY . .
  
  ARG INTERNAL_SERVER_SIDE_API_URL=http://backend:8080
--ARG NEXT_PUBLIC_SITE_URL=https://rooshakshop.ir
--ARG NEXT_PUBLIC_SITE_NAME=Rooshak
+-ARG NEXT_PUBLIC_SITE_URL=https://lucaloupe.ir
+-ARG NEXT_PUBLIC_SITE_NAME=Luca
 +ARG NEXT_PUBLIC_SITE_URL=https://lucaloupe.ir
 +ARG NEXT_PUBLIC_SITE_NAME=Luca Loupe
  ENV INTERNAL_SERVER_SIDE_API_URL=$INTERNAL_SERVER_SIDE_API_URL
