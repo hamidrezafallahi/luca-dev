@@ -33,13 +33,6 @@ Desktop.ini
 logs/
 *.pid
 
-# ─── Docker ───────────────────────────────────────────────────────────────
-docker/nginx/conf.d/*.conf
-!docker/nginx/nginx.conf
-!docker/nginx/conf.d/default.conf
-docker/certbot/conf/
-docker/certbot/www/
-
 # ─── Backend ──────────────────────────────────────────────────────────────
 BackEnd/**/bin/
 BackEnd/**/obj/
@@ -75,7 +68,6 @@ FrontEnd/next-env.d.ts
 *.p12
 *.cert
 *.key
-!docker/certbot/conf/ # Track folder existence, not contents
 
 # ─── Secrets ──────────────────────────────────────────────────────────────
 secrets/
@@ -84,4 +76,3 @@ secrets.txt
 credentials.json
 serviceAccountKey.json
 *.pem
-!nginx_configs/ssl-dhparams.pem
