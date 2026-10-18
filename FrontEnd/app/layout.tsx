@@ -3,10 +3,28 @@ import '../style/globals.css';
 import { ReactNode } from 'react';
 
 import type { Metadata, Viewport } from 'next';
+import { Markazi_Text, Vazirmatn } from 'next/font/google';
 
 import { siteBaseUrl } from '@lib/api';
 import { SITE_NAME } from '@lib/seo';
 import { getActiveTheme, themeToCss } from '@lib/theme';
+
+// Luca typefaces: Markazi Text (display) + Vazirmatn (UI). next/font downloads
+// them at build time and serves them from /_next/static/media, so the CSP's
+// style-src/font-src 'self' allows them and no request goes to Google Fonts.
+const displayFont = Markazi_Text({
+  subsets: ['arabic', 'latin'],
+  weight: ['400', '500', '600'],
+  display: 'swap',
+  variable: '--font-markazi',
+});
+
+const bodyFont = Vazirmatn({
+  subsets: ['arabic', 'latin'],
+  weight: ['300', '400', '500', '600'],
+  display: 'swap',
+  variable: '--font-vazirmatn',
+});
 
 type Props = {
   children: ReactNode;
@@ -54,17 +72,12 @@ export default async function RootLayout({ children }: Props) {
   const themeCss = themeToCss(await getActiveTheme());
 
   return (
-    <html lang="fa" suppressHydrationWarning>
+    <html
+      lang="fa"
+      className={`${displayFont.variable} ${bodyFont.variable}`}
+      suppressHydrationWarning
+    >
       <head>
-        {/* Luca typefaces: Markazi Text (display) + Vazirmatn (UI).
-            For production in restricted networks, self-host these as woff2 in /public/fonts
-            and replace this <link> with @font-face rules in style/globals.css. */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Markazi+Text:wght@400;500;600&family=Vazirmatn:wght@300;400;500;600&display=swap"
-        />
         {themeCss ? (
           <style id="site-theme" dangerouslySetInnerHTML={{ __html: themeCss }} />
         ) : null}
