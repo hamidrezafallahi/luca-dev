@@ -1,4 +1,8 @@
 import { browserApiBaseUrl } from '@/lib/api';
+import {
+  fetchWithAuth,
+  forbiddenMessage,
+} from '@/lib/client-auth';
 import { SimpleResponse } from '@models/base';
 
 /** Sent by the backend's ExceptionHandlingMiddleware when values exceed column limits. */
@@ -60,15 +64,19 @@ export async function saveEntity({
     const isFormData =
       typeof FormData !== 'undefined' && body instanceof FormData;
 
-    const response = await fetch(`${browserApiBaseUrl}/${path}`, {
+    // 401 → refresh + retry, or the login page when the session is over.
+    const response = await fetchWithAuth(`${browserApiBaseUrl}/${path}`, {
       method,
       body: isFormData ? body : JSON.stringify(body),
       headers: isFormData
         ? undefined
         : { 'Content-Type': 'application/json' },
-      credentials: 'include',
       cache: 'no-store',
     });
+
+    if (response.status === 403) {
+      return { data: null, isSuccess: false, error: forbiddenMessage() };
+    }
 
     let data: SaveEntityResponse & ProblemDetails;
     try {
