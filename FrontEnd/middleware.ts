@@ -3,8 +3,10 @@ import createMiddleware from 'next-intl/middleware';
 import type { NextRequest } from 'next/server';
 
 import {
+  CURRENT_PATH_HEADER,
   applySessionToRequest,
   applySessionToResponse,
+  currentPath,
   refreshSessionIfNeeded,
 } from '@lib/session-refresh';
 
@@ -25,6 +27,8 @@ export default async function middleware(req: NextRequest) {
   const session = await refreshSessionIfNeeded(req);
   // next-intl forwards req.headers (incl. the updated cookie) to the render.
   applySessionToRequest(req, session);
+  // Lets a Server Component that still gets 401 come back here after /auth/refresh.
+  req.headers.set(CURRENT_PATH_HEADER, currentPath(req));
   const res = intlMiddleware(req);
   applySessionToResponse(res, session);
   return res;
