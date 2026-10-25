@@ -284,6 +284,190 @@
     "loginFirst": "Log in first"
   },
   "admin": {
+    "themeSettings": {
+      "title": "Site theme",
+      "subtitle": "Define the colours of the Luca store and admin, check them on the product page, and put one live.",
+      "viewStore": "View store",
+      "newTheme": "New theme",
+      "liveShort": "Live",
+      "activeEyebrow": "The theme shoppers see right now",
+      "liveHint": "These colours are used by the store and by this admin panel. Any change goes live once you save it.",
+      "edit": "Edit",
+      "editNamed": "Edit theme {name}",
+      "duplicate": "Duplicate",
+      "noActiveTitle": "No theme is active",
+      "noActiveHint": "The store is using Luca's default palette (white ground, near-black ink, navy accent). Put one of the themes below live, or create a new one.",
+      "allThemes": "All themes",
+      "count": "{count, plural, one {# theme} other {# themes}}",
+      "themeId": "Theme no. {id}",
+      "activate": "Put live",
+      "isLive": "Live now",
+      "working": "Please wait…",
+      "activated": "“{name}” is now live on the site.",
+      "deleted": "“{name}” was deleted.",
+      "actionFailed": "That didn't work. Please try again.",
+      "confirmDelete": "Delete this theme?",
+      "cancel": "Cancel",
+      "delete": "Delete",
+      "cannotDeleteActive": "The live theme can't be deleted; put another theme live first.",
+      "newTileTitle": "New theme",
+      "newTileHint": "Start from the day or night palette and tune it on a product-page preview.",
+      "loadError": "Couldn't load themes. Check the API connection.",
+      "retry": "Try again",
+      "createTitle": "New theme",
+      "editTitle": "Edit theme",
+      "studioSubtitle": "Change the colours; the product-page preview updates as you go.",
+      "back": "Back",
+      "reset": "Reset",
+      "save": "Save",
+      "saving": "Saving…",
+      "saveShortcut": "Save (Ctrl+S)",
+      "saved": "Theme saved.",
+      "savedLive": "Theme saved and going live on the site.",
+      "saveFailed": "Couldn't save the theme.",
+      "unsavedLong": "You have unsaved changes",
+      "noChanges": "No changes yet",
+      "copyName": "{name} (copy)",
+      "tabColors": "Colours",
+      "tabPreview": "Preview",
+      "nameLabel": "Theme name",
+      "namePlaceholder": "e.g. Bright clinic",
+      "nameHelp": "Only used to find it in the admin; shoppers never see it.",
+      "nameRequired": "A theme name is required.",
+      "presetsTitle": "Starting point",
+      "presetsHint": "Replaces every colour with the chosen palette; Reset brings yours back.",
+      "presets": {
+        "day": "Day (Luca default)",
+        "night": "Night"
+      },
+      "groups": {
+        "brand": {
+          "title": "Brand",
+          "hint": "Luca's accent for the announcement bar and primary buttons, and the ink colour for dark buttons."
+        },
+        "page": {
+          "title": "Page & text",
+          "hint": "White ground, paper sections, hairlines and type; the admin panel uses these too."
+        },
+        "status": {
+          "title": "Status messages",
+          "hint": "Success, error, warning and info notices."
+        }
+      },
+      "fields": {
+        "primaryColor": {
+          "label": "Primary",
+          "help": "Announcement bar, primary buttons and links"
+        },
+        "secondaryColor": {
+          "label": "Ink",
+          "help": "Dark buttons such as “Subscribe” and strong details"
+        },
+        "highlightColor": {
+          "label": "Accent",
+          "help": "Badges, small labels and decorative details"
+        },
+        "neutralColor": {
+          "label": "Paper",
+          "help": "Background of sections such as the newsletter"
+        },
+        "successColor": {
+          "label": "Success",
+          "help": "Success messages"
+        },
+        "errorColor": {
+          "label": "Error",
+          "help": "Errors and discounts"
+        },
+        "warningColor": {
+          "label": "Warning",
+          "help": "Warnings"
+        },
+        "infoColor": {
+          "label": "Info",
+          "help": "Informational messages"
+        },
+        "surfaceColor": {
+          "label": "Page background",
+          "help": "Main site background, cards and the admin"
+        },
+        "surfaceMutedColor": {
+          "label": "Soft background",
+          "help": "Product photo frames, footer and admin sidebar"
+        },
+        "borderColor": {
+          "label": "Lines & borders",
+          "help": "Dividers and card borders"
+        },
+        "textColor": {
+          "label": "Text",
+          "help": "Body text and headings"
+        },
+        "textMutedColor": {
+          "label": "Muted text",
+          "help": "Descriptions, labels and secondary text"
+        }
+      },
+      "edited": "edited",
+      "changedFrom": "Was {hex}",
+      "hexOf": "{label} hex code",
+      "revertColor": "Revert this colour",
+      "livePreview": "Product page preview",
+      "deviceDesktop": "Desktop",
+      "deviceMobile": "Mobile",
+      "previewHint": "Hover a colour to outline where the preview uses it.",
+      "contrastTitle": "Readability",
+      "contrastHint": "Contrast of the colour pairs the site puts together, checked against WCAG AA.",
+      "contrastScore": "{passed} of {total} pass",
+      "sample": "Aa",
+      "ratio": "{value}:1 (min {min})",
+      "pass": "Pass",
+      "fail": "Low",
+      "checks": {
+        "body": "Text on background",
+        "muted": "Muted text on background",
+        "paper": "Text on soft background",
+        "button": "White label on primary button",
+        "ink": "White label on ink button",
+        "link": "Link on background",
+        "error": "Error message on background"
+      },
+      "preview": {
+        "announcement": "Expert advice on choosing the right loupe",
+        "announcementLink": "Book a visit",
+        "dealers": "Dealers",
+        "contact": "Contact",
+        "nav1": "Products",
+        "nav2": "Categories",
+        "nav3": "Brands",
+        "nav4": "Articles",
+        "nav5": "Price list",
+        "crumbs": "Home / Loupes / Galilean TTL loupe",
+        "eyebrow": "LUCA · TTL collection",
+        "productTitle": "Galilean TTL loupe",
+        "price": "[price] Toman",
+        "productText": "A light loupe with through-the-lens optics, built to your pupil distance and working distance.",
+        "magnification": "Magnification",
+        "frameColor": "Frame colour",
+        "addToCart": "Add to cart",
+        "bookFitting": "Book a fitting",
+        "specs": "Specifications",
+        "spec1Label": "Magnification",
+        "spec1Value": "[…x]",
+        "spec2Label": "Working distance",
+        "spec2Value": "[… mm]",
+        "spec3Label": "Weight",
+        "spec3Value": "[… g]",
+        "alertSuccess": "Added to your cart",
+        "alertError": "This model is currently unavailable",
+        "alertWarning": "Limited stock left",
+        "alertInfo": "Book a fitting appointment",
+        "newsletter": "What's new at Luca",
+        "newsletterText": "New models and expert guides",
+        "subscribe": "Subscribe",
+        "copyright": "© LUCA"
+      }
+    },
     "dashboard": "Dashboard",
     "dashboardTitle": "Admin panel",
     "dashboardSubtitle": "Manage store content, entities, and settings",
