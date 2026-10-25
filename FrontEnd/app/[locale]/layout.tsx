@@ -13,7 +13,7 @@ import type { TLang } from '@slice/config/type';
 interface IProps {
   children: ReactNode;
   params: Promise<{
-    locale: TLang;
+    locale: string;
   }>;
 }
 
