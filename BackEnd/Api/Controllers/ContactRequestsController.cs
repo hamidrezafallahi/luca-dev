@@ -11,7 +11,7 @@ namespace WebApi.Controllers
     /// <summary>
     /// درخواست های ثبت شده از فرم عمومی سایت.
     /// بسته به سایت، این فرم «همکاری با ما» یا «مشاوره خرید» است.
-    /// ثبت درخواست عمومی است؛ ویرایش و حذف فقط برای ادمین.
+    /// ثبت درخواست عمومی است؛ خواندن، ویرایش و حذف فقط برای ادمین.
     /// </summary>
     [ApiController]
     [Route("api/[controller]")]
@@ -28,6 +28,7 @@ namespace WebApi.Controllers
 
         // GET: api/contactRequests
         [HttpGet]
+        [Authorize(Roles = StaffRoles)]
         public async Task<ActionResult<ListDto<ContactRequestDto>>> GetAll([FromQuery] GetAllContactRequestsQuery query)
         {
             var result = await _mediator.Send(query);
