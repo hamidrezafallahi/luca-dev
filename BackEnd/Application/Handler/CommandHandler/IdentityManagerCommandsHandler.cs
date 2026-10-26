@@ -48,6 +48,10 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
                 phoneNumber: request.PhoneNumber,
                 userDescription: request.UserDescription
                 );
+        // The password goes in with the first save, so the account is never stored without one,
+        // whatever happens to the profile image. No one is signed in yet: 0, as for anonymous contact requests.
+        var hashedPassword = _passwordHasher.HashPassword(user, request.Password.Trim());
+        user.ChangePassword(hashedPassword, currentUserId: 0);
         await _repo.AddAsync(user);
         await _repo.SaveChangesAsync(cancellationToken);
 
@@ -58,12 +62,21 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
                 File = request.UserImageFile,
                 Path = UploadPaths.Users(user.Id)
             };
-            var imageUrl = await _uploaderService.UploadAsWebp(uploadDto);
+            string? imageUrl;
+            try
+            {
+                imageUrl = await _uploaderService.UploadAsWebp(uploadDto);
+            }
+            catch
+            {
+                // All or nothing: remove the account (a hard delete) so the visitor can register again with
+                // the same email, and let the error reach the client as before.
+                await _repo.DeleteAsync(user.Id);
+                throw;
+            }
             if (UploadPaths.IsStoredPath(imageUrl))
                 user.SetImage(imageUrl!, user.Id);
         }
-        var hashedPassword = _passwordHasher.HashPassword(user, request.Password.Trim());
-        user.ChangePassword(hashedPassword, user.Id);
         await _repo.SaveChangesAsync(cancellationToken);
 
         return ServiceResult<IdDto>.Ok(new IdDto { Id = user.Id });
