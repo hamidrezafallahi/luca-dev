@@ -35,3 +35,16 @@ export async function getCategories(
     console.log(error)
   }
 }
+
+/**
+ * Categories for the landing grid: the ones flagged "show in landing", or every
+ * active root category when none is flagged, so the section is never empty
+ * while categories exist.
+ */
+export async function getLandingCategories(): Promise<ICategory[]> {
+  const flagged = await getCategories({ queries: { IsShowInLanding: true } });
+  if (flagged?.data?.records?.length) return flagged.data.records;
+
+  const all = await getCategories({ queries: { PageSize: 8 } });
+  return all?.data?.records ?? [];
+}

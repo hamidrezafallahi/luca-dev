@@ -103,6 +103,8 @@ function ProductCard({ product }: { product: ILandingProduct }) {
   const [addToShoppingCart] = useGetConditionallyMutation();
   const dispatch = useDispatch();
   const handleAddToCart = async (product: ILandingProduct) => {
+    // Products without an in-stock offer are listed but cannot be bought.
+    if (product.bestOfferId == null || product.price == null || product.finalPrice == null) return;
     if (isAuthenticated) {
       const syncCartResponse = await addToShoppingCart({
         url: '/CartItems',
@@ -124,8 +126,8 @@ function ProductCard({ product }: { product: ILandingProduct }) {
             name: product.name,
             description: product.description,
             price: product.price,
-            discountAmount: product.discountAmount,
-            discountIsPercent: product.discountIsPercent,
+            discountAmount: product.discountAmount ?? 0,
+            discountIsPercent: product.discountIsPercent ?? false,
             finalPrice: product.finalPrice,
             quantity: 1,
             mainImage: product.mainImage,
@@ -136,6 +138,8 @@ function ProductCard({ product }: { product: ILandingProduct }) {
   };
  
   const href = `/${locale}/products/${product.slug || product.id}`;
+  const canBuy = product.inStock && product.bestOfferId != null;
+  const hasDiscount = canBuy && (product.discountAmount ?? 0) > 0;
 
   return (
     <article className="flex flex-col gap-3.5 w-full min-w-0">
@@ -148,7 +152,7 @@ function ProductCard({ product }: { product: ILandingProduct }) {
           sizes="(max-width: 640px) 168px, (max-width: 1024px) 236px, 310px"
           loading="lazy"
         />
-        {product.discountAmount > 0 && (
+        {hasDiscount && (
           <span className="top-3 absolute start-3 luca-badge luca-badge-accent">
             -{product.discountAmount}
             {product.discountIsPercent && "%"}
@@ -164,22 +168,27 @@ function ProductCard({ product }: { product: ILandingProduct }) {
         <div className="flex justify-center items-center">
           <Rate value={product.averageRate} />
         </div>
-        <div className="flex flex-wrap justify-center items-baseline gap-x-2 text-sm">
-          {product.discountAmount > 0 && (
-            <span className="line-through luca-muted">
-              {product.price?.toLocaleString()}
-            </span>
-          )}
-          <span>{product.finalPrice?.toLocaleString()}</span>
-          <span className="luca-muted">{t('common.currency')}</span>
-        </div>
+        {canBuy ? (
+          <div className="flex flex-wrap justify-center items-baseline gap-x-2 text-sm">
+            {hasDiscount && (
+              <span className="line-through luca-muted">
+                {product.price?.toLocaleString()}
+              </span>
+            )}
+            <span>{product.finalPrice?.toLocaleString()}</span>
+            <span className="luca-muted">{t('common.currency')}</span>
+          </div>
+        ) : (
+          <span className="text-sm luca-muted">{t('common.outOfStock')}</span>
+        )}
         <button
           type="button"
+          disabled={!canBuy}
           onClick={() => {
             handleAddToCart(product);
           }}
           aria-label={t('common.addToCartAria', { name: product.name })}
-          className="text-[13px] luca-link"
+          className="disabled:opacity-40 text-[13px] disabled:no-underline disabled:cursor-not-allowed luca-link"
         >
           {t('common.addToCart')}
         </button>

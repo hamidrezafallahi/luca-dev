@@ -66,7 +66,13 @@ export default function TheMostProductsClient({
         </Link>
       </div>
 
-      <ProductsCarousel items={items} Loading={false} title={null} />
+      {items.length > 0 ? (
+        <ProductsCarousel items={items} Loading={false} title={null} />
+      ) : (
+        <p className="py-10 text-sm text-center luca-muted">
+          {t('productsPage.emptyHint')}
+        </p>
+      )}
     </div>
   );
 }

@@ -12,6 +12,7 @@ interface IProps {
 }
 export default async  function LandingCategory(props: IProps) {
   const { categories } = props;
+  if (!categories?.length) return null;
   const locale = await getLocale();
   const t = await getTranslations('landing');
   return (
@@ -23,8 +24,8 @@ export default async  function LandingCategory(props: IProps) {
         </Link>
       </div>
       <div className="gap-x-3 md:gap-x-4 lg:gap-x-6 gap-y-5 grid grid-cols-2 md:grid-cols-4">
-        {categories?.map((cat, index) => (
-          <CategoryCard key={index} category={cat} />
+        {categories.map((cat) => (
+          <CategoryCard key={cat.id} category={cat} />
         ))}
       </div>
     </section>

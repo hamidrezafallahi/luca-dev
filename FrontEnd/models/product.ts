@@ -63,17 +63,19 @@ export interface IDetailedProductOffer {
 export interface ILandingProduct {
     id: number
     slug?: string | null
-    bestOfferId: number
+    /** Null when the product has no active offer in stock. */
+    bestOfferId: number | null
     name: string
     description: string
-    price: number
+    price: number | null
     inventory: number
+    inStock: boolean
     persianCategoryName: string
     englishCategoryName: string
     brand: string
-    discountIsPercent: boolean
-    discountAmount: number
-    finalPrice: number
+    discountIsPercent: boolean | null
+    discountAmount: number | null
+    finalPrice: number | null
     mainImage: string
     averageRate: number
     rateCount: number

@@ -391,46 +391,36 @@ public class ProductQueryHandler(IProductRepository _repo,
     {
         var now = DateTime.UtcNow;
 
-        IQueryable<Product> query;
+        // Flags are evaluated exclusively: BestSeller → TheNewest → else Discounters.
+        var newest = request.BestSeller != true && request.TheNewest == true;
+        var discounters = request.BestSeller != true && request.TheNewest != true;
 
-        // فیلتر موجودی قبل از Take اعمال می‌شود تا محصولات بدون پیشنهاد فعال جای محصولات موجود را نگیرند
-        Expression<Func<Product, bool>> inStock = p => p.IsActive && !p.IsDeleted
-            && p.ProductOffers.Any(po => po.IsActive && !po.IsDeleted && po.Inventory > 0);
+        // محصولات بدون پیشنهاد فعال هم (به‌صورت ناموجود) نمایش داده می‌شوند تا لندینگ با کاتالوگ یکی باشد؛
+        // مرتب‌سازی اول بر اساس موجودی است تا محصولات موجود هیچ‌وقت جایشان را از دست ندهند
+        var query = _repo.Query(p => p.IsActive && !p.IsDeleted)
+            .Include(p => p.ProductOffers).ThenInclude(po => po.Discounts).ThenInclude(pd => pd.Discount)
+            .Include(p => p.Images)
+            .Include(p => p.Category)
+            .Include(p => p.Brand)
+            .AsQueryable();
 
-        if (request.BestSeller == true)
+        if (discounters)
         {
-            // منطق بهترین فروشنده نیاز به Order دارد (فعلاً ساده)
-            query = _repo.Query(inStock)
-                .Include(p => p.ProductOffers).ThenInclude(po => po.Discounts).ThenInclude(pd => pd.Discount)
-                .Include(p => p.Images)
-                .Include(p => p.Category)
-                .Include(p => p.Brand)
-                .OrderByDescending(p => p.UpdatedAt)
-                .Take(5);
-        }
-        else if (request.TheNewest == true)
-        {
-            query = _repo.Query(inStock)
-                .Include(p => p.ProductOffers).ThenInclude(po => po.Discounts).ThenInclude(pd => pd.Discount)
-                .Include(p => p.Images)
-                .Include(p => p.Category)
-                .Include(p => p.Brand)
-                //.Where(p => p.ProductOffers.Any(po => po.Discounts.Any(pd => pd.Discount.IsActive)))
-                .OrderByDescending(p => p.UpdatedAt)
-                .Take(5);
-        }
-        else
-        {
-            query = _repo.Query(inStock)
-                .Include(p => p.ProductOffers).ThenInclude(po => po.Discounts).ThenInclude(pd => pd.Discount)
-                .Include(p => p.Images)
-                .Include(p => p.Category)
-                .Include(p => p.Brand)
-                .OrderByDescending(p => p.UpdatedAt)
-                .Take(5);
+            query = query.Where(p => p.ProductOffers.Any(po =>
+                po.IsActive && !po.IsDeleted && po.Inventory > 0
+                && po.Discounts.Any(pd => !pd.Discount.IsDeleted && pd.Discount.IsActive
+                    && pd.Discount.StartDate <= now && pd.Discount.EndDate >= now)));
         }
 
-        var products = await query.ToListAsync(cancellationToken);
+        var ordered = query.OrderByDescending(p =>
+            p.ProductOffers.Any(po => po.IsActive && !po.IsDeleted && po.Inventory > 0));
+
+        // منطق پرفروش‌ترین نیاز به Order دارد (فعلاً بر اساس آخرین به‌روزرسانی)
+        ordered = newest
+            ? ordered.ThenByDescending(p => p.CreatedAt)
+            : ordered.ThenByDescending(p => p.UpdatedAt ?? p.CreatedAt);
+
+        var products = await ordered.Take(5).ToListAsync(cancellationToken);
 
         var dtos = new List<TheMostProductDto>();
 
@@ -441,7 +431,10 @@ public class ProductQueryHandler(IProductRepository _repo,
                 .OrderBy(po => po.GetFinalPrice(now))
                 .FirstOrDefault();
 
-            if (bestOffer == null) continue;
+            var activeDiscount = bestOffer?.Discounts
+                .Select(d => d.Discount).OrderByDescending(d => d.Priority)
+                .FirstOrDefault(d =>
+                    !d.IsDeleted && d.IsActive && d.StartDate <= now && d.EndDate >= now);
 
             var rate = await _rateRepository.GetAverageRateAsync(EnumTargetType.Product, p.Id);
 
@@ -454,18 +447,13 @@ public class ProductQueryHandler(IProductRepository _repo,
                 Brand = p.Brand?.Name ?? "",
                 PersianCategoryName = p.Category?.PersianName ?? "",
                 EnglishCategoryName = p.Category?.EnglishName ?? "",
-                BestOfferId = bestOffer.Id,
-                Price = bestOffer.BasePrice,
-                FinalPrice = bestOffer.GetFinalPrice(now),
-                DiscountIsPercent = bestOffer.Discounts
-                    .Select(d => d.Discount).OrderByDescending(d => d.Priority)
-            .FirstOrDefault(d =>
-                !d.IsDeleted && d.IsActive && d.StartDate <= now && d.EndDate >= now)?.IsPercent,
-                
-                DiscountAmount = bestOffer.Discounts
-                   .Select(d => d.Discount).OrderByDescending(d => d.Priority)
-            .FirstOrDefault(d =>
-                !d.IsDeleted && d.IsActive && d.StartDate <= now && d.EndDate >= now)?.Amount,
+                BestOfferId = bestOffer?.Id,
+                Price = bestOffer?.BasePrice,
+                FinalPrice = bestOffer?.GetFinalPrice(now),
+                Inventory = bestOffer?.Inventory ?? 0,
+                InStock = bestOffer != null,
+                DiscountIsPercent = activeDiscount?.IsPercent,
+                DiscountAmount = activeDiscount?.Amount,
                 MainImage = p.Images
                     .Where(i => !i.IsDeleted && i.IsMain)
                     .Select(i => i.ImageUrl.TrimStart('/'))

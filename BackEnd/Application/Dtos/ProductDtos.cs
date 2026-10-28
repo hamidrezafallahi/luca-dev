@@ -121,18 +121,20 @@ namespace Application.Dtos
     {
         public int Id { get; set; }
         public string Slug { get; set; } = default!;
-        public int BestOfferId { get; set; }
+        /// <summary>Null when the product has no active offer in stock.</summary>
+        public int? BestOfferId { get; set; }
 
         public string Name { get; set; } = default!;
         public string Description { get; set; } = default!;
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
         public int Inventory { get; set; }
+        public bool InStock { get; set; }
         public string? PersianCategoryName { get; set; }
         public string? EnglishCategoryName { get; set; }
         public string? Brand  { get; set; }
         public bool? DiscountIsPercent { get; set; }
         public decimal? DiscountAmount { get; set; }
-        public decimal FinalPrice { get; set; }
+        public decimal? FinalPrice { get; set; }
         public string? MainImage { get; set; }
         public double AverageRate { get; set; }
         public int RateCount { get; set; }

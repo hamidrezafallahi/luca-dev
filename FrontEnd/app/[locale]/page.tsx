@@ -32,7 +32,7 @@ import LandingHero from '@components/organisms/landingHero';
 import Footer from '@layout/footer';
 import Header from '@layout/header';
 import { siteBaseUrl } from '@lib/api';
-import { getCategories } from '@lib/category';
+import { getLandingCategories } from '@lib/category';
 import {
   getSlides,
   splitHeroSlide,
@@ -71,9 +71,7 @@ export default async function Home({ params }: Props) {
   const tSeo = await getTranslations({ locale, namespace: 'seo' });
 
   const { hero, rest } = splitHeroSlide(await getSlides());
-  const categories = await getCategories({
-    queries: { IsShowInLanding: true },
-  });
+  const categories = await getLandingCategories();
 
 const organizationLd = {
     '@context': 'https://schema.org',
@@ -125,7 +123,7 @@ const organizationLd = {
         <LandingHero slide={hero} />
         <TheMostProducts />
         <LandingSlider images={rest} />
-        <LandingCategory categories={categories?.data.records ?? []} />
+        <LandingCategory categories={categories} />
         <LandingFeatures />
         <LandingSpecialOffer />
         <LandingBrands />
