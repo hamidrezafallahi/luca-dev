@@ -3,6 +3,7 @@ using Application.Common.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Services.Services.Uploader.DTO;
 using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Formats;
 using SixLabors.ImageSharp.Formats.Jpeg;
 using SixLabors.ImageSharp.Formats.Png;
 using SixLabors.ImageSharp.Formats.Webp;
@@ -14,6 +15,19 @@ namespace Services.Services.Uploader
         private static readonly HashSet<string> SupportedTypes = new(StringComparer.OrdinalIgnoreCase)
         {
             "jpg", "jpeg", "png", "webp"
+        };
+
+        /// <summary>
+        /// Decode only the formats in <see cref="SupportedTypes"/>. ImageSharp picks the decoder from the file's
+        /// bytes, not its name, so with the default configuration a TIFF renamed to .jpg would still reach the
+        /// TIFF decoder (GHSA-wmxv-xphr-5c9g). Anything else now fails with UnknownImageFormatException.
+        /// </summary>
+        private static readonly DecoderOptions ImageDecoderOptions = new()
+        {
+            Configuration = new Configuration(
+                new JpegConfigurationModule(),
+                new PngConfigurationModule(),
+                new WebpConfigurationModule())
         };
 
         private static readonly HashSet<string> VideoTypes = new(StringComparer.OrdinalIgnoreCase)
@@ -188,7 +202,7 @@ namespace Services.Services.Uploader
             var systemFilePath = Path.Combine(rootPath, fileName);
 
             await using (var input = request.File.OpenReadStream())
-            using (var image = await Image.LoadAsync(input))
+            using (var image = await Image.LoadAsync(ImageDecoderOptions, input))
             await using (var output = new FileStream(
                 systemFilePath,
                 FileMode.Create,
