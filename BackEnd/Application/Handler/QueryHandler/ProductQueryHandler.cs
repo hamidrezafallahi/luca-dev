@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using OnlineShop.Domain.Entities;
 using OnlineShop.Domain.Interfaces;
 using System;
+using System.Linq.Expressions;
 
 public class ProductQueryHandler(IProductRepository _repo,
         IUserRepository _userRepository,
@@ -392,10 +393,14 @@ public class ProductQueryHandler(IProductRepository _repo,
 
         IQueryable<Product> query;
 
+        // فیلتر موجودی قبل از Take اعمال می‌شود تا محصولات بدون پیشنهاد فعال جای محصولات موجود را نگیرند
+        Expression<Func<Product, bool>> inStock = p => p.IsActive && !p.IsDeleted
+            && p.ProductOffers.Any(po => po.IsActive && !po.IsDeleted && po.Inventory > 0);
+
         if (request.BestSeller == true)
         {
             // منطق بهترین فروشنده نیاز به Order دارد (فعلاً ساده)
-            query = _repo.Query(p => p.IsActive && !p.IsDeleted)
+            query = _repo.Query(inStock)
                 .Include(p => p.ProductOffers).ThenInclude(po => po.Discounts).ThenInclude(pd => pd.Discount)
                 .Include(p => p.Images)
                 .Include(p => p.Category)
@@ -405,7 +410,7 @@ public class ProductQueryHandler(IProductRepository _repo,
         }
         else if (request.TheNewest == true)
         {
-            query = _repo.Query(p => p.IsActive && !p.IsDeleted)
+            query = _repo.Query(inStock)
                 .Include(p => p.ProductOffers).ThenInclude(po => po.Discounts).ThenInclude(pd => pd.Discount)
                 .Include(p => p.Images)
                 .Include(p => p.Category)
@@ -416,7 +421,7 @@ public class ProductQueryHandler(IProductRepository _repo,
         }
         else
         {
-            query = _repo.Query(p => p.IsActive && !p.IsDeleted)
+            query = _repo.Query(inStock)
                 .Include(p => p.ProductOffers).ThenInclude(po => po.Discounts).ThenInclude(pd => pd.Discount)
                 .Include(p => p.Images)
                 .Include(p => p.Category)
