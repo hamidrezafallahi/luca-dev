@@ -8,6 +8,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OnlineShop.Domain.Common;
 using OnlineShop.Domain.Entities;
 using OnlineShop.Domain.Interfaces;
 using Services.Services.Uploader.DTO;
@@ -48,6 +49,7 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
                 phoneNumber: request.PhoneNumber,
                 userDescription: request.UserDescription
                 );
+        await MakeSlugUniqueAsync(user);
         // The password goes in with the first save, so the account is never stored without one,
         // whatever happens to the profile image. No one is signed in yet: 0, as for anonymous contact requests.
         var hashedPassword = _passwordHasher.HashPassword(user, request.Password.Trim());
@@ -82,6 +84,24 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
         return ServiceResult<IdDto>.Ok(new IdDto { Id = user.Id });
 
     }
+    /// <summary>
+    /// The slug comes from the name, which two customers can share, while /suppliers/{slug} has to
+    /// stay unique. The first one keeps the clean address; the next ones get a number.
+    /// </summary>
+    private async Task MakeSlugUniqueAsync(User user)
+    {
+        if (!await _repo.ExistsBySlugAsync(user.Slug))
+            return;
+
+        // SlugHelper cuts at 180 characters: leave room, or a long name would lose its number.
+        var stem = user.Slug.Length > 170 ? user.Slug[..170] : user.Slug;
+        var suffix = 2;
+        while (await _repo.ExistsBySlugAsync(SlugHelper.Generate(stem, suffix)))
+            suffix++;
+
+        user.SetSlug(SlugHelper.Generate(stem, suffix), currentUserId: 0);
+    }
+
     public async Task<ServiceResult<LoginDto>> Handle(LoginCommand request, CancellationToken cancellationToken)
     {
         var ip = _accessor.HttpContext?.GetClientIp();

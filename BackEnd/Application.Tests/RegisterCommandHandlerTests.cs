@@ -51,6 +51,48 @@ public class RegisterCommandHandlerTests
         Assert.Equal(FakeUploader.StoredPath, user.Image);
     }
 
+    [Fact]
+    public async Task Customers_with_the_same_name_can_all_register()
+    {
+        var repo = new FakeUserRepository();
+
+        foreach (var (email, expectedSlug) in new[]
+        {
+            ("first@example.com", "sara-ahmadi"),
+            ("second@example.com", "sara-ahmadi-2"),
+            ("third@example.com", "sara-ahmadi-3"),
+        })
+        {
+            var command = Command(withImage: false);
+            command.Email = email;
+
+            var result = await CreateHandler(repo, new FakeUploader(fails: false))
+                .Handle(command, CancellationToken.None);
+
+            Assert.True(result.IsSuccess);
+            Assert.Equal(expectedSlug, repo.Users[^1].Slug);
+        }
+    }
+
+    [Fact]
+    public async Task A_name_longer_than_the_slug_limit_still_gets_its_own_slug()
+    {
+        var repo = new FakeUserRepository();
+
+        foreach (var email in new[] { "first@example.com", "second@example.com", "third@example.com" })
+        {
+            var command = Command(withImage: false);
+            command.Email = email;
+            command.FullName = new string('a', 200);
+
+            await CreateHandler(repo, new FakeUploader(fails: false))
+                .Handle(command, CancellationToken.None);
+        }
+
+        Assert.Equal(3, repo.Users.Select(u => u.Slug).Distinct().Count());
+        Assert.All(repo.Users, user => Assert.True(user.Slug.Length <= 180));
+    }
+
     private static UserCommandHandler CreateHandler(FakeUserRepository repo, FakeUploader uploader) =>
         new(repo, uploader, new PasswordHasher<User>(), null!, null!, null!, new HttpContextAccessor());
 
@@ -74,6 +116,9 @@ public class RegisterCommandHandlerTests
 
         public Task<User?> GetByEmailAsync(string email) =>
             Task.FromResult(Users.FirstOrDefault(u => u.Email == email));
+
+        public Task<bool> ExistsBySlugAsync(string slug) =>
+            Task.FromResult(Users.Any(u => u.Slug == slug));
 
         public Task AddAsync(User entity)
         {
