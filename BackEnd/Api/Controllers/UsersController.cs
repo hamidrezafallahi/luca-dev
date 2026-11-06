@@ -63,6 +63,8 @@ public class UsersController : BaseController
         var result = await _mediator.Send(command);
         if (result.IsUnauthorized)
             return Unauthorized(result);
+        if (result.IsForbidden)
+            return StatusCode(StatusCodes.Status403Forbidden, result);
         return Ok(result);
     }
     [HttpPut("active")]
