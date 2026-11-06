@@ -1,3 +1,4 @@
+using OnlineShop.Domain.Common;
 using Application.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,7 +41,7 @@ public class UploaderServiceTests : IDisposable
         using var tiff = new MemoryStream();
         image.SaveAsTiff(tiff);
 
-        await Assert.ThrowsAsync<UnknownImageFormatException>(
+        await Assert.ThrowsAsync<FileUploadException>(
             () => uploader.UploadAsWebp(Upload(tiff.ToArray(), "photo.jpg")));
         Assert.Empty(Directory.GetFiles(_webRoot, "*", SearchOption.AllDirectories));
     }

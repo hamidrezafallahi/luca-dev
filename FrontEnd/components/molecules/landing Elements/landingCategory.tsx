@@ -6,13 +6,21 @@ import Link from 'next/link';
 import { ICategory } from '@models/category';
 
 import CategoryCard from '../categoryCart';
+import ApiErrorNotice from '@components/molecules/apiErrorNotice';
 
 interface IProps {
   categories: ICategory[];
+  error?: string | null;
 }
 export default async  function LandingCategory(props: IProps) {
-  const { categories } = props;
-  if (!categories?.length) return null;
+  const { categories, error } = props;
+  if (!categories?.length) {
+    return error ? (
+      <section className="store-section luca-container">
+        <ApiErrorNotice message={error} />
+      </section>
+    ) : null;
+  }
   const locale = await getLocale();
   const t = await getTranslations('landing');
   return (

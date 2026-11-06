@@ -179,7 +179,7 @@ public class ProductQueryHandler(IProductRepository _repo,
         var now = DateTime.UtcNow;
         var key = (request.IdOrSlug ?? string.Empty).Trim();
         if (string.IsNullOrWhiteSpace(key))
-            return ServiceResult<ProductByDetailDto?>.Failed("product not found");
+            return ServiceResult<ProductByDetailDto?>.Failed("محصول موردنظر پیدا نشد.");
 
         IQueryable<Product> query = _repo.Query(p => !p.IsDeleted);
         if (int.TryParse(key, out var id))
@@ -194,7 +194,7 @@ public class ProductQueryHandler(IProductRepository _repo,
             .Include(p => p.Brand)
             .Include(p => p.Category)
             .FirstOrDefaultAsync(cancellationToken);
-        if (product == null) return ServiceResult<ProductByDetailDto?>.Failed("product not found");
+        if (product == null) return ServiceResult<ProductByDetailDto?>.Failed("محصول موردنظر پیدا نشد.");
 
         var rate = await _rateRepository.GetAverageRateAsync(EnumTargetType.Product, product.Id);
 
@@ -282,7 +282,7 @@ public class ProductQueryHandler(IProductRepository _repo,
         var now = DateTime.UtcNow;
         var product = await _repo.GetProductWithDetailsAsync(request.Id);
         if (product == null || product.IsDeleted)
-            return ServiceResult<ProductSpecialsByIdDto?>.Failed("Product not found");
+            return ServiceResult<ProductSpecialsByIdDto?>.Failed("محصول موردنظر پیدا نشد.");
         var dto = new ProductSpecialsByIdDto
         {
             Id = product.Id,

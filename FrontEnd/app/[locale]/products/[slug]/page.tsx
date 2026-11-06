@@ -20,6 +20,7 @@ import { fetchStaticSlugParams } from '@lib/staticParams';
 import { SimpleResponse } from '@models/base';
 import { IDetailedProduct } from '@models/product';
 import { toMediaUrl } from '@utils/toMediaUrl';
+import { ApiRequestError, describeStatus } from '@lib/apiError';
 
 export const dynamicParams = true;
 
@@ -36,7 +37,7 @@ function toAbsoluteImage(url?: string | null) {
 
 async function fetchProduct(
   slug: string,
-): Promise<{ status: number; product: IDetailedProduct | null }> {
+): Promise<{ status: number; product: IDetailedProduct | null; error?: string }> {
   const result = await safeFetchJson<
     SimpleResponse<IDetailedProduct> | IDetailedProduct
   >(`${serverApiBaseUrl}/Products/${slug}`, {
@@ -44,7 +45,7 @@ async function fetchProduct(
   });
 
   if (!result.ok) {
-    return { status: result.status || 500, product: null };
+    return { status: result.status || 500, product: null, error: result.error };
   }
 
   const envelope = result.data as SimpleResponse<IDetailedProduct>;
@@ -112,7 +113,7 @@ export default async function ProductPage({
   setRequestLocale(locale);
   const tNav = await getTranslations({ locale, namespace: 'header' });
   const tStore = await getTranslations({ locale, namespace: 'store' });
-  const { status, product } = await fetchProduct(slug);
+  const { status, product, error } = await fetchProduct(slug);
 
   // Unknown slug → real HTTP 404 via app/[locale]/not-found.tsx.
   if (!product && (status === 404 || status === 200)) {
@@ -122,7 +123,7 @@ export default async function ProductPage({
   // API down / 5xx: throw so the response is an error status (and ISR keeps
   // the last good page) instead of a 200 "load error" page Google could index.
   if (!product) {
-    throw new Error(`Product ${slug} could not be loaded (API status ${status})`);
+    throw new ApiRequestError(error ?? describeStatus(status));
   }
 
   // Legacy numeric URLs → permanent SEO slug (must not be inside a broad try/catch).

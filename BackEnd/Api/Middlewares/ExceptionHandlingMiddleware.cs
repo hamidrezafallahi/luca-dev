@@ -1,10 +1,9 @@
-using Microsoft.EntityFrameworkCore;
-using Npgsql;
-using OnlineShop.Domain.Common;
+using Api.Errors;
 
 /// <summary>
-/// Turns unhandled exceptions into the ServiceResult JSON shape the frontend already reads
-/// (isSuccess / error), so the admin UI can show a real message instead of "HTTP 500".
+/// Outermost guard of the API: no request leaves with a bare status code. Unhandled exceptions
+/// and empty error responses (401, 403, 404, 429 ...) both become an <see cref="ApiErrorBody"/>
+/// that says what went wrong.
 /// </summary>
 public class ExceptionHandlingMiddleware
 {
@@ -22,57 +21,41 @@ public class ExceptionHandlingMiddleware
         try
         {
             await _next(context);
+
+            if (HasNoExplanation(context))
+                // Status and headers such as Retry-After or WWW-Authenticate stay as they are.
+                await context.Response.WriteAsJsonAsync(StatusCodeErrors.ForEmptyResponse(context).Body);
+        }
+        catch (Exception) when (context.RequestAborted.IsCancellationRequested)
+        {
+            // The client went away; there is nobody left to answer.
+            _logger.LogDebug("Request aborted by the client: {Method} {Path}",
+                context.Request.Method, context.Request.Path);
         }
         catch (Exception ex) when (!context.Response.HasStarted)
         {
-            await WriteErrorAsync(context, ex);
+            var error = ApiExceptionTranslator.Translate(ex, context);
+            Log(context, ex, error);
+            await ApiErrorWriter.WriteAsync(context, error);
         }
     }
 
-    private async Task WriteErrorAsync(HttpContext context, Exception ex)
+    private static bool HasNoExplanation(HttpContext context) =>
+        context.Response.StatusCode >= StatusCodes.Status400BadRequest
+        && !context.Response.HasStarted
+        && !HttpMethods.IsHead(context.Request.Method);
+
+    private void Log(HttpContext context, Exception ex, ApiError error)
     {
-        int status;
-        object body;
-
-        switch (ex)
+        if (error.Status >= StatusCodes.Status500InternalServerError)
         {
-            case FieldLengthExceededException lengthEx:
-                status = StatusCodes.Status400BadRequest;
-                body = new
-                {
-                    isSuccess = false,
-                    error = lengthEx.Message,
-                    errorCode = lengthEx.Code,
-                    fieldErrors = lengthEx.Violations,
-                };
-                break;
-
-            // Fallback for columns whose limit is not in the EF model (string_data_right_truncation).
-            case DbUpdateException { InnerException: PostgresException { SqlState: PostgresErrorCodes.StringDataRightTruncation } }:
-                status = StatusCodes.Status400BadRequest;
-                body = new
-                {
-                    isSuccess = false,
-                    error = "A field is longer than allowed.",
-                    errorCode = "FIELD_TOO_LONG",
-                };
-                break;
-
-            default:
-                _logger.LogError(ex, "Unhandled exception for {Method} {Path}",
-                    context.Request.Method, context.Request.Path);
-                status = StatusCodes.Status500InternalServerError;
-                body = new
-                {
-                    isSuccess = false,
-                    error = "Internal server error",
-                    errorCode = "INTERNAL_ERROR",
-                };
-                break;
+            _logger.LogError(ex, "{Code} for {Method} {Path} (trace {TraceId}): {Message}",
+                error.Body.ErrorCode, context.Request.Method, context.Request.Path,
+                context.TraceIdentifier, error.Body.Error);
+            return;
         }
 
-        context.Response.Clear();
-        context.Response.StatusCode = status;
-        await context.Response.WriteAsJsonAsync(body);
+        _logger.LogInformation("{Code} for {Method} {Path}: {Message}",
+            error.Body.ErrorCode, context.Request.Method, context.Request.Path, error.Body.Error);
     }
 }

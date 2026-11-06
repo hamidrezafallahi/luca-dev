@@ -65,7 +65,7 @@ public class SetCatalogItemActiveCommandHandlerTests
             CancellationToken.None);
 
         Assert.False(result.IsSuccess);
-        Assert.Equal("Product has no offer to publish", result.Error);
+        Assert.Equal("این محصول هیچ پیشنهاد فروشی ندارد و نمی‌توان آن را منتشر کرد.", result.Error);
         Assert.False(store.Products[0].IsActive);
         Assert.False(store.Images[0].IsActive);
     }
@@ -81,7 +81,7 @@ public class SetCatalogItemActiveCommandHandlerTests
             CancellationToken.None);
 
         Assert.False(result.IsSuccess);
-        Assert.Equal("Unauthorized", result.Error);
+        Assert.True(result.IsUnauthorized);
         Assert.False(store.Products[0].IsActive);
     }
 
@@ -96,7 +96,7 @@ public class SetCatalogItemActiveCommandHandlerTests
             CancellationToken.None);
 
         Assert.False(result.IsSuccess);
-        Assert.Equal("Product not found", result.Error);
+        Assert.Equal("محصول موردنظر پیدا نشد.", result.Error);
         Assert.False(store.Products[0].IsActive);
         Assert.False(store.Offers[0].IsActive);
     }

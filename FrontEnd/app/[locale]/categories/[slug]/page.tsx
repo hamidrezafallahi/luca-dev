@@ -13,6 +13,7 @@ import { pickLocalized } from '@lib/utils';
 import { fetchStaticSlugParams } from '@lib/staticParams';
 import { SimpleResponse } from '@models/base';
 import type { ICategory } from '@models/category';
+import { ApiRequestError, describeStatus } from '@lib/apiError';
 
 export const dynamicParams = true;
 
@@ -26,13 +27,15 @@ export async function generateStaticParams() {
 
 async function fetchCategory(
   slug: string,
-): Promise<{ status: number; category: ICategory | null }> {
+): Promise<{ status: number; category: ICategory | null; error?: string }> {
   const result = await safeFetchJson<SimpleResponse<ICategory>>(
     `${serverApiBaseUrl}/Categories/${slug}`,
     { next: { revalidate: 36 } },
   );
 
-  if (!result.ok) return { status: result.status || 500, category: null };
+  if (!result.ok) {
+    return { status: result.status || 500, category: null, error: result.error };
+  }
   if (result.data?.isSuccess === false || !result.data?.data) {
     return { status: 404, category: null };
   }
@@ -82,7 +85,7 @@ export default async function Page({ params }: Props) {
   setRequestLocale(locale);
   const tNav = await getTranslations({ locale, namespace: 'header' });
   const tFaq = await getTranslations({ locale, namespace: 'categoryFaq' });
-  const { status, category } = await fetchCategory(slug);
+  const { status, category, error } = await fetchCategory(slug);
 
   // Unknown slug → real HTTP 404 via app/[locale]/not-found.tsx.
   if (!category && status === 404) {
@@ -91,7 +94,7 @@ export default async function Page({ params }: Props) {
 
   // API down / 5xx: error status instead of an indexable 200 page.
   if (!category) {
-    throw new Error(`Category ${slug} could not be loaded (API status ${status})`);
+    throw new ApiRequestError(error ?? describeStatus(status));
   }
 
   if (category.slug && category.slug !== slug && /^\d+$/.test(slug)) {

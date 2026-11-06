@@ -7,6 +7,7 @@ import { getAll } from '@lib/getAll';
 import { IBrand } from '@models/brand';
 
 import BrandCard from '../brandCard';
+import ApiErrorNotice from '@components/molecules/apiErrorNotice';
 
 export default async function LandingBrands( ) {
     const locale = await getLocale();
@@ -28,6 +29,9 @@ export default async function LandingBrands( ) {
         </Link>
       </div>
       <div className="gap-3 md:gap-4 lg:gap-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {!response.isSuccess ? (
+          <ApiErrorNotice message={response.error} className="col-span-full" />
+        ) : null}
         {response?.data?.records?.map((brand, index) => (
           <BrandCard brand={brand} key={index} />
         ))}

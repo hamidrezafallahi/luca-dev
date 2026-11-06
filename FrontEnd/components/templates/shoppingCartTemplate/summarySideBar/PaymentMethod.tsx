@@ -19,9 +19,10 @@ export default function PaymentMethod() {
   const { data } = useGetData<DataResponse<IPaymentMethod>>({
     url: '/paymentMethods',
     method: 'GET',
+    reportFailure: true,
   });
 const handleChangePaymentMethod = (e:string|number)=>{
-const selectedMethod = data?.data.records.find((method) => method.id === e);
+const selectedMethod = data?.data?.records.find((method) => method.id === e);
 if (selectedMethod) {
   dispatch(setPaymentMethod(selectedMethod));
 }
@@ -43,7 +44,7 @@ useEffect(()=>{
           <RadioList
           name='paymentMethods'
           className='!flex-row flex-wrap justify-between gap-3 text-sm'
-            options={data?.data.records?.map((method) => ({label:method.title,value:method.id}))||[]}
+            options={data?.data?.records?.map((method) => ({label:method.title,value:method.id}))||[]}
              onChange={handleChangePaymentMethod}
              value={selectedPaymentMethod}
             // checked={selectedPaymentMethod === method.id}

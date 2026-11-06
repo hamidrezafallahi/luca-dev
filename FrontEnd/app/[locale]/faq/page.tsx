@@ -7,6 +7,7 @@ import FaqAccordion from '@components/molecules/storefront/FaqAccordion';
 import PageHeader from '@components/molecules/storefront/PageHeader';
 import { getFaqs } from '@lib/faq';
 import { buildPageMetadata } from '@lib/seo';
+import ApiErrorNotice from '@components/molecules/apiErrorNotice';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -31,7 +32,7 @@ export default async function Page({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'faqPage' });
-  const faqs = await getFaqs();
+  const { faqs, error } = await getFaqs();
 
   return (
     <article className="store-page !pt-6">
@@ -41,7 +42,9 @@ export default async function Page({ params }: Props) {
         align="center"
       />
 
-      {faqs.length === 0 ? (
+      {error ? (
+        <ApiErrorNotice message={error} />
+      ) : faqs.length === 0 ? (
         <EmptyState title={t('empty')} description={t('emptyHint')} />
       ) : (
         <FaqAccordion

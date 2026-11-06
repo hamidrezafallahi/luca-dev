@@ -39,7 +39,7 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
 
         var existingUser = await _repo.GetByEmailAsync(request.Email);
         if (existingUser != null)
-            return ServiceResult<IdDto>.Failed("User with this email already exists");
+            return ServiceResult<IdDto>.Failed("حسابی با این ایمیل از قبل وجود دارد.");
 
 
         var user = User.Create(
@@ -91,10 +91,10 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
             .Include(u => u.Role)
             .FirstOrDefaultAsync(u => u.PhoneNumber == request.EmailOrPhone || u.Email == request.EmailOrPhone, cancellationToken);
         if (user == null)
-            return ServiceResult<LoginDto>.Failed("Invalid email or phone");
+            return ServiceResult<LoginDto>.Failed("حسابی با این ایمیل یا شماره موبایل پیدا نشد.");
         var result = _passwordHasher.VerifyHashedPassword(user, user.Password, request.Password.Trim());
         if (result == PasswordVerificationResult.Failed)
-            return ServiceResult<LoginDto>.Failed("Invalid password");
+            return ServiceResult<LoginDto>.Failed("رمز عبور اشتباه است.");
 
         // ===== Claims =====
         var claims = new List<Claim>
@@ -137,12 +137,12 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
     public async Task<ServiceResult<LoginDto>> Handle(RefreshTokenCommand request, CancellationToken cancellationToken)
     {
         if (string.IsNullOrWhiteSpace(request.RefreshToken))
-            return ServiceResult<LoginDto>.Failed("Invalid or expired refresh token");
+            return ServiceResult<LoginDto>.Failed("نشست کاربری شما منقضی شده است؛ لطفاً دوباره وارد شوید.");
 
         // ===== پیدا کردن توکن =====
         var existingToken = await _refreshTokenRepo.GetByTokenAsync(request.RefreshToken);
         if (existingToken == null)
-            return ServiceResult<LoginDto>.Failed("Invalid or expired refresh token");
+            return ServiceResult<LoginDto>.Failed("نشست کاربری شما منقضی شده است؛ لطفاً دوباره وارد شوید.");
 
         // ===== توکنی که همین الان rotate شده: جایگزینش را برگردان =====
         if (existingToken.IsRevoked)
@@ -162,11 +162,11 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
                     });
                 }
             }
-            return ServiceResult<LoginDto>.Failed("Invalid or expired refresh token");
+            return ServiceResult<LoginDto>.Failed("نشست کاربری شما منقضی شده است؛ لطفاً دوباره وارد شوید.");
         }
 
         if (!existingToken.IsActive())
-            return ServiceResult<LoginDto>.Failed("Invalid or expired refresh token");
+            return ServiceResult<LoginDto>.Failed("نشست کاربری شما منقضی شده است؛ لطفاً دوباره وارد شوید.");
 
         // ===== Claims =====
         var claims = new List<Claim>
@@ -209,10 +209,10 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
 
         var user = await _repo.GetByIdAsync(request.Id);
         if (user == null)
-            return ServiceResult<IdDto>.Failed("Unauthorized");
+            return ServiceResult<IdDto>.Unauthorized("حساب کاربری موردنظر پیدا نشد؛ لطفاً دوباره وارد شوید.");
         var result = _passwordHasher.VerifyHashedPassword(user, user.Password, request.OldPassword);
         if (result == PasswordVerificationResult.Failed)
-            return ServiceResult<IdDto>.Failed("پسسورد قدیمی را درست وارد نکردید");
+            return ServiceResult<IdDto>.Failed("رمز عبور فعلی را درست وارد نکردید.");
         var hashedPassword = _passwordHasher.HashPassword(user, request.NewPassword);
         user.ChangePassword(hashedPassword, userId.Value);
 
@@ -224,7 +224,7 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
     {
         var userId = _accessor.HttpContext.GetUserId();
         if (userId == null)
-            return ServiceResult<IdDto>.Failed("Unauthorized");
+            return ServiceResult<IdDto>.Unauthorized();
         var user = await _repo.GetByIdAsync(request.Id);
         if (user == null)
             return ServiceResult<IdDto>.Failed("کاربری پیدا نشد");
@@ -240,7 +240,7 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
     {
         var userId = _accessor.HttpContext.GetUserId();
         if (userId == null)
-            return ServiceResult<IdDto>.Failed("Unauthorized");
+            return ServiceResult<IdDto>.Unauthorized();
         var user = await _repo.GetByIdAsync(request.Id);
         if (user == null)
             return ServiceResult<IdDto>.Failed("کاربری پیدا نشد");
@@ -255,7 +255,7 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
     {
         var userId = _accessor.HttpContext.GetUserId();
         if (userId == null)
-            return ServiceResult<IdDto>.Failed("Unauthorized");
+            return ServiceResult<IdDto>.Unauthorized();
         var user = await _repo.GetByIdAsync(request.Id);
         if (user == null)
             return ServiceResult<IdDto>.Failed("کاربری پیدا نشد");
@@ -274,10 +274,10 @@ IRequestHandler<DeleteUserCommand, ServiceResult<IdDto>>
     {
         var user = await _repo.GetByIdAsync(request.UserId);
         if (user == null)
-            return ServiceResult<IdDto>.Failed("User not found");
+            return ServiceResult<IdDto>.Failed("کاربر موردنظر پیدا نشد.");
         var role = await _roleRepo.GetByIdAsync(request.RoleId);
         if (role == null)
-            return ServiceResult<IdDto>.Failed("Role not found");
+            return ServiceResult<IdDto>.Failed("نقش کاربری موردنظر پیدا نشد.");
         user.SetRole(role, user.Id);
         await _repo.SaveChangesAsync(cancellationToken);
 
