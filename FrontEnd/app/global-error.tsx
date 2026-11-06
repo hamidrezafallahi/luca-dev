@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { messageFromDigest } from '@lib/apiError';
 
 type Props = {
   error: Error & { digest?: string };
@@ -26,6 +27,8 @@ const COPY = {
 export default function GlobalError({ error, reset }: Props) {
   const [locale, setLocale] = useState<'fa' | 'en'>('fa');
   const copy = COPY[locale];
+  // Server errors reach production builds without their message; ours carry it in the digest.
+  const explanation = messageFromDigest(error.digest);
 
   useEffect(() => {
     if (/^\/en(\/|$)/.test(window.location.pathname)) setLocale('en');
@@ -68,9 +71,10 @@ export default function GlobalError({ error, reset }: Props) {
         <div style={{ maxWidth: 420, textAlign: 'center' }}>
           <h1 style={{ fontSize: 22, marginBottom: 12 }}>{copy.title}</h1>
           <p style={{ opacity: 0.85, fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>
-            {process.env.NODE_ENV === 'development'
-              ? error.message
-              : copy.message}
+            {explanation ??
+              (process.env.NODE_ENV === 'development'
+                ? error.message
+                : copy.message)}
           </p>
           <button
             type="button"

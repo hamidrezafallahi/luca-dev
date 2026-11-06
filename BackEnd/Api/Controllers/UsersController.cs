@@ -22,7 +22,7 @@ public class UsersController : BaseController
     public async Task<ActionResult<UserDto>> GetByIdOrSlug(string idOrSlug)
     {
         var result = await _mediator.Send(new GetUserByIdQuery { IdOrSlug = idOrSlug });
-        if (!result.IsSuccess && result.Error == "Unauthorized") return Unauthorized(result);
+        if (result.IsUnauthorized) return Unauthorized(result);
         if (!result.IsSuccess || result.Data is null) return NotFound(result);
 
         return Ok(result);
@@ -32,7 +32,7 @@ public class UsersController : BaseController
     public async Task<ActionResult<IEnumerable<SlugDto>>> GetAllUsersSlugs()
     {
         var result = await _mediator.Send(new GetAllUsersSlugsQuery());
-        if (!result.IsSuccess && result.Error == "Unauthorized") return Unauthorized(result);
+        if (result.IsUnauthorized) return Unauthorized(result);
         return Ok(result);
     }
 
@@ -41,7 +41,7 @@ public class UsersController : BaseController
     public async Task<ActionResult<List<UserDto>>> GetAll([FromQuery] GetUsersQuery query)
     {
         var result = await _mediator.Send(query);
-        if (!result.IsSuccess && result.Error == "Unauthorized") return Unauthorized(result);
+        if (result.IsUnauthorized) return Unauthorized(result);
 
         return Ok(result);
     }
@@ -49,7 +49,7 @@ public class UsersController : BaseController
     public async Task<ActionResult<ListDto<SelectOptionDto>>> GetParent4selectOption([FromQuery] GetUsers4selectOptionQuery query)
     {
         var result = await _mediator.Send(query);
-        if (!result.IsSuccess && result.Error == "Unauthorized") return Unauthorized(result);
+        if (result.IsUnauthorized) return Unauthorized(result);
 
         return Ok(result);
     }
@@ -61,7 +61,7 @@ public class UsersController : BaseController
     public async Task<ActionResult<UserDto>> UpdateProfile(UpdateUserProfileCommand command)
     {
         var result = await _mediator.Send(command);
-        if (!result.IsSuccess && result.Error == "Unauthorized")
+        if (result.IsUnauthorized)
             return Unauthorized(result);
         return Ok(result);
     }
@@ -74,7 +74,7 @@ public class UsersController : BaseController
             return BadRequest(ModelState);
 
         var result = await _mediator.Send(command);
-        if (!result.IsSuccess && result.Error == "Unauthorized")
+        if (result.IsUnauthorized)
             return Unauthorized(result);
 
         return Ok(result);
@@ -86,7 +86,7 @@ public class UsersController : BaseController
     public async Task<ActionResult<IdDto>> Delete(int id)
     {
         var result = await _mediator.Send(new DeleteUserCommand { Id = id });
-        if (!result.IsSuccess && result.Error == "Unauthorized")
+        if (result.IsUnauthorized)
             return Unauthorized(result);
         return Ok(result);
 

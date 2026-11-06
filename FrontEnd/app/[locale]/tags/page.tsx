@@ -8,6 +8,7 @@ import TagCard from '@components/molecules/tagCard';
 import { getAll } from '@lib/getAll';
 import { buildPageMetadata } from '@lib/seo';
 import { IProductTag } from '@models/tag';
+import ApiErrorNotice from '@components/molecules/apiErrorNotice';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -52,7 +53,9 @@ export default async function Page({ params, searchParams }: Props) {
         align="center"
       />
 
-      {tags.length === 0 ? (
+      {!response.isSuccess ? (
+        <ApiErrorNotice message={response.error} />
+      ) : tags.length === 0 ? (
         <EmptyState title={t('empty')} description={t('emptyHint')} />
       ) : (
         <div className="gap-3 md:gap-4 lg:gap-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">

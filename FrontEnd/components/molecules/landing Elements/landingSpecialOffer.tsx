@@ -7,6 +7,7 @@ import { getAll } from '@lib/getAll';
 import { SpecialOffer } from '@models/specialOffer';
 
 import SpecialOfferCarouselClient from './SpecialOfferCarouselClient';
+import ApiErrorNotice from '@components/molecules/apiErrorNotice';
 
 export default async  function LandingSpecialOffer() {
   const t = await getTranslations('landing');
@@ -21,7 +22,11 @@ export default async  function LandingSpecialOffer() {
         </div>
         <div className="flex flex-1 justify-center w-full min-w-0">
           <div className="w-full h-[420px]">
-            <SpecialOfferCarouselClient spacialOffers={spacialOffers?.data.records||[]} />
+            {spacialOffers.isSuccess ? (
+              <SpecialOfferCarouselClient spacialOffers={spacialOffers.data.records} />
+            ) : (
+              <ApiErrorNotice message={spacialOffers.error} className="bg-white" />
+            )}
           </div>
         </div>
       </div>

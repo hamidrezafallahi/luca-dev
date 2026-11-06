@@ -1,5 +1,7 @@
-﻿using Domain.Entities;
+﻿using Application.Common;
+using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 using OnlineShop.Domain.Common;
 using OnlineShop.Domain.Entities;
 
@@ -52,16 +54,30 @@ namespace OnlineShop.Infrastructure.Persistence
             base.OnModelCreating(modelBuilder);
         }
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
+        public override async Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {
             EnsureStringLengths();
-            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            try
+            {
+                return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+            }
+            catch (Exception ex) when (ex is DbUpdateException or NpgsqlException)
+            {
+                throw DatabaseErrorTranslator.Translate(ex, Model) ?? ex;
+            }
         }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             EnsureStringLengths();
-            return base.SaveChanges(acceptAllChangesOnSuccess);
+            try
+            {
+                return base.SaveChanges(acceptAllChangesOnSuccess);
+            }
+            catch (Exception ex) when (ex is DbUpdateException or NpgsqlException)
+            {
+                throw DatabaseErrorTranslator.Translate(ex, Model) ?? ex;
+            }
         }
 
         // PostgreSQL rejects an over-length varchar with a bare 22001 error that names no
@@ -88,7 +104,8 @@ namespace OnlineShop.Infrastructure.Persistence
                         violations.Add(new FieldLengthViolation(
                             char.ToLowerInvariant(name[0]) + name[1..],
                             maxLength.Value,
-                            value.Length));
+                            value.Length,
+                            FieldLabels.Field(name)));
                     }
                 }
             }

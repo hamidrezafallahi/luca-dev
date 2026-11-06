@@ -51,7 +51,7 @@ namespace OnlineShop.Domain.Entities
 
         {
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Product name cannot be empty.", nameof(name));
+                throw new DomainException("نام محصول نمی‌تواند خالی باشد.");
 
             var product = new Product
             {
@@ -140,7 +140,7 @@ namespace OnlineShop.Domain.Entities
         public void AddSpecification(string key, string value)
         {
             if (Specifications.Any(s => s.Key == key))
-                throw new InvalidOperationException("Specification already exists.");
+                throw new DomainException("این مشخصه قبلاً برای محصول ثبت شده است.");
 
             Specifications.Add(
                 ProductSpecification.Create(this.Id, key, value)

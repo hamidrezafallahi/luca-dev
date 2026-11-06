@@ -71,7 +71,7 @@ export default async function Home({ params }: Props) {
   const tSeo = await getTranslations({ locale, namespace: 'seo' });
 
   const { hero, rest } = splitHeroSlide(await getSlides());
-  const categories = await getLandingCategories();
+  const { categories, error: categoriesError } = await getLandingCategories();
 
 const organizationLd = {
     '@context': 'https://schema.org',
@@ -123,7 +123,7 @@ const organizationLd = {
         <LandingHero slide={hero} />
         <TheMostProducts />
         <LandingSlider images={rest} />
-        <LandingCategory categories={categories} />
+        <LandingCategory categories={categories} error={categoriesError} />
         <LandingFeatures />
         <LandingSpecialOffer />
         <LandingBrands />

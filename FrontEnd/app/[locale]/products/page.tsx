@@ -12,6 +12,12 @@ import { serverApiBaseUrl } from '@lib/api';
 import { absoluteUrl, buildPageMetadata } from '@lib/seo';
 import { PagedResponse } from '@models/base';
 import { IProduct } from '@models/product';
+import {
+  ApiRequestError,
+  describeStatus,
+  describeThrown,
+  readApiResult,
+} from '@lib/apiError';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -71,7 +77,8 @@ export default async function Page({ params, searchParams }: Props) {
     );
 
     if (!response.ok) {
-      throw new Error(`Failed to fetch products: ${response.status}`);
+      const { error } = await readApiResult(response);
+      throw new ApiRequestError(error ?? describeStatus(response.status));
     }
 
     productsResponse = await response.json();
@@ -87,7 +94,7 @@ export default async function Page({ params, searchParams }: Props) {
     } else {
       products = [];
     }
-  } catch {
+  } catch (error) {
     productsResponse = {
       data: {
         records: [],
@@ -99,7 +106,7 @@ export default async function Page({ params, searchParams }: Props) {
         totalPages: 0,
       },
       isSuccess: false,
-      error: tStore('fetchError'),
+      error: describeThrown(error),
     };
     products = [];
   }

@@ -5,15 +5,17 @@ import { useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 
 import { reportClientError } from '@components/organisms/runtimeErrorBridge';
+import { messageFromDigest } from '@lib/apiError';
 
 type ErrorProps = {
-  error: Error;
+  error: Error & { digest?: string };
   reset: () => void;
 };
 
 /** Legacy layout error UI — prefers app/[locale]/error.tsx in App Router. */
 export default function Error({ error, reset }: ErrorProps) {
   const t = useTranslations('store');
+  const explanation = messageFromDigest(error.digest);
   useEffect(() => {
     reportClientError(error.message, error, { scope: 'layout/error' });
   }, [error]);
@@ -21,8 +23,8 @@ export default function Error({ error, reset }: ErrorProps) {
   return (
     <div className="flex flex-col items-center gap-3 p-8 text-center">
       <h2 className="luca-h3">{t('genericError')}</h2>
-      {process.env.NODE_ENV === 'development' ? (
-        <p className="max-w-md text-sm break-words">{error.message}</p>
+      {explanation || process.env.NODE_ENV === 'development' ? (
+        <p className="max-w-md text-sm break-words">{explanation ?? error.message}</p>
       ) : null}
       <button type="button" className="store-btn store-btn-primary" onClick={reset}>
         {t('retry')}

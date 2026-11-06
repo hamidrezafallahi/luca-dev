@@ -41,7 +41,7 @@ function MobileMenu() {
   const [isVisible, setIsVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const locale = useLocale();
-  const pathname = usePathname();
+  const pathname = usePathname()!;
   const t = useTranslations("header");
 
   const openDrawer = () => {

@@ -106,16 +106,20 @@ function ProductCard({ product }: { product: ILandingProduct }) {
     // Products without an in-stock offer are listed but cannot be bought.
     if (product.bestOfferId == null || product.price == null || product.finalPrice == null) return;
     if (isAuthenticated) {
-      const syncCartResponse = await addToShoppingCart({
-        url: '/CartItems',
-        body: {
-          productId: product.id,
-          productOfferId: product.bestOfferId,
-          quantity: 1,
-        },
-      }).unwrap();
-      if (syncCartResponse.isSuccess) {
-         dispatch(synchronousCart(syncCartResponse.data));
+      try {
+        const syncCartResponse = await addToShoppingCart({
+          url: '/CartItems',
+          body: {
+            productId: product.id,
+            productOfferId: product.bestOfferId,
+            quantity: 1,
+          },
+        }).unwrap();
+        if (syncCartResponse.isSuccess) {
+           dispatch(synchronousCart(syncCartResponse.data));
+        }
+      } catch {
+        // baseQueryByToken already showed the reason.
       }
     } else {
       dispatch(

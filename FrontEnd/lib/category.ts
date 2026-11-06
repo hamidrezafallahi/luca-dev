@@ -7,6 +7,7 @@ import {
 } from '@models/category';
 
 import { serverApiBaseUrl } from './api';
+import { describeStatus, readApiResult } from './apiError';
 
 const emptyCategoryQueries: CategoryRequestQueries['queries'] = {};
 
@@ -24,15 +25,14 @@ export async function getCategories(
     const res = await fetch(url, {
       next: { revalidate: 60, tags: ['categories'] },
     });
-    if (!res.ok) {
-      console.error('getCategories HTTP error', { url, status: res.status });
-      return undefined;
+    const result = await readApiResult<PagedResponse<ICategory>['data']>(res);
+    if (!result.isSuccess) {
+      console.error('getCategories failed', { url, status: res.status, error: result.error });
     }
-    const data: PagedResponse<ICategory> = await res.json();
-    return data;
-
+    return result;
   } catch (error) {
-    console.log(error)
+    console.error('getCategories: no answer', { url }, error);
+    return { isSuccess: false, data: null, error: describeStatus(503) };
   }
 }
 
@@ -41,10 +41,18 @@ export async function getCategories(
  * active root category when none is flagged, so the section is never empty
  * while categories exist.
  */
-export async function getLandingCategories(): Promise<ICategory[]> {
+export async function getLandingCategories(): Promise<{
+  categories: ICategory[];
+  error: string | null;
+}> {
   const flagged = await getCategories({ queries: { IsShowInLanding: true } });
-  if (flagged?.data?.records?.length) return flagged.data.records;
+  if (flagged.data?.records?.length) {
+    return { categories: flagged.data.records, error: null };
+  }
 
   const all = await getCategories({ queries: { PageSize: 8 } });
-  return all?.data?.records ?? [];
+  return {
+    categories: all.data?.records ?? [],
+    error: all.isSuccess ? null : all.error,
+  };
 }

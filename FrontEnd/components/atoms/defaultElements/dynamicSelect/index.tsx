@@ -48,15 +48,16 @@ const DynamicSelect = React.forwardRef<HTMLDivElement, DynamicSelectProps>(
       url: endpoint ? `${endpoint}?${params.toString()}` : '',
       method: 'GET',
       skip: !endpoint,
+      reportFailure: true,
     });
     const handleSetPage = () => {
-      if (data && data.data.totalPages > page) {
+      if (data?.data && data.data.totalPages > page) {
         setPage(page + 1);
       }
     };
 
     React.useEffect(() => {
-      if (data && data.isSuccess) {
+      if (data?.isSuccess && data.data) {
         const newOptions = data.data.records.map((opt) => ({
           label: pickLocalized(locale, opt.persianLabel, opt.englishLabel),
           value: opt.id,

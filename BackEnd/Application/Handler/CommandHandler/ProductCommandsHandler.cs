@@ -20,11 +20,11 @@ namespace Application.Handler.CommandHandler
         {
             var userId = _accessor.HttpContext.GetUserId();
             if (userId == null)
-                return ServiceResult<IdDto>.Failed("Unauthorized");
+                return ServiceResult<IdDto>.Unauthorized();
             var existingProducts = await _repository.ExistsByNameAndBrandAsync(request.Name, request.BrandId);
             if (existingProducts)
             {
-                return ServiceResult<IdDto>.Failed("A product with the same name and brand already exists.");
+                return ServiceResult<IdDto>.Failed("محصولی با همین نام و برند از قبل وجود دارد.");
             }
 
             var product = Product.Create(
@@ -87,11 +87,11 @@ namespace Application.Handler.CommandHandler
         {
             var userId = _accessor.HttpContext.GetUserId();
             if (userId == null)
-                return ServiceResult<IdDto>.Failed("Unauthorized");
+                return ServiceResult<IdDto>.Unauthorized();
 
             var product = await _repository.GetByIdAsync(request.Id);
             if (product == null)
-                return ServiceResult<IdDto>.Failed("مورد پیدا نشد");
+                return ServiceResult<IdDto>.Failed("محصول موردنظر پیدا نشد.");
 
 
 
@@ -150,11 +150,11 @@ namespace Application.Handler.CommandHandler
         {
             var userId = _accessor.HttpContext.GetUserId();
             if (userId == null)
-                return ServiceResult<IdDto>.Failed("Unauthorized");
+                return ServiceResult<IdDto>.Unauthorized();
 
             var product = await _repository.GetByIdAsync(request.Id);
             if (product == null)
-                return ServiceResult<IdDto>.Failed("مورد پیدا نشد");
+                return ServiceResult<IdDto>.Failed("محصول موردنظر پیدا نشد.");
 
             product.SetActive(request.IsActive, userId.Value);
 
@@ -166,11 +166,11 @@ namespace Application.Handler.CommandHandler
         {
             var userId = _accessor.HttpContext.GetUserId();
             if (userId == null)
-                return ServiceResult<IdDto>.Failed("Unauthorized");
+                return ServiceResult<IdDto>.Unauthorized();
 
             var product = await _repository.GetByIdAsync(request.Id);
             if (product == null)
-                return ServiceResult<IdDto>.Failed("مورد پیدا نشد");
+                return ServiceResult<IdDto>.Failed("محصول موردنظر پیدا نشد.");
 
             product.Delete(userId.Value);
 
