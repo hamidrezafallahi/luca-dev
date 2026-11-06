@@ -46,7 +46,8 @@ public class BrandCommandHandlerTests
         return new BrandCommandHandler(
             repo,
             new HttpContextAccessor { HttpContext = http },
-            new FakeUploader());
+            new FakeUploader(),
+            new FakeUnitOfWork());
     }
 
     private sealed class FakeBrandRepository : IBrandRepository
@@ -67,6 +68,19 @@ public class BrandCommandHandlerTests
         public Task UpdateAsync(Brand entity) => throw new NotSupportedException();
         public Task<bool> DeleteAsync(int id) => throw new NotSupportedException();
         public Task<List<int>> GetAllIds() => throw new NotSupportedException();
+    }
+
+    private sealed class FakeUnitOfWork : IUnitOfWork
+    {
+        public Task<IAppTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default) =>
+            Task.FromResult<IAppTransaction>(new FakeTransaction());
+
+        private sealed class FakeTransaction : IAppTransaction
+        {
+            public Task CommitAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
+            public Task RollbackAsync(CancellationToken cancellationToken = default) => Task.CompletedTask;
+            public ValueTask DisposeAsync() => ValueTask.CompletedTask;
+        }
     }
 
     private sealed class FakeUploader : IUploaderService
