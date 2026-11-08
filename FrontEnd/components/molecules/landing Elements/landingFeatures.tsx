@@ -11,7 +11,8 @@ import { LoupeMark } from '@components/atoms/lucaIcons';
 import MediaImage from '@components/atoms/MediaImage';
 import ergonomicPicture
   from '@public/images/landingPage/Black Eyeglasses with LUCA Magnifying Loupe.png';
-import sportPicture from '@public/images/landingPage/ergonomics.png';
+import sportPicture
+  from '@public/images/landingPage/ChatGPT Image Nov 8, 2026, 02_16_27 PM-1.png';
 
 type FeatureKey = 'ergonomics' | 'optics';
 
