@@ -6,10 +6,11 @@ import {
 } from '@utils/toMediaUrl';
 
 type MediaImageProps = Omit<ImageProps, 'src'> & {
-  src: string | null | undefined;
+  src: ImageProps['src'];
   fallbackSrc?: string;
 };
-
+ 
+ 
 /**
  * next/image for backend media.
  *
@@ -30,13 +31,19 @@ export default function MediaImage({
   fill,
   ...props
 }: MediaImageProps) {
-  const resolved = toMediaUrl(src) || fallbackSrc;
-  const isUpload = isUploadMediaPath(resolved);
+  const resolvedSrc =
+    typeof src === 'string'
+      ? toMediaUrl(src) || fallbackSrc
+      : src;
+
+  const isUpload =
+    typeof resolvedSrc === 'string' &&
+    isUploadMediaPath(resolvedSrc);
 
   return (
     <Image
       {...props}
-      src={resolved}
+      src={resolvedSrc}
       alt={alt}
       fill={fill}
       sizes={sizes ?? (fill ? '(max-width: 768px) 100vw, 33vw' : undefined)}
