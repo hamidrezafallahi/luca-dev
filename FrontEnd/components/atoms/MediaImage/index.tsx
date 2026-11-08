@@ -6,7 +6,8 @@ import {
 } from '@utils/toMediaUrl';
 
 type MediaImageProps = Omit<ImageProps, 'src'> & {
-  src: ImageProps['src'];
+  /** Missing/empty values render `fallbackSrc` (API media is often optional). */
+  src: ImageProps['src'] | null | undefined;
   fallbackSrc?: string;
 };
  
@@ -32,7 +33,7 @@ export default function MediaImage({
   ...props
 }: MediaImageProps) {
   const resolvedSrc =
-    typeof src === 'string'
+    src == null || typeof src === 'string'
       ? toMediaUrl(src) || fallbackSrc
       : src;
 
