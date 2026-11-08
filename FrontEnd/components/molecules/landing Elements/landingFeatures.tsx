@@ -11,8 +11,9 @@ import { LoupeMark } from '@components/atoms/lucaIcons';
 import MediaImage from '@components/atoms/MediaImage';
 import ergonomicPicture
   from '@public/images/landingPage/Black Eyeglasses with LUCA Magnifying Loupe.png';
-import sportPicture
-  from '@public/images/landingPage/ChatGPT Image Nov 8, 2026, 02_16_27 PM-1.png';
+// Keep static-import filenames URL-safe: /_next/image decodes the url param,
+// and commas in the path make its internal fetch 404 → 400 "not a valid image".
+import sportPicture from '@public/images/landingPage/luca-onex-loupe.png';
 
 type FeatureKey = 'ergonomics' | 'optics';
 
