@@ -1103,6 +1103,14 @@
     "ctaContact": {
       "title": "Talk to a specialist",
       "link": "Book a consultation"
+    },
+    "images": {
+      "hero": "LUCA dental loupe mounted on black prescription eyeglasses",
+      "optics": "LUCA dental loupe on the OneX safety frame with binocular lenses",
+      "ergonomics": "LUCA dental loupe on an adjustable headband",
+      "custom": "Open LUCA loupe case with the loupe, a cleaning cloth and an adjustment screwdriver",
+      "ctaShop": "LUCA dental loupe on an adjustable headband",
+      "ctaContact": "Black LUCA loupe case with embossed logo"
     }
   },
   "categoryFaq": {

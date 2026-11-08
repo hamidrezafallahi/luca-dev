@@ -1,8 +1,15 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
+import Image, { type StaticImageData } from 'next/image';
 import Link from 'next/link';
 
-import { LoupeMark } from '@components/atoms/lucaIcons';
+// Keep filenames URL-safe (no commas): /_next/image decodes the url param and
+// a comma path makes its internal fetch 404.
+import heroPicture from '@public/images/landingPage/Black Eyeglasses with LUCA Magnifying Loupe.png';
+import headbandPicture from '@public/images/landingPage/luca-headband-loupe.png';
+import caseOpenPicture from '@public/images/landingPage/luca-loupe-case-open.png';
+import casePicture from '@public/images/landingPage/luca-loupe-case.png';
+import onexPicture from '@public/images/landingPage/luca-onex-loupe.png';
 import { isPlaceholder } from '@lib/placeholder';
 import { buildPageMetadata } from '@lib/seo';
 
@@ -23,9 +30,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const CHAPTERS = [
-  { key: 'optics' as const, reverse: false, cta: null },
-  { key: 'ergonomics' as const, reverse: true, cta: null },
-  { key: 'custom' as const, reverse: false, cta: 'cooperation' },
+  { key: 'optics' as const, reverse: false, cta: null, image: onexPicture, contain: false },
+  { key: 'ergonomics' as const, reverse: true, cta: null, image: headbandPicture, contain: true },
+  { key: 'custom' as const, reverse: false, cta: 'cooperation', image: caseOpenPicture, contain: false },
+];
+
+const TILES = [
+  { key: 'ctaShop' as const, href: 'products', image: headbandPicture, contain: true },
+  { key: 'ctaContact' as const, href: 'cooperation', image: casePicture, contain: false },
 ];
 
 const FACTS = ['1', '2', '3'] as const;
@@ -37,15 +49,33 @@ const MD_COLS: Record<number, string> = {
   3: 'md:grid-cols-3',
 };
 
-/** Image slot. Replace the mark with <MediaImage> / <Image> once brand photography exists. */
-function Placeholder({ className = '', dark = false }: { className?: string; dark?: boolean }) {
+/** Full-bleed photo filling its slot; the slot sets the height. */
+function StoryImage({
+  src,
+  alt,
+  sizes,
+  className = '',
+  priority = false,
+  contain = false,
+}: {
+  src: StaticImageData;
+  alt: string;
+  sizes: string;
+  className?: string;
+  priority?: boolean;
+  contain?: boolean;
+}) {
   return (
-    <div
-      className={`flex justify-center items-center ${
-        dark ? 'text-[#6f6f69]' : 'text-[#6a6a65] luca-ph'
-      } ${className}`}
-    >
-      <LoupeMark width={150} />
+    <div className={`relative overflow-hidden bg-[#2b2b2b] ${className}`}>
+      <Image
+        src={src}
+        alt={alt}
+        fill
+        sizes={sizes}
+        priority={priority}
+        placeholder="blur"
+        className={contain ? 'object-contain' : 'object-cover'}
+      />
     </div>
   );
 }
@@ -65,7 +95,13 @@ export default async function Page({ params }: Props) {
     <article className="flex flex-col text-ink">
       {/* Hero */}
       <section className="flex flex-col items-center px-5 md:px-10 pb-10 md:pb-14 h-[480px] md:h-[460px] xl:h-[560px] text-center luca-dark">
-        <Placeholder dark className="flex-1" />
+        <StoryImage
+          src={heroPicture}
+          alt={t('images.hero')}
+          sizes="100vw"
+          priority
+          className="flex-1 -mx-5 md:-mx-10 mb-6 self-stretch"
+        />
         <div className="flex flex-col items-center gap-2.5">
           <span className="font-medium text-[#d0d0cb] text-[13px]">{t('eyebrow')}</span>
           <h1 className="text-white luca-h1">{t('title')}</h1>
@@ -84,7 +120,11 @@ export default async function Page({ params }: Props) {
       {/* Chapters */}
       {CHAPTERS.map((chapter) => (
         <section key={chapter.key} className="grid grid-cols-1 md:grid-cols-2">
-          <Placeholder
+          <StoryImage
+            src={chapter.image}
+            contain={chapter.contain}
+            alt={t(`images.${chapter.key}`)}
+            sizes="(max-width: 768px) 100vw, 50vw"
             className={`h-[360px] md:h-[460px] xl:h-[620px] ${chapter.reverse ? 'md:order-2' : ''}`}
           />
           <div
@@ -137,12 +177,15 @@ export default async function Page({ params }: Props) {
 
       {/* Closing tiles */}
       <section className="gap-8 md:gap-4 xl:gap-6 grid grid-cols-1 md:grid-cols-2 pb-12 md:pb-16 xl:pb-[88px] luca-container">
-        {[
-          { key: 'ctaShop' as const, href: 'products' },
-          { key: 'ctaContact' as const, href: 'cooperation' },
-        ].map((tile) => (
+        {TILES.map((tile) => (
           <div key={tile.key} className="flex flex-col">
-            <Placeholder className="h-[400px] xl:h-[600px]" />
+            <StoryImage
+              src={tile.image}
+              contain={tile.contain}
+              alt={t(`images.${tile.key}`)}
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="h-[400px] xl:h-[600px]"
+            />
             <div className="flex flex-col items-center gap-0.5 pt-5 min-h-[96px]">
               <h2 className="luca-h3">{t(`${tile.key}.title`)}</h2>
               <Link href={`/${locale}/${tile.href}`} className="luca-link">
