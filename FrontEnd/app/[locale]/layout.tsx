@@ -2,7 +2,6 @@ import { ReactNode } from 'react';
 
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
-import localFont from 'next/font/local';
 import { notFound } from 'next/navigation';
 
 import CustomLayout from '@layout/index';
@@ -16,18 +15,6 @@ interface IProps {
     locale: string;
   }>;
 }
-
-const myFont = localFont({
-  src: [
-    {
-      path: '../../public/fonts/IRANSansWeb(FaNum).woff',
-      weight: '400',
-      style: 'normal',
-    },
-  ],
-  variable: '--IRANSans-font',
-  display: 'swap',
-});
 
 export async function generateStaticParams() {
   return [{ locale: 'fa' }, { locale: 'en' }];
@@ -57,7 +44,7 @@ export default async function BaseLayout({ children, params }: IProps) {
     <html
       lang={locale}
       dir={locale === 'fa' ? 'rtl' : 'ltr'}
-      className={`${fontVariables} ${myFont.variable}`}
+      className={fontVariables}
       suppressHydrationWarning
     >
       <head>

@@ -416,6 +416,20 @@
       "deviceDesktop": "دسکتاپ",
       "deviceMobile": "موبایل",
       "previewHint": "نشانگر را روی یک رنگ نگه دارید تا جاهایی که به کار رفته در پیش‌نمایش مشخص شود.",
+      "fontTitle": "فونت",
+      "fontHint": "فونت متن‌ها و فونت تیترهای سایت را جدا انتخاب کنید. فونت‌ها روی سرور خود سایت میزبانی می‌شوند و فقط فونت‌های انتخاب‌شده برای بازدیدکننده دانلود می‌شوند.",
+      "fontTargets": {
+        "body": "متن",
+        "heading": "تیترها"
+      },
+      "fontHeadingSample": "راهنمای انتخاب لوپ",
+      "fontSample": "لوپ دندانپزشکی لوکا با بزرگنمایی ۳٫۵ برابر",
+      "fontCurrent": "انتخاب‌شده",
+      "fontCategories": {
+        "general": "عمومی",
+        "formal": "رسمی",
+        "fancy": "فانتزی و تزئینی"
+      },
       "contrastTitle": "خوانایی",
       "contrastHint": "کنتراست جفت‌رنگ‌هایی که در سایت کنار هم می‌آیند، بر اساس استاندارد WCAG AA.",
       "contrastScore": "{passed} از {total} مورد قبول",
@@ -823,7 +837,9 @@
     "brandSuppliers": "تامین‌کنندگان برند",
     "brandCategories": "دسته‌بندی‌ها",
     "tagProducts": "محصولات دسته بندی",
-    "chooseOffer": "انتخاب فروشنده و افزودن به سبد",
+    "chooseOffer": "افزودن به سبد",
+    "variantDefaultLabel": "مدل",
+    "variantGroupAria": "انتخاب {name}",
     "supplierProducts": "محصولات این تأمین‌کننده"
   },
   "category": {

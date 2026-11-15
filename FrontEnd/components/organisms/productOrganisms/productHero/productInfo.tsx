@@ -1,17 +1,13 @@
-import {
-  getLocale,
-  getTranslations,
-} from 'next-intl/server';
+import { getLocale } from 'next-intl/server';
 
 import { pickLocalized } from '@lib/utils';
 import { IDetailedProduct } from '@models/product';
 
-import ProductPrice from './productPrice';
+import ProductPurchase from './productPurchase';
 import ProductRate from './productRate';
 
 export default async function ProductInfo({ product }: { product: IDetailedProduct }) {
   const locale = await getLocale();
-  const t = await getTranslations();
   const categoryName = pickLocalized(
     locale,
     product.categoryName,
@@ -29,15 +25,6 @@ export default async function ProductInfo({ product }: { product: IDetailedProdu
         <h1 className="luca-h2">{product.name}</h1>
       </div>
 
-      <ProductPrice
-        price={product.price}
-        finalPrice={product.finalPrice}
-        currency={product.currency}
-        inStock={product.inStock}
-        inventory={product.inventory}
-        locale={locale}
-      />
-
       {product.description && (
         <p className="text-[15px] line-clamp-4 leading-loose luca-muted">{product.description}</p>
       )}
@@ -48,9 +35,7 @@ export default async function ProductInfo({ product }: { product: IDetailedProdu
         count={product.rateCount}
       />
 
-      <a href="#product-offers" className="w-full store-btn store-btn-primary">
-        {t('product.chooseOffer')}
-      </a>
+      <ProductPurchase product={product} />
     </div>
   );
 }

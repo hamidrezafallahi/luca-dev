@@ -19,6 +19,8 @@ import {
   deleteTheme,
   refreshStorefrontTheme,
 } from './api';
+import { findFont, fontStack, headingFontStack } from '@lib/fontCatalog';
+
 import { Glyph } from './icons';
 import {
   ColorKey,
@@ -187,7 +189,20 @@ export default function ThemeGallery({ themes }: { themes: ThemeRecord[] | null 
                 <div className="flex justify-between items-start gap-3 pt-4">
                   <div className="min-w-0">
                     <p className="text-[13px] text-[var(--admin-text-muted)]">{t('themeId', { id: theme.id })}</p>
-                    <h3 className="luca-display text-[22px] truncate">{theme.name}</h3>
+                    <h3
+                      className="luca-display text-[22px] truncate"
+                      style={{ fontFamily: headingFontStack(theme.headingFontFamily) }}
+                    >
+                      {theme.name}
+                    </h3>
+                    <p
+                      className="text-[13px] text-[var(--admin-text-muted)] truncate"
+                      style={{ fontFamily: fontStack(theme.fontFamily) }}
+                    >
+                      {t('fontTitle')}: {findFont(theme.fontFamily)?.[locale === 'fa' ? 'fa' : 'en']}
+                      {' · '}
+                      {t('fontTargets.heading')}: {findFont(theme.headingFontFamily)?.[locale === 'fa' ? 'fa' : 'en']}
+                    </p>
                   </div>
                   <FrameDots
                     colors={[theme.primaryColor, theme.secondaryColor, theme.surfaceMutedColor, theme.textColor]}

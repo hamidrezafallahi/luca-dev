@@ -17,6 +17,9 @@ export interface ISupplier {
   basePrice: number;
   finalPrice: number;
   inventory: number;
+  /** Option this offer sells, e.g. «بزرگنمایی» / «3.5x». */
+  variantName?: string | null;
+  variantValue?: string | null;
   isActive: true;
   createdAt: string;
   activeDiscounts: [];
@@ -70,7 +73,15 @@ export async function SupplierCardGrid({
           </p>
         ) : null}
 
-        {inStock ? <span className="luca-badge">{t('common.inStock')}</span> : null}
+        <div className="flex flex-wrap gap-1.5">
+          {supplier.variantValue ? (
+            <span className="luca-badge luca-badge-solid">
+              {supplier.variantName ? `${supplier.variantName} ` : ''}
+              <span dir="ltr">{supplier.variantValue}</span>
+            </span>
+          ) : null}
+          {inStock ? <span className="luca-badge">{t('common.inStock')}</span> : null}
+        </div>
 
         <div className="flex flex-wrap items-baseline gap-1.5 mt-auto pt-2">
           <span className="text-lg">

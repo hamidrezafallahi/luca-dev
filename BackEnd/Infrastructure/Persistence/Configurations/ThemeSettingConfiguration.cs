@@ -26,6 +26,17 @@ namespace OnlineShop.Infrastructure.Persistence.Configurations
                 builder.Property(name).IsRequired().HasMaxLength(7);
             }
 
+            // ردیف‌های موجود هم فونت پیش‌فرض فعلی سایت (وزیرمتن) را می‌گیرند.
+            builder.Property(x => x.FontFamily)
+                   .IsRequired()
+                   .HasMaxLength(ThemeFonts.MaxLength)
+                   .HasDefaultValue(ThemeFonts.Default);
+
+            builder.Property(x => x.HeadingFontFamily)
+                   .IsRequired()
+                   .HasMaxLength(ThemeFonts.MaxLength)
+                   .HasDefaultValue(ThemeFonts.DefaultHeading);
+
             builder.ToTable("ThemeSettings");
 
             // تم پیش‌فرض (همان پالت مونوکروم فعلی سایت) تا سایت از روز اول رنگ‌هایش را از دیتابیس بگیرد.
@@ -46,6 +57,8 @@ namespace OnlineShop.Infrastructure.Persistence.Configurations
                 BorderColor = "#e4e4e0",
                 TextColor = "#111111",
                 TextMutedColor = "#5c5c58",
+                FontFamily = ThemeFonts.Default,
+                HeadingFontFamily = ThemeFonts.DefaultHeading,
                 IsActive = true,
                 IsDeleted = false,
                 CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),

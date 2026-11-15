@@ -3,20 +3,11 @@ import React, {
   useRef,
 } from 'react';
 
-import { useLocale, useTranslations } from 'next-intl';
-import Link from 'next/link';
-import { useDispatch } from 'react-redux';
+import { useTranslations } from 'next-intl';
 
-import { Rate } from '@components/atoms/defaultElements/customRate';
 import { IcChevronLeft, IcChevronRight } from '@components/atoms/lucaIcons';
-import MediaImage from '@components/atoms/MediaImage';
+import VariantProductCard from '@components/molecules/productCard/variantProductCard';
 import { ILandingProduct } from '@models/product';
-import { useGetConditionallyMutation } from '@services/base';
-import {
-  addToCart,
-  synchronousCart,
-} from '@slice/shoppingCartSlice';
-import { getCookie } from '@utils/core';
 
 interface ProductsCarouselProps {
   /** Section title. Omit for the default, pass `null` when the parent renders its own heading. */
@@ -87,117 +78,12 @@ export default function ProductsCarousel({
               key={p.id}
               className="flex-shrink-0 w-[168px] md:w-[236px] lg:w-[calc((100%-4.5rem)/4)]"
             >
-              <ProductCard product={p} />
+              <VariantProductCard product={p} />
             </div>
           ))
         )}
       </div>
     </div>
-  );
-}
-
-function ProductCard({ product }: { product: ILandingProduct }) {
-  const t = useTranslations();
-  const isAuthenticated = Boolean(getCookie("candySession"));
-  const locale = useLocale();
-  const [addToShoppingCart] = useGetConditionallyMutation();
-  const dispatch = useDispatch();
-  const handleAddToCart = async (product: ILandingProduct) => {
-    // Products without an in-stock offer are listed but cannot be bought.
-    if (product.bestOfferId == null || product.price == null || product.finalPrice == null) return;
-    if (isAuthenticated) {
-      try {
-        const syncCartResponse = await addToShoppingCart({
-          url: '/CartItems',
-          body: {
-            productId: product.id,
-            productOfferId: product.bestOfferId,
-            quantity: 1,
-          },
-        }).unwrap();
-        if (syncCartResponse.isSuccess) {
-           dispatch(synchronousCart(syncCartResponse.data));
-        }
-      } catch {
-        // baseQueryByToken already showed the reason.
-      }
-    } else {
-      dispatch(
-        addToCart({
-          product: {
-            id: product.id,
-            productOfferId: product.bestOfferId,
-            name: product.name,
-            description: product.description,
-            price: product.price,
-            discountAmount: product.discountAmount ?? 0,
-            discountIsPercent: product.discountIsPercent ?? false,
-            finalPrice: product.finalPrice,
-            quantity: 1,
-            mainImage: product.mainImage,
-          },
-        }),
-      );
-    }
-  };
- 
-  const href = `/${locale}/products/${product.slug || product.id}`;
-  const canBuy = product.inStock && product.bestOfferId != null;
-  const hasDiscount = canBuy && (product.discountAmount ?? 0) > 0;
-
-  return (
-    <article className="flex flex-col gap-3.5 w-full min-w-0">
-      <Link href={href} className="block relative w-full aspect-[31/34] overflow-hidden luca-ph">
-        <MediaImage
-          src={product.mainImage}
-          alt={product.name}
-          fill
-          className="object-cover"
-          sizes="(max-width: 640px) 168px, (max-width: 1024px) 236px, 310px"
-          loading="lazy"
-        />
-        {hasDiscount && (
-          <span className="top-3 absolute start-3 luca-badge luca-badge-accent">
-            -{product.discountAmount}
-            {product.discountIsPercent && "%"}
-          </span>
-        )}
-      </Link>
-
-      <div className="flex flex-col items-center gap-1 text-center">
-        <span className="text-xs luca-muted">{product.brand}</span>
-        <Link href={href} className="hover:underline underline-offset-4">
-          <h3 className="font-body font-normal text-[15px] line-clamp-2 leading-relaxed">{product.name}</h3>
-        </Link>
-        <div className="flex justify-center items-center">
-          <Rate value={product.averageRate} />
-        </div>
-        {canBuy ? (
-          <div className="flex flex-wrap justify-center items-baseline gap-x-2 text-sm">
-            {hasDiscount && (
-              <span className="line-through luca-muted">
-                {product.price?.toLocaleString()}
-              </span>
-            )}
-            <span>{product.finalPrice?.toLocaleString()}</span>
-            <span className="luca-muted">{t('common.currency')}</span>
-          </div>
-        ) : (
-          <span className="text-sm luca-muted">{t('common.outOfStock')}</span>
-        )}
-        <button
-          type="button"
-          disabled={!canBuy}
-          onClick={() => {
-            handleAddToCart(product);
-          }}
-          aria-label={t('common.addToCartAria', { name: product.name })}
-          className="disabled:opacity-40 text-[13px] disabled:no-underline disabled:cursor-not-allowed luca-link"
-        >
-          {t('common.addToCart')}
-        </button>
-      </div>
-    </article>
   );
 }
 

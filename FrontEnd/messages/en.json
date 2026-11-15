@@ -416,6 +416,20 @@
       "deviceDesktop": "Desktop",
       "deviceMobile": "Mobile",
       "previewHint": "Hover a colour to outline where the preview uses it.",
+      "fontTitle": "Fonts",
+      "fontHint": "Pick the typeface for body text and for headings separately. Fonts are self-hosted and visitors only download the ones you pick.",
+      "fontTargets": {
+        "body": "Body text",
+        "heading": "Headings"
+      },
+      "fontHeadingSample": "Choosing a dental loupe — راهنمای انتخاب لوپ",
+      "fontSample": "Luca dental loupe, 3.5× magnification — لوپ دندانپزشکی لوکا",
+      "fontCurrent": "Selected",
+      "fontCategories": {
+        "general": "General",
+        "formal": "Formal",
+        "fancy": "Decorative"
+      },
       "contrastTitle": "Readability",
       "contrastHint": "Contrast of the colour pairs the site puts together, checked against WCAG AA.",
       "contrastScore": "{passed} of {total} pass",
@@ -823,7 +837,9 @@
     "brandSuppliers": "Brand suppliers",
     "brandCategories": "Categories",
     "tagProducts": "Tagged products",
-    "chooseOffer": "Choose a seller and add to cart",
+    "chooseOffer": "Add to cart",
+    "variantDefaultLabel": "Option",
+    "variantGroupAria": "Choose {name}",
     "supplierProducts": "Products from this supplier"
   },
   "category": {
