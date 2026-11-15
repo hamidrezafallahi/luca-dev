@@ -149,8 +149,9 @@ export const ShoppingCartReducer = createSlice({
       if ((item.quantity || 1) > 1) {
         item.quantity!--;
       } else {
+        // Remove only this line; other variants (offers) of the same product stay.
         state.products = state.products.filter(
-          (p) => p.id !== id && p.productOfferId !== productOfferId,
+          (p) => !(p.id === id && p.productOfferId === productOfferId),
         );
       }
       calculateTotals(state);
@@ -161,8 +162,9 @@ export const ShoppingCartReducer = createSlice({
     ) => {
       const { id, productOfferId } = action.payload;
 
+      // Remove only this line; other variants (offers) of the same product stay.
       state.products = state.products.filter(
-        (p) => p.id !== id && p.productOfferId !== productOfferId,
+        (p) => !(p.id === id && p.productOfferId === productOfferId),
       );
       calculateTotals(state);
     },
