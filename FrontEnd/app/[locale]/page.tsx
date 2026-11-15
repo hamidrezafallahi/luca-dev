@@ -89,6 +89,7 @@ const organizationLd = {
     sameAs: [
       'https://instagram.com/lucaloupe.ir',
       'https://wa.me/989355716386',
+      'https://t.me/Raha_aku'
     ],
   
     address: {

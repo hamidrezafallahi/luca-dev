@@ -10,10 +10,10 @@ import { IcPlus } from '@components/atoms/lucaIcons';
 
 // TODO(luca): replace with the brand's real social profiles.
 const SOCIAL = [
-  { href: 'https://instagram.com', label: 'Instagram', labelKey: 'instagram' as const },
-  { href: 'https://t.me', label: 'Telegram', labelKey: 'telegram' as const },
-  { href: 'https://youtube.com', label: 'YouTube', labelKey: 'youtube' as const },
-  { href: 'https://wa.me', label: 'WhatsApp', labelKey: 'whatsapp' as const },
+  { href: 'https://instagram.com/lucaloupe.ir', label: 'Instagram', labelKey: 'instagram' as const },
+  { href: 'https://t.me/Raha_aku', label: 'Telegram', labelKey: 'telegram' as const },
+  // { href: 'https://youtube.com', label: 'YouTube', labelKey: 'youtube' as const },
+  { href: 'https://wa.me/989355716386', label: 'WhatsApp', labelKey: 'whatsapp' as const },
 ] as const;
 
 const COLUMNS = [
@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
     <footer className="store-footer" role="contentinfo">
       <div className="luca-container">
         {/* Desktop / tablet: link columns */}
-        <div className="hidden md:grid grid-cols-5 gap-4 lg:gap-8 pb-10 border-b border-[#dcdcd6]">
+        <div className="hidden gap-4 lg:gap-8 md:grid grid-cols-5 pb-10 border-[#dcdcd6] border-b">
           {COLUMNS.map((col) => (
             <div key={col.titleKey} className="flex flex-col">
               <h2 className="pb-2 font-body font-semibold text-[13px]">
@@ -104,8 +104,8 @@ const Footer: React.FC = () => {
         {/* Mobile: accordion */}
         <div className="md:hidden flex flex-col">
           {COLUMNS.map((col) => (
-            <details key={col.titleKey} className="group border-b border-[#dcdcd6]">
-              <summary className="flex justify-between items-center h-14 font-medium text-sm list-none cursor-pointer marker:content-none [&::-webkit-details-marker]:hidden">
+            <details key={col.titleKey} className="group border-[#dcdcd6] border-b">
+              <summary className="[&::-webkit-details-marker]:hidden flex justify-between items-center h-14 font-medium text-sm marker:content-none cursor-pointer list-none">
                 <span>{t(`columns.${col.titleKey}`)}</span>
                 <IcPlus size={18} className="group-open:rotate-45 transition-transform" />
               </summary>
@@ -120,8 +120,8 @@ const Footer: React.FC = () => {
               </ul>
             </details>
           ))}
-          <details className="group border-b border-[#dcdcd6]">
-            <summary className="flex justify-between items-center h-14 font-medium text-sm list-none cursor-pointer marker:content-none [&::-webkit-details-marker]:hidden">
+          <details className="group border-[#dcdcd6] border-b">
+            <summary className="[&::-webkit-details-marker]:hidden flex justify-between items-center h-14 font-medium text-sm marker:content-none cursor-pointer list-none">
               <span>{t('columns.follow')}</span>
               <IcPlus size={18} className="group-open:rotate-45 transition-transform" />
             </summary>
