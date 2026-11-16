@@ -887,6 +887,8 @@
     "goToParent": "Go to parent"
   },
   "common": {
+    "viewProduct": "View product",
+    "featured": "Featured",
     "loading": "Loading",
     "view": "View",
     "add": "Add",

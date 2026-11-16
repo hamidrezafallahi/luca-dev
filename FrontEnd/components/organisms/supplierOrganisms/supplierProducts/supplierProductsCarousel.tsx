@@ -18,6 +18,7 @@ import {
   synchronousCart,
 } from '@slice/shoppingCartSlice';
 import { getCookie } from '@utils/core';
+import { CardPlus } from '@components/molecules/productCard/cardParts';
 import { toMediaUrl } from '@utils/toMediaUrl';
 
 interface ProductsCarouselProps {
@@ -68,13 +69,10 @@ export default function SupplierProductsCarousel({
 
       <div
         ref={scrollRef}
-        className="hidden-show-scrollbar flex gap-3 md:gap-4 lg:gap-6 overflow-x-auto scroll-smooth"
+        className="hidden-show-scrollbar luca-card-rail"
       >
         {items?.map((p) => (
-          <div
-            key={p.id}
-            className="flex-shrink-0 w-[168px] md:w-[236px] lg:w-[calc((100%-4.5rem)/4)]"
-          >
+          <div key={p.id} className="luca-card-rail-item">
             <ProductCard product={p} />
           </div>
         ))}
@@ -129,38 +127,48 @@ dispatch(addToCart({
     product.finalPrice != null && product.basePrice != null && product.finalPrice < product.basePrice;
 
   return (
-    <article className="flex flex-col gap-3.5 w-full min-w-0">
-      <Link href={href} className="block relative w-full aspect-[31/34] overflow-hidden luca-ph">
-        <img
-          src={toMediaUrl(product.productImage)}
-          alt={product.productName}
-          className="w-full h-full object-cover"
-          loading="lazy"
-        />
+    <article className="luca-card">
+      {/* The title links to the product for keyboard and screen-reader users. */}
+      <Link href={href} className="luca-card-media" tabIndex={-1} aria-hidden="true">
+        {product.productImage && (
+          <img
+            src={toMediaUrl(product.productImage)}
+            alt={product.productName}
+            className="luca-card-img"
+            loading="lazy"
+          />
+        )}
       </Link>
 
-      <div className="flex flex-col items-center gap-1 text-center">
-        <Link href={href} className="hover:underline underline-offset-4">
-          <h3 className="font-body font-normal text-[15px] line-clamp-2 leading-relaxed">{product.productName}</h3>
-        </Link>
-        <div className="flex flex-wrap justify-center items-baseline gap-x-2 text-sm">
-          {hasDiscount && (
-            <span className="line-through luca-muted">
-              {product.basePrice?.toLocaleString()}
+      <div className="luca-card-body">
+        <h3 className="luca-card-title">
+          <Link href={href}>{product.productName}</Link>
+        </h3>
+        {product.productDescription && (
+          <p className="luca-card-desc">{product.productDescription}</p>
+        )}
+        <div className="luca-card-foot luca-card-actions">
+          <div className="luca-card-price">
+            {hasDiscount && (
+              <span className="luca-card-price-old">{product.basePrice?.toLocaleString()}</span>
+            )}
+            <span className="luca-card-price-now">
+              {(product.finalPrice ?? product.basePrice)?.toLocaleString()}
             </span>
-          )}
-          <span>{(product.finalPrice ?? product.basePrice)?.toLocaleString()}</span>
-          <span className="luca-muted">{t('common.currency')}</span>
+            <span className="luca-card-price-unit">{t('common.currency')}</span>
+          </div>
+          <button
+            type="button"
+            onClick={() => {
+              handleAddToCart(product);
+            }}
+            aria-label={t('common.addToCartAria', { name: product.productName })}
+            className="luca-card-action"
+          >
+            {t('common.add')}
+            <CardPlus />
+          </button>
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            handleAddToCart(product);
-          }}
-          className="text-[13px] luca-link"
-        >
-          {t('common.addToCart')}
-        </button>
       </div>
     </article>
   );
