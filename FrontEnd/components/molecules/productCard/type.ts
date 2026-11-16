@@ -26,5 +26,8 @@ export interface ISimpleProduct {
     description: string;
     mainImage: string | null;
     suppliers?:IUser[]
+    /** Sent by the /Products listing; shown in the card footer when present. */
+    categoryName?: string | null;
+    brandName?: string | null;
 }
  

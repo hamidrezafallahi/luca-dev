@@ -1209,3 +1209,295 @@ html {
     animation-duration: 2s;
   }
 }
+
+/* ================== LUCA Card System — Version 02 ==================
+   Product cards only. Two variants share one shell:
+   .luca-card                      editorial (light surface, inset image, charcoal pill CTA)
+   .luca-card.luca-card-immersive  feature highlight (edge-to-edge photo, ivory pill CTA)
+   Unlike the rest of the storefront these cards are rounded and softly elevated. */
+:root {
+  --card-radius: 30px;
+  --card-pad: 12px;
+  --card-surface: #fbfaf7;
+  --card-media: #f1efea;
+  --card-border: rgba(23, 26, 25, 0.08);
+  --card-ink: #171a19;
+  --card-muted: #6d6a64;
+  --card-pill: #efede8;
+  --card-ivory: #f6f5f2;
+  --card-shadow: 0 1px 2px rgba(23, 26, 25, 0.04), 0 14px 36px -14px rgba(23, 26, 25, 0.12);
+  --card-shadow-hover: 0 2px 4px rgba(23, 26, 25, 0.05), 0 26px 54px -18px rgba(23, 26, 25, 0.2);
+}
+
+[data-theme="dark"] {
+  --card-surface: #232321;
+  --card-media: #2c2c29;
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-ink: #f3f3f0;
+  --card-muted: #a9a9a4;
+  --card-pill: #32322f;
+  --card-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 14px 36px -14px rgba(0, 0, 0, 0.55);
+  --card-shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.35), 0 26px 54px -18px rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 639px) {
+  :root { --card-radius: 24px; --card-pad: 10px; }
+}
+
+@layer components {
+  .luca-card {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    padding: var(--card-pad);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+    background: var(--card-surface);
+    color: var(--card-ink);
+    box-shadow: var(--card-shadow);
+    transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 300ms ease;
+  }
+  .luca-card-media {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    border-radius: calc(var(--card-radius) - var(--card-pad) + 2px);
+    background: var(--card-media);
+  }
+  .luca-card-img {
+    width: 100%;
+    height: 100%;
+    /* Product shots are isolated on white: show the whole loupe, never crop the frame,
+       and let the white backdrop melt into the tinted panel. */
+    object-fit: contain;
+    padding: 6%;
+    mix-blend-mode: multiply;
+    transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  [data-theme="dark"] .luca-card-media { background: #ffffff; }
+  [data-theme="dark"] .luca-card-img { mix-blend-mode: normal; }
+  .luca-card-badges {
+    @apply top-3 z-10 absolute flex flex-col items-start gap-1.5 start-3;
+  }
+  .luca-card-badge {
+    @apply inline-flex items-center px-3 h-7 text-xs font-medium whitespace-nowrap;
+    border-radius: 9999px;
+    background: var(--card-surface);
+    color: var(--card-ink);
+    box-shadow: 0 1px 2px rgba(23, 26, 25, 0.08);
+  }
+  .luca-card-badge-solid { background: var(--card-ink); color: var(--card-surface); }
+  .luca-card-badge-mute { color: var(--card-muted); }
+
+  .luca-card-body {
+    @apply flex flex-col flex-1 gap-2 min-w-0;
+    padding: 16px 8px 4px;
+  }
+  .luca-card-eyebrow {
+    @apply text-xs font-medium;
+    color: var(--card-muted);
+  }
+  /* Tracked capitals suit Latin labels only; tracking breaks joined Persian letters. */
+  :lang(en) .luca-card-eyebrow { @apply text-[11px] uppercase; letter-spacing: 0.12em; }
+  .luca-card-title {
+    @apply font-body text-[17px] font-semibold;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+    color: inherit;
+  }
+  .luca-card-title a { color: inherit; text-decoration: none; }
+  .luca-card-title a:hover { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+  .luca-card-desc {
+    @apply text-[13px] line-clamp-2;
+    line-height: 1.75;
+    color: var(--card-muted);
+  }
+  .luca-card-pills { @apply flex flex-wrap items-center gap-1.5; }
+  .luca-card-pill {
+    @apply inline-flex items-center px-3 h-7 text-xs font-medium whitespace-nowrap;
+    border-radius: 9999px;
+    background: var(--card-pill);
+    color: var(--card-ink);
+  }
+  .luca-card-price { @apply flex flex-wrap items-baseline gap-x-2 min-h-[1.5rem] text-sm; }
+  .luca-card-price-old { text-decoration: line-through; color: var(--card-muted); }
+  .luca-card-price-now { @apply text-[15px] font-semibold; }
+  .luca-card-price-unit { @apply text-xs; color: var(--card-muted); }
+
+  /* Keeps the CTA on the bottom edge whatever the text length above it. */
+  .luca-card-foot { @apply flex flex-col gap-3 mt-auto pt-2; }
+
+  /* Editorial footer (reference card A): details at the start, a compact pill
+     action at the end. Wraps onto two lines in a very narrow card. */
+  .luca-card-actions { @apply flex flex-row flex-wrap justify-between items-center gap-x-3 gap-y-2 min-h-[44px]; }
+  /* One line, so a long category name never pushes the action pill down. */
+  .luca-card-meta { @apply flex-1 min-w-0 text-[13px] truncate; flex-basis: 0; color: var(--card-muted); }
+  .luca-card-action {
+    @apply inline-flex flex-shrink-0 justify-center items-center gap-2 px-4 h-11 text-sm font-medium whitespace-nowrap;
+    margin-inline-start: auto;
+    border: 1px solid var(--card-border);
+    border-radius: 9999px;
+    background: var(--card-pill);
+    color: var(--card-ink);
+    box-shadow: 0 1px 2px rgba(23, 26, 25, 0.06), 0 4px 10px -4px rgba(23, 26, 25, 0.12);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 250ms ease, color 250ms ease, box-shadow 250ms ease, opacity 250ms ease;
+  }
+  .luca-card-action:hover { background: var(--card-ink); color: var(--card-surface); }
+  .luca-card-action:active { background: color-mix(in srgb, var(--card-ink) 84%, var(--card-surface)); }
+  .luca-card-action:disabled, .luca-card-action[aria-disabled="true"] {
+    opacity: 0.45;
+    cursor: not-allowed;
+    background: var(--card-pill);
+    color: var(--card-ink);
+  }
+  .luca-card-action-icon { flex-shrink: 0; }
+
+  /* Full-width pill with a centred label (immersive card, reference stay cards). */
+  .luca-card-cta {
+    @apply inline-flex justify-center items-center w-full h-12 text-sm font-semibold;
+    padding-inline: 20px;
+    border-radius: 9999px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 250ms ease, color 250ms ease, opacity 250ms ease;
+  }
+  .luca-card-arrow { flex-shrink: 0; transition: transform 250ms ease; }
+  [dir="rtl"] .luca-card-arrow { transform: scaleX(-1); }
+
+  .luca-card :is(a, button):focus-visible {
+    outline: 2px solid var(--card-ink);
+    outline-offset: 3px;
+  }
+
+  /* Option chips (e.g. magnification) read as spec pills inside a card. */
+  .luca-card [role="radio"] { border-radius: 9999px; }
+
+  /* ---- immersive feature card ---- */
+  /* --card-tint is the photo's dominant dark tone (set per product in
+     lib/featuredProducts.ts); the gradient and scrim are drawn in it, like the
+     reference cards whose lower half takes the colour of their photo. */
+  .luca-card-immersive {
+    --card-tint: #0d0f0e;
+    justify-content: flex-end;
+    min-height: 440px;
+    padding: 0;
+    overflow: hidden;
+    border-color: transparent;
+    background: var(--card-tint);
+    color: #ffffff;
+    box-shadow: 0 2px 4px rgba(23, 26, 25, 0.06), 0 22px 48px -18px rgba(23, 26, 25, 0.38);
+  }
+  .luca-card-immersive .luca-card-media {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    height: 100%;
+    aspect-ratio: auto;
+    border-radius: 0;
+    background: var(--card-tint);
+  }
+  .luca-card-immersive .luca-card-img { object-fit: cover; padding: 0; mix-blend-mode: normal; }
+  /* Starts near the middle and deepens downward, so the top of the photo stays clear. */
+  .luca-card-immersive .luca-card-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* The lower part of the photo is frosted as well as darkened (as in the reference
+       cards), and the mask fades that blur out upward so it has no hard edge. */
+    background: linear-gradient(
+      to top,
+      color-mix(in srgb, var(--card-tint) 86%) 0%,
+      color-mix(in srgb, var(--card-tint) 70%) 26%,
+      color-mix(in srgb, var(--card-tint) 38%) 46%,
+      color-mix(in srgb, var(--card-tint) 8%) 62%,
+      color-mix(in srgb, var(--card-tint) 0%) 72%
+    );
+    -webkit-backdrop-filter: blur(22px) saturate(1.15);
+    backdrop-filter: blur(22px) saturate(1.15);
+    -webkit-mask-image: linear-gradient(to top, #000 0%, #000 40%, transparent 72%);
+    mask-image: linear-gradient(to top, #000 0%, #000 40%, transparent 72%);
+    pointer-events: none;
+  }
+  /* Title with the price pill at the far end of the same row. */
+  /* In a narrow card the pill drops under a long title instead of squeezing it. */
+  .luca-card-headline { @apply flex flex-wrap justify-between items-start gap-x-3 gap-y-2; }
+  .luca-card-headline .luca-card-title { @apply min-w-0; flex: 1 1 11rem; }
+  .luca-card-headline .luca-card-pill { @apply flex-shrink-0 mt-0.5; }
+  .luca-card-immersive .luca-card-body {
+    position: relative;
+    z-index: 0;
+    flex: 0 0 auto;
+    padding: 20px 20px 16px;
+    gap: 10px;
+  }
+  /* A scrim tied to the text block itself, so a long title over a pale photo
+     (e.g. a product shot on white) still has contrast. */
+  .luca-card-immersive .luca-card-body::before {
+    content: "";
+    position: absolute;
+    inset: -64px 0 0;
+    z-index: -1;
+    background: linear-gradient(
+      to bottom,
+      color-mix(in srgb, var(--card-tint) 0%) 0,
+      color-mix(in srgb, var(--card-tint) 50%) 64px,
+      color-mix(in srgb, var(--card-tint) 60%) 100%
+    );
+    pointer-events: none;
+  }
+  .luca-card-immersive .luca-card-eyebrow { color: rgba(255, 255, 255, 0.78); }
+  .luca-card-immersive .luca-card-title { @apply text-xl; line-height: 1.45; }
+  .luca-card-immersive .luca-card-desc { color: rgba(255, 255, 255, 0.82); }
+  .luca-card-immersive .luca-card-pill {
+    background: rgba(255, 255, 255, 0.16);
+    color: #ffffff;
+  }
+  .luca-card-immersive .luca-card-foot { margin-top: 0; padding-top: 6px; }
+  .luca-card-immersive .luca-card-cta { background: #ffffff; color: #171a19; }
+  .luca-card-immersive .luca-card-cta:hover { background: var(--card-ivory); }
+  .luca-card-immersive .luca-card-cta:active { background: #e9e7e1; }
+  .luca-card-immersive :is(a, button):focus-visible { outline-color: #ffffff; }
+
+  /* ---- listing layouts ---- */
+  .luca-card-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-5 xl:gap-6;
+  }
+  /* Padding leaves room for the card shadows, which a horizontal scroller would clip. */
+  .luca-card-rail {
+    @apply flex gap-4 md:gap-5 xl:gap-6 -mx-5 -my-8 px-5 py-8 overflow-x-auto scroll-smooth;
+    scroll-padding-inline: 1.25rem;
+  }
+  .luca-card-rail-item {
+    @apply flex-shrink-0 w-[272px] md:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-2.5rem)/3)] xl:w-[calc((100%-4.5rem)/4)];
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .luca-card:hover { transform: translateY(-4px); box-shadow: var(--card-shadow-hover); }
+    .luca-card:hover .luca-card-img { transform: scale(1.03); }
+    .luca-card-action:hover .luca-card-arrow { transform: translateX(3px); }
+    [dir="rtl"] .luca-card-action:hover .luca-card-arrow { transform: scaleX(-1) translateX(3px); }
+  }
+
+  @media (max-width: 639px) {
+    .luca-card-body { padding: 14px 6px 2px; }
+    .luca-card-immersive { min-height: 420px; }
+    .luca-card-immersive .luca-card-body { padding: 16px 16px 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .luca-card, .luca-card-img, .luca-card-cta, .luca-card-action, .luca-card-arrow { transition: none; }
+    .luca-card:hover { transform: none; }
+    .luca-card:hover .luca-card-img { transform: none; }
+    .luca-card-action:hover .luca-card-arrow { transform: none; }
+    [dir="rtl"] .luca-card-action:hover .luca-card-arrow { transform: scaleX(-1); }
+  }
+}

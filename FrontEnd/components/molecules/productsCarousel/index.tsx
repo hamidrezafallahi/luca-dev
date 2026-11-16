@@ -63,7 +63,7 @@ export default function ProductsCarousel({
 
       <div
         ref={scrollRef}
-        className="hidden-show-scrollbar flex gap-3 md:gap-4 lg:gap-6 overflow-x-auto scroll-smooth"
+        className="hidden-show-scrollbar luca-card-rail"
       >
         {Loading ? (
           <>
@@ -74,10 +74,7 @@ export default function ProductsCarousel({
           </>
         ) : (
           items?.map((p) => (
-            <div
-              key={p.id}
-              className="flex-shrink-0 w-[168px] md:w-[236px] lg:w-[calc((100%-4.5rem)/4)]"
-            >
+            <div key={p.id} className="luca-card-rail-item">
               <VariantProductCard product={p} />
             </div>
           ))
@@ -89,14 +86,16 @@ export default function ProductsCarousel({
 
 function ProductCardSkeleton() {
   return (
-    <div
-      className="flex flex-col flex-shrink-0 gap-3.5 w-[168px] md:w-[236px] lg:w-[calc((100%-4.5rem)/4)] animate-pulse"
-      aria-hidden="true"
-    >
-      <div className="w-full aspect-[31/34] luca-ph" />
-      <div className="flex flex-col items-center gap-2">
-        <div className="w-3/4 h-4 luca-ph" />
-        <div className="w-1/2 h-3 luca-ph" />
+    <div className="luca-card-rail-item" aria-hidden="true">
+      <div className="animate-pulse luca-card">
+        <div className="luca-card-media" />
+        <div className="luca-card-body">
+          <div className="w-3/4 h-4 luca-ph" />
+          <div className="w-1/2 h-3 luca-ph" />
+          <div className="luca-card-foot">
+            <div className="rounded-full w-full h-12 luca-ph" />
+          </div>
+        </div>
       </div>
     </div>
   );
