@@ -53,6 +53,10 @@ export default async function LandingHero({ slide }: Props) {
   )?.trim();
   const showSecond = Boolean(secondHref && secondText);
   const hasText = Boolean(title || description || showSecond);
+  // Admin «شفافیت عنوان» (0..100). At 0 the title and description stay in the HTML
+  // (H1 and text for search engines and screen readers) but are not visible.
+  const opacity = Math.min(100, Math.max(0, slide?.titleOpacity ?? 100)) / 100;
+  const textVisible = Boolean((title || description) && opacity > 0) || showSecond;
 
   return (
     <section
@@ -65,8 +69,8 @@ export default async function LandingHero({ slide }: Props) {
         alt={title || t('heroImageAlt')}
         playLabel={t('videoPlay')}
         pauseLabel={t('videoPause')}
-        noScrim={!hasText}
-        dim={hasText}
+        noScrim={!textVisible}
+        dim={textVisible}
       />
 
       {bannerHref ? (
@@ -87,13 +91,17 @@ export default async function LandingHero({ slide }: Props) {
 
       {hasText ? (
         <div className="z-10 relative flex flex-col items-center gap-2.5 pointer-events-none">
-          {title ? (
-            <h1 id="home-hero-title" className="text-white luca-h1">
-              {title}
-            </h1>
-          ) : null}
-          {description ? (
-            <p className="max-w-[520px] text-[#d8d8d3] leading-loose">{description}</p>
+          {title || description ? (
+            <div className="flex flex-col items-center gap-2.5" style={opacity < 1 ? { opacity } : undefined}>
+              {title ? (
+                <h1 id="home-hero-title" className="text-white luca-h1">
+                  {title}
+                </h1>
+              ) : null}
+              {description ? (
+                <p className="max-w-[520px] text-[#d8d8d3] leading-loose">{description}</p>
+              ) : null}
+            </div>
           ) : null}
           {showSecond ? (
             <Link

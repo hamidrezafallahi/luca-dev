@@ -1,7 +1,14 @@
 import type { CSSProperties } from 'react';
 
 import { DEFAULT_FONT_KEY, DEFAULT_HEADING_FONT_KEY, isFontKey } from '@lib/fontCatalog';
-import { TEXT_SIZE_KEYS, type TextSizeKey } from '@lib/typography';
+import {
+  BODY_WEIGHT_BASE,
+  type FontWeight,
+  HEADING_WEIGHT_BASE,
+  TEXT_SIZE_KEYS,
+  type TextSizeKey,
+  toFontWeight,
+} from '@lib/typography';
 
 /**
  * Palette model of the theme editor. Mirrors ThemeSettingDto (BackEnd) and
@@ -32,6 +39,8 @@ export type Typography = {
   bodyTextSizePx: number | null;
   headingTextSize: TextSizeKey;
   headingTextSizePx: number | null;
+  bodyFontWeight: FontWeight;
+  headingFontWeight: FontWeight;
 };
 
 export const DEFAULT_TYPOGRAPHY: Typography = {
@@ -39,6 +48,8 @@ export const DEFAULT_TYPOGRAPHY: Typography = {
   bodyTextSizePx: null,
   headingTextSize: 'medium',
   headingTextSizePx: null,
+  bodyFontWeight: BODY_WEIGHT_BASE,
+  headingFontWeight: HEADING_WEIGHT_BASE,
 };
 
 export type ThemeRecord = Palette & Typography & { id: number; name: string; isActive: boolean; fontFamily: string; headingFontFamily: string };
@@ -54,6 +65,8 @@ export function pickTypography(source: Typography): Typography {
     bodyTextSizePx: source.bodyTextSizePx,
     headingTextSize: source.headingTextSize,
     headingTextSizePx: source.headingTextSizePx,
+    bodyFontWeight: source.bodyFontWeight,
+    headingFontWeight: source.headingFontWeight,
   };
 }
 
@@ -132,6 +145,8 @@ export function toThemeRecord(row: Record<string, unknown> | null | undefined): 
     bodyTextSizePx: sizePx(row.bodyTextSizePx),
     headingTextSize: sizeKey(row.headingTextSize),
     headingTextSizePx: sizePx(row.headingTextSizePx),
+    bodyFontWeight: toFontWeight(row.bodyFontWeight, BODY_WEIGHT_BASE),
+    headingFontWeight: toFontWeight(row.headingFontWeight, HEADING_WEIGHT_BASE),
   };
 }
 
