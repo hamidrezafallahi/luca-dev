@@ -11,6 +11,7 @@ import {
   useLocale,
   useTranslations,
 } from 'next-intl';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -149,8 +150,15 @@ function MobileMenu() {
                 >
                   <IcClose />
                 </button>
-                <p id="mobile-nav-title" className="text-[26px] luca-wordmark">
-                  LUCA
+                <p id="mobile-nav-title" className="flex items-center m-0">
+                  <Image
+                    src="/logo-wordmark.png"
+                    alt="LUCA"
+                    width={640}
+                    height={166}
+                    sizes="108px"
+                    className="w-auto h-7"
+                  />
                 </p>
                 <div className="flex justify-end w-11">
                   <LangSwitcher />

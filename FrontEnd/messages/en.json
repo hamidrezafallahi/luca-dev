@@ -183,7 +183,8 @@
     "heroImageAlt": "Luca dental loupes",
     "eyebrow": "New collection",
     "videoPause": "Pause background video",
-    "videoPlay": "Play background video"
+    "videoPlay": "Play background video",
+    "heroLinkAria": "See the banner details"
   },
   "usp": {
     "sectionTitle": "Why Luca?",
@@ -480,7 +481,31 @@
         "newsletterText": "New models and expert guides",
         "subscribe": "Subscribe",
         "copyright": "© LUCA"
-      }
+      },
+      "textSizeTitle": "Text size",
+      "textSizeHint": "Pick the size of body text and of headings separately; “Custom” takes an exact pixel size. The preview updates right away.",
+      "textSizes": {
+        "small": "Small",
+        "medium": "Medium",
+        "large": "Large",
+        "custom": "Custom (px)"
+      },
+      "textSizePxBody": "Base text size",
+      "textSizePxHeading": "Main heading (H1) size",
+      "textSizePxRange": "Between {min} and {max} px; the site is currently {base} px and every other size follows in proportion.",
+      "customFontBadge": "Uploaded",
+      "addFontTitle": "Add a font",
+      "addFontHint": "Choose a font file (woff2, woff, ttf or otf, up to 5 MB) and its name. It joins this category and can be used for text and headings.",
+      "addFontFile": "Font file",
+      "addFontNameFa": "Persian name",
+      "addFontNameEn": "English name",
+      "addFontSubmit": "Upload font",
+      "addFontUploading": "Uploading…",
+      "addFontCancel": "Cancel",
+      "addFontDone": "Font added; you can select it now.",
+      "addFontFailed": "The font could not be uploaded",
+      "addFontNeedFile": "Choose a font file",
+      "addFontNeedName": "Enter the font name"
     },
     "dashboard": "Dashboard",
     "dashboardTitle": "Admin panel",
@@ -952,7 +977,8 @@
       "title": "Latest from Luca",
       "body": "Leave a contact request to hear about new models and get advice.",
       "cta": "Request a call"
-    }
+    },
+    "homeSliderLabel": "Home page slider"
   },
   "order": {
     "myOrders": "My orders",

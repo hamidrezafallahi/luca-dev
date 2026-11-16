@@ -6,6 +6,7 @@ import {
   useLocale,
   useTranslations,
 } from 'next-intl';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import {
@@ -70,12 +71,21 @@ export default function HeaderClient({ announcement = null }: HeaderProps) {
           </Link>
         </div>
 
-         <Link
+        <Link
           href={`/${locale}`}
           aria-label={tBrand('homeLink')}
-          className="text-[30px] md:text-[36px] xl:text-[42px] luca-wordmark"
+          className="inline-flex items-center"
         >
-          LUCA
+          {/* 640×166 artwork; the height drives the size so the ratio is kept. */}
+          <Image
+            src="/logo-wordmark.png"
+            alt={tBrand('name')}
+            width={640}
+            height={166}
+            priority
+            sizes="(min-width: 1280px) 170px, (min-width: 768px) 139px, 116px"
+            className="w-auto h-[30px] md:h-9 xl:h-11"
+          />
         </Link>
 
         <div className="flex justify-end items-center gap-1">

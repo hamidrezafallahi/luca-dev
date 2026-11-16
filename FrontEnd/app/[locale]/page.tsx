@@ -34,8 +34,9 @@ import Header from '@layout/header';
 import { siteBaseUrl } from '@lib/api';
 import { getLandingCategories } from '@lib/category';
 import {
+  getHomeSlides,
   getSlides,
-  splitHeroSlide,
+  pickHeroSlide,
 } from '@lib/landing';
 import {
   absoluteUrl,
@@ -70,7 +71,9 @@ export default async function Home({ params }: Props) {
   const tBrand = await getTranslations({ locale, namespace: 'brand' });
   const tSeo = await getTranslations({ locale, namespace: 'seo' });
 
-  const { hero, rest } = splitHeroSlide(await getSlides());
+  // Hero banner (Slides) and mid-page slider (HomeSlides) are separate tables and APIs.
+  const [heroSlides, homeSlides] = await Promise.all([getSlides(), getHomeSlides()]);
+  const hero = pickHeroSlide(heroSlides);
   const { categories, error: categoriesError } = await getLandingCategories();
 
 const organizationLd = {
@@ -81,7 +84,7 @@ const organizationLd = {
     url: absoluteUrl(locale, ''),
     // Root-absolute assets (never locale-prefixed).
     logo: `${siteBaseUrl}/logo.png`,
-    image: `${siteBaseUrl}/og-image.jpg`,
+    image: `${siteBaseUrl}/logo.png`,
     // TODO(luca): replace contact details and social profiles with the brand's real ones.
     email: 'info@lucaloupe.ir',
     telephone: '+98-935-5716386',
@@ -123,7 +126,7 @@ const organizationLd = {
       <main className="flex flex-col min-h-screen">
         <LandingHero slide={hero} />
         <TheMostProducts />
-        <LandingSlider images={rest} />
+        <LandingSlider slides={homeSlides} />
         <LandingCategory categories={categories} error={categoriesError} />
         <LandingFeatures />
         <LandingSpecialOffer />

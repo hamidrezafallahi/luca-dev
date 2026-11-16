@@ -38,9 +38,12 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: SITE_NAME,
+    // Square brand logo as the share image of any page that does not set its own.
+    images: [{ url: '/logo.png', width: 512, height: 512, alt: SITE_NAME }],
   },
   twitter: {
-    card: 'summary_large_image',
+    card: 'summary',
+    images: ['/logo.png'],
   },
   robots: {
     index: true,

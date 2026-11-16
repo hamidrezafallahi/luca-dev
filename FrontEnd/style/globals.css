@@ -17,6 +17,15 @@
   --info-color: #1e3a8a;
   --font-display: var(--font-markazi), 'Noto Naskh Arabic', Georgia, serif;
   --font-body: var(--font-vazirmatn), var(--IRANSans-font, 'IRANSans'), Tahoma, sans-serif;
+  /* Text sizes chosen in admin → تم سایت (lib/theme.ts overrides these). Every fixed
+     font-size is multiplied by --text-scale at build time (postcss/font-scale.cjs). */
+  --text-scale: 1;
+  --heading-scale: 1;
+}
+
+/* Headings (and everything inside them) follow the heading size instead of the body size. */
+:where(h1, h2, h3, h4, h5, h6, .luca-display, .luca-h1, .luca-h2, .luca-h3, .luca-wordmark) {
+  --text-scale: var(--heading-scale, 1);
 }
 
 /* ================== Dark theme ================== */
@@ -60,6 +69,7 @@
     background: #ffffff;
     color: #111111;
     font-family: var(--font-body);
+    font-size: 1rem;
     line-height: 1.8;
   }
   [data-theme="dark"] body {
@@ -337,6 +347,17 @@ html {
 
   .admin-table td {
     @apply px-3 py-3;
+  }
+
+  /* Long values wrap to two lines inside a fixed width instead of widening the column
+     (max-width on <td> itself is ignored); hover shows the full text via title. */
+  .admin-cell-text {
+    max-width: 14rem;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow-wrap: anywhere;
   }
 
   .admin-card-list {
@@ -814,8 +835,9 @@ html {
   .store-section { @apply py-14 md:py-20; }
   .store-section-title { @apply luca-h2 mb-0 tracking-normal; color: var(--store-text); }
   .store-hero { background: #1d1d1b; color: #ffffff; }
+  /* Stays at the top while the page scrolls (same behaviour as Rooshak's header). */
   .store-nav {
-    @apply static block p-0 w-full;
+    @apply sticky top-0 z-50 block p-0 w-full;
     background: var(--store-surface-solid);
     color: var(--store-text);
   }

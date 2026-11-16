@@ -43,7 +43,9 @@ export function buildAlternates(locale: string, path = '') {
 }
 
 /** Used whenever a page has no image of its own, so every share card has a preview. */
-export const DEFAULT_OG_IMAGE = '/og-image.jpg';
+/** Square brand logo (512×512) used when a page has no image of its own. */
+export const DEFAULT_OG_IMAGE = '/logo.png';
+export const DEFAULT_OG_IMAGE_SIZE = 512;
 
 export function ogLocale(locale: string): string {
   return locale === 'fa' ? 'fa_IR' : 'en_US';
@@ -192,7 +194,8 @@ export async function buildPageMetadata({
   const ogImages = resolvedImages
     .filter((img): img is string => Boolean(img))
     .map((img) => toAbsoluteAssetUrl(img));
-  if (!ogImages.length) ogImages.push(`${siteBaseUrl}${DEFAULT_OG_IMAGE}`);
+  const usesDefaultImage = !ogImages.length;
+  if (usesDefaultImage) ogImages.push(`${siteBaseUrl}${DEFAULT_OG_IMAGE}`);
 
   return {
     metadataBase: new URL(siteBaseUrl),
@@ -210,12 +213,13 @@ export async function buildPageMetadata({
       siteName: SITE_NAME,
       locale: ogLocale(locale),
       type,
-      images: ogImages.length
-        ? ogImages.map((url) => ({ url }))
-        : undefined,
+      images: usesDefaultImage
+        ? [{ url: ogImages[0], width: DEFAULT_OG_IMAGE_SIZE, height: DEFAULT_OG_IMAGE_SIZE, alt: SITE_NAME }]
+        : ogImages.map((url) => ({ url })),
     },
     twitter: {
-      card: ogImages.length ? 'summary_large_image' : 'summary',
+      // The square logo fallback suits the small card; real page images get the large one.
+      card: usesDefaultImage ? 'summary' : 'summary_large_image',
       title: resolvedTitle,
       description: resolvedDescription,
       images: ogImages.length ? ogImages : undefined,
