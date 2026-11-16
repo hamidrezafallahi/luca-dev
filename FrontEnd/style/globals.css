@@ -21,11 +21,17 @@
      font-size is multiplied by --text-scale at build time (postcss/font-scale.cjs). */
   --text-scale: 1;
   --heading-scale: 1;
+  /* Font weight chosen in admin → تم سایت, as a step from the design weight
+     (postcss/font-scale.cjs adds it to every font-weight). */
+  --weight-shift: 0;
+  --heading-weight-shift: 0;
 }
 
-/* Headings (and everything inside them) follow the heading size instead of the body size. */
-:where(h1, h2, h3, h4, h5, h6, .luca-display, .luca-h1, .luca-h2, .luca-h3, .luca-wordmark) {
+/* Headings — and any text set in the heading (display) font, such as titles written as
+   <p class="font-display"> — follow the heading size and weight instead of the body ones. */
+:where(h1, h2, h3, h4, h5, h6, .luca-display, .luca-h1, .luca-h2, .luca-h3, .luca-wordmark, .font-display) {
   --text-scale: var(--heading-scale, 1);
+  --weight-shift: var(--heading-weight-shift, 0);
 }
 
 /* ================== Dark theme ================== */
@@ -70,6 +76,7 @@
     color: #111111;
     font-family: var(--font-body);
     font-size: 1rem;
+    font-weight: 400;
     line-height: 1.8;
   }
   [data-theme="dark"] body {
