@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
 
 import Register from '@components/templates/register';
-import { getSlides, splitHeroSlide } from '@lib/landing';
+import { getSlides, pickHeroSlide } from '@lib/landing';
 import { buildPageMetadata } from '@lib/seo';
 import { toMediaUrl } from '@utils/toMediaUrl';
 
@@ -28,7 +28,7 @@ export default async function RegisterPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'homePage' });
-  const { hero } = splitHeroSlide(await getSlides());
+  const hero = pickHeroSlide(await getSlides());
 
   return (
     <Register

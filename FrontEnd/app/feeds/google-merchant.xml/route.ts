@@ -60,7 +60,7 @@ export async function GET() {
       const link = absoluteUrl(locale, `products/${slug}`);
       const image =
         toAbsoluteImage(product.imageUrls?.[0] || product.mainImage) ||
-        `${siteBaseUrl}/og-image.jpg`;
+        `${siteBaseUrl}/logo.png`;
       const price = Number(product.finalPrice ?? product.price ?? 0);
       const availability = product.inStock === false ? 'out_of_stock' : 'in_stock';
       const description = (product.description || product.name).slice(0, 5000);

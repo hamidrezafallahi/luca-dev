@@ -5,6 +5,7 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
 import CustomLayout from '@layout/index';
+import { getCustomFonts } from '@lib/customFonts';
 import { fontVariables } from '@lib/fonts';
 import { getActiveTheme, themeToCss } from '@lib/theme';
 import type { TLang } from '@slice/config/type';
@@ -38,7 +39,8 @@ export default async function BaseLayout({ children, params }: IProps) {
   // Colours come from the active ThemeSetting row (cached fetch); globals.css
   // only holds the fallback palette. Avoid cookies()/headers() here so
   // storefront segments can stay SSG/ISR instead of always dynamic.
-  const themeCss = themeToCss(await getActiveTheme());
+  const [theme, customFonts] = await Promise.all([getActiveTheme(), getCustomFonts()]);
+  const themeCss = themeToCss(theme, customFonts);
 
   return (
     <html
