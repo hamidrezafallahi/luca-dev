@@ -67,9 +67,6 @@ export function ProductShowcaseCard({
             <ChevronIcon />
           </button>
         )}
-        <Link href={href} className="pc-control pc-control-end" aria-label={`${t('moreDetails')}: ${name}`}>
-          <MoreIcon />
-        </Link>
 
         {/* The title link and the more control lead to the product for keyboard users. */}
         <Link href={href} className="pc-photo" tabIndex={-1} aria-hidden="true">

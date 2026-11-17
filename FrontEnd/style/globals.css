@@ -154,7 +154,7 @@ html {
   }
 
   .admin-topbar {
-    @apply sticky top-0 z-30 flex items-center gap-3 px-3 sm:px-4 h-14 shrink-0;
+    @apply top-0 z-30 sticky flex items-center gap-3 px-3 sm:px-4 h-14 shrink-0;
     background: var(--admin-surface);
     border-bottom: 1px solid var(--admin-border);
     box-shadow: var(--admin-shadow);
@@ -162,13 +162,13 @@ html {
   }
 
   .admin-sidebar-backdrop {
-    @apply fixed inset-0 z-40;
+    @apply z-40 fixed inset-0;
     background: color-mix(in srgb, var(--admin-text) 42%, transparent);
     backdrop-filter: blur(2px);
   }
 
   .admin-sidebar {
-    @apply fixed inset-y-0 z-50 h-dvh shrink-0 pointer-events-none;
+    @apply z-50 fixed inset-y-0 h-dvh pointer-events-none shrink-0;
     width: min(300px, 88vw);
     inset-inline-start: 0;
     transition: transform 300ms ease, visibility 300ms ease;
@@ -189,7 +189,7 @@ html {
   }
 
   .admin-sidebar-panel {
-    @apply flex flex-col h-full w-full;
+    @apply flex flex-col w-full h-full;
     background: color-mix(in srgb, var(--admin-surface-elevated) 94%, transparent);
     border-inline-end: 1px solid var(--admin-border);
     box-shadow: var(--admin-shadow);
@@ -224,7 +224,7 @@ html {
   }
 
   .admin-page-header {
-    @apply flex flex-col sm:flex-row sm:flex-wrap justify-between items-stretch sm:items-start gap-3;
+    @apply flex sm:flex-row flex-col sm:flex-wrap justify-between items-stretch sm:items-start gap-3;
   }
 
   .admin-page-title {
@@ -259,13 +259,13 @@ html {
   }
 
   .admin-toolbar {
-    @apply flex flex-col sm:flex-row flex-wrap justify-between items-stretch sm:items-center gap-3 p-3 sm:p-4 border-b;
+    @apply flex sm:flex-row flex-col flex-wrap justify-between items-stretch sm:items-center gap-3 p-3 sm:p-4 border-b;
     border-color: var(--admin-border);
     background: var(--admin-surface-elevated);
   }
 
   .admin-btn {
-    @apply inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-xl text-sm font-medium transition-all duration-200;
+    @apply inline-flex justify-center items-center gap-2 px-3.5 py-2 rounded-xl font-medium text-sm transition-all duration-200;
     border: 1px solid var(--admin-border);
     background: var(--admin-surface-elevated);
     color: var(--admin-text);
@@ -312,7 +312,7 @@ html {
   }
 
   .admin-search input {
-    @apply block ps-10 pe-9 py-2.5 rounded-xl w-full sm:w-72 text-sm outline-none transition-all;
+    @apply block py-2.5 ps-10 pe-9 rounded-xl outline-none w-full sm:w-72 text-sm transition-all;
     background: var(--admin-surface-muted);
     border: 1px solid var(--admin-border);
     color: var(--admin-text);
@@ -368,7 +368,7 @@ html {
   }
 
   .admin-card-list {
-    @apply flex flex-col gap-3 p-3 sm:p-4 md:hidden;
+    @apply md:hidden flex flex-col gap-3 p-3 sm:p-4;
   }
 
   .admin-record-card {
@@ -383,7 +383,7 @@ html {
   }
 
   .admin-record-card-label {
-    @apply shrink-0 max-w-[42%] text-start;
+    @apply max-w-[42%] text-start shrink-0;
     color: var(--admin-text-muted);
   }
 
@@ -401,7 +401,7 @@ html {
   }
 
   .admin-form-actions {
-    @apply flex flex-col-reverse sm:flex-row flex-wrap justify-stretch sm:justify-end items-stretch sm:items-center gap-2 sm:gap-3 px-4 sm:px-5 md:px-6 py-4 border-t;
+    @apply flex sm:flex-row flex-col-reverse flex-wrap justify-stretch sm:justify-end items-stretch sm:items-center gap-2 sm:gap-3 px-4 sm:px-5 md:px-6 py-4 border-t;
     background: var(--admin-surface-muted);
     border-color: var(--admin-border);
   }
@@ -426,7 +426,7 @@ html {
   }
 
   .admin-field-label {
-    @apply text-sm font-medium;
+    @apply font-medium text-sm;
     color: var(--admin-text);
   }
 
@@ -450,7 +450,7 @@ html {
   }
 
   .admin-badge {
-    @apply inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium;
+    @apply inline-flex items-center px-2.5 py-1 rounded-full font-medium text-xs;
   }
 
   .admin-badge-success {
@@ -510,7 +510,7 @@ html {
   }
 
   .store-eyebrow {
-    @apply text-xs sm:text-sm font-semibold tracking-wide uppercase;
+    @apply font-semibold text-xs sm:text-sm uppercase tracking-wide;
     color: var(--primary-color);
   }
 
@@ -548,7 +548,7 @@ html {
   }
 
   .store-btn {
-    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200;
+    @apply inline-flex justify-center items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200;
     border: 1px solid var(--store-border);
     background: var(--store-surface-solid);
     color: var(--store-text);
@@ -612,11 +612,11 @@ html {
   }
 
   .store-hero-inner {
-    @apply relative z-10 flex flex-col md:flex-row items-center justify-between gap-10 mx-auto px-4 sm:px-8 lg:px-16 py-16 md:py-24 w-full max-w-7xl min-h-[72vh];
+    @apply z-10 relative flex md:flex-row flex-col justify-between items-center gap-10 mx-auto px-4 sm:px-8 lg:px-16 py-16 md:py-24 w-full max-w-7xl min-h-[72vh];
   }
 
   .store-nav {
-    @apply z-50 fixed inset-x-0 top-0 flex justify-center px-3 sm:px-6 pt-3 sm:pt-4;
+    @apply top-0 z-50 fixed inset-x-0 flex justify-center px-3 sm:px-6 pt-3 sm:pt-4;
   }
 
   .store-nav-bar {
@@ -631,7 +631,7 @@ html {
   }
 
   .store-nav-link {
-    @apply inline-flex items-center px-2.5 py-1.5 rounded-lg text-sm font-medium transition-colors;
+    @apply inline-flex items-center px-2.5 py-1.5 rounded-lg font-medium text-sm transition-colors;
     color: var(--store-text-muted);
   }
 
@@ -663,17 +663,17 @@ html {
   }
 
   .store-meta-row {
-    @apply flex flex-wrap items-center justify-between gap-3 text-sm;
+    @apply flex flex-wrap justify-between items-center gap-3 text-sm;
     color: color-mix(in srgb, var(--store-text-on-dark) 75%, transparent);
   }
 
   .admin-dock {
-    @apply pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center px-3;
+    @apply bottom-0 z-40 fixed inset-x-0 flex justify-center px-3 pointer-events-none;
     padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
   }
 
   .admin-dock-bar {
-    @apply pointer-events-auto flex items-stretch gap-1 sm:gap-1.5 p-1.5 sm:p-2 w-full max-w-md;
+    @apply flex items-stretch gap-1 sm:gap-1.5 p-1.5 sm:p-2 w-full max-w-md pointer-events-auto;
     background: color-mix(in srgb, var(--store-surface-solid) 82%, transparent);
     border: 1px solid var(--store-border);
     border-radius: 0;
@@ -684,7 +684,7 @@ html {
   }
 
   .admin-dock-item {
-    @apply flex flex-1 flex-col sm:flex-row justify-center items-center gap-0.5 sm:gap-1.5 min-w-0 px-1.5 sm:px-3 py-2 rounded-xl text-[0.65rem] sm:text-xs font-medium transition-colors;
+    @apply flex sm:flex-row flex-col flex-1 justify-center items-center gap-0.5 sm:gap-1.5 px-1.5 sm:px-3 py-2 rounded-xl min-w-0 font-medium text-[0.65rem] sm:text-xs transition-colors;
     color: var(--store-text-muted);
   }
 
@@ -717,7 +717,7 @@ html {
   }
 
   .admin-dock-label {
-    @apply truncate max-w-full leading-tight;
+    @apply max-w-full truncate leading-tight;
   }
 }
 
@@ -731,7 +731,7 @@ html {
   .luca-h1 { @apply luca-display; font-size: clamp(2.75rem, 5.3vw, 4.75rem); }
   .luca-h2 { @apply luca-display; font-size: clamp(2.25rem, 3.6vw, 3.25rem); }
   .luca-h3 { @apply luca-display; font-size: clamp(1.75rem, 2.2vw, 2rem); }
-  .luca-eyebrow { @apply text-[13px] font-medium; color: var(--store-text-muted); }
+  .luca-eyebrow { @apply font-medium text-[13px]; color: var(--store-text-muted); }
   .luca-muted { color: var(--store-text-muted); }
   .luca-wordmark {
     font-family: var(--font-display);
@@ -744,7 +744,7 @@ html {
     text-decoration: none;
   }
   .luca-link {
-    @apply inline-flex items-center min-h-[44px] text-sm font-medium;
+    @apply inline-flex items-center min-h-[44px] font-medium text-sm;
     color: inherit;
     text-decoration: underline;
     text-underline-offset: 7px;
@@ -756,7 +756,7 @@ html {
   .luca-tint { background: var(--tint-color); }
   .luca-dark { background: #1d1d1b; color: #ffffff; }
   .luca-input {
-    @apply block px-4 w-full h-[52px] text-[15px] outline-none transition-colors;
+    @apply block px-4 outline-none w-full h-[52px] text-[15px] transition-colors;
     background: var(--store-surface-solid);
     border: 1px solid #8a8a85;
     color: var(--store-text);
@@ -765,7 +765,7 @@ html {
   textarea.luca-input { @apply py-3.5 h-[120px]; }
   .luca-label { @apply block mb-1.5 text-[13px]; color: var(--store-text-muted); }
   .luca-badge {
-    @apply inline-flex items-center px-2.5 h-[26px] text-xs font-medium whitespace-nowrap;
+    @apply inline-flex items-center px-2.5 h-[26px] font-medium text-xs whitespace-nowrap;
     border: 1px solid var(--store-text);
     color: var(--store-text);
     background: var(--store-surface-solid);
@@ -782,7 +782,7 @@ html {
   .luca-chip:hover, .luca-chip[aria-pressed="true"] { border-color: var(--store-text); }
   .luca-row { @apply flex justify-between items-center gap-3 min-h-[36px] text-sm; color: var(--store-text-muted); }
   .luca-row > :last-child { color: var(--store-text); }
-  .luca-row-strong { @apply text-[17px] font-semibold; color: var(--store-text); }
+  .luca-row-strong { @apply font-semibold text-[17px]; color: var(--store-text); }
 
   /* ---- storefront ---- */
   .store-page {
@@ -791,11 +791,11 @@ html {
   }
   .store-page-header { @apply mb-0 py-8 md:py-12; }
   .store-eyebrow {
-    @apply text-[13px] font-medium normal-case tracking-normal;
+    @apply font-medium text-[13px] normal-case tracking-normal;
     color: var(--store-text-muted);
   }
   .store-page-title {
-    @apply luca-h1 tracking-normal;
+    @apply tracking-normal luca-h1;
     color: var(--store-text);
   }
   .store-page-subtitle {
@@ -819,7 +819,7 @@ html {
   }
   .store-card:hover { transform: none; border-color: var(--store-text); }
   .store-btn {
-    @apply px-8 py-0 h-[52px] text-sm font-medium;
+    @apply px-8 py-0 h-[52px] font-medium text-sm;
     border: 1px solid var(--store-text);
     border-radius: 0;
     background: var(--store-surface-solid);
@@ -840,11 +840,11 @@ html {
   .store-empty-icon { color: var(--store-text-muted); }
   .store-empty-title { @apply luca-h3; color: var(--store-text); }
   .store-section { @apply py-14 md:py-20; }
-  .store-section-title { @apply luca-h2 mb-0 tracking-normal; color: var(--store-text); }
+  .store-section-title { @apply mb-0 tracking-normal luca-h2; color: var(--store-text); }
   .store-hero { background: #1d1d1b; color: #ffffff; }
   /* Stays at the top while the page scrolls (same behaviour as Rooshak's header). */
   .store-nav {
-    @apply sticky top-0 z-50 block p-0 w-full;
+    @apply block top-0 z-50 sticky p-0 w-full;
     background: var(--store-surface-solid);
     color: var(--store-text);
   }
@@ -858,7 +858,7 @@ html {
     -webkit-backdrop-filter: none;
   }
   .store-nav-link {
-    @apply px-0 py-0 min-h-[44px] text-sm font-normal;
+    @apply px-0 py-0 min-h-[44px] font-normal text-sm;
     border-radius: 0;
     color: var(--store-text);
   }
@@ -902,7 +902,7 @@ html {
   .admin-panel { border-radius: 0; box-shadow: none; backdrop-filter: none; }
   .admin-page { @apply gap-6 p-5 md:p-8 xl:px-12 xl:py-10; }
   .admin-page-header { @apply sm:items-end; }
-  .admin-page-title { @apply luca-h2 tracking-normal; }
+  .admin-page-title { @apply tracking-normal luca-h2; }
   .admin-nav-item { @apply px-4 py-0 min-h-[44px]; border-radius: 0; color: var(--admin-text); }
   .admin-nav-item-active,
   [dir="rtl"] .admin-nav-item-active {
@@ -925,7 +925,7 @@ html {
   .admin-search input:focus { border-color: var(--admin-text); box-shadow: none; }
   .admin-table { @apply text-start; color: var(--admin-text); }
   .admin-table thead { background: var(--admin-surface-muted); color: var(--admin-text-muted); }
-  .admin-table th { @apply px-4 py-3.5 text-[13px] font-medium text-start; }
+  .admin-table th { @apply px-4 py-3.5 font-medium text-[13px] text-start; }
   .admin-table td { @apply px-4 py-3; }
   .admin-table tbody tr { border-bottom: 0; border-top: 1px solid var(--admin-border); }
   .admin-pagination { border: 0; padding: 0; background: transparent; }
@@ -1284,8 +1284,7 @@ html {
   }
   .pc-control:hover { background: #e2e2e2; }
   .pc-control-start { inset-inline-start: 7.9cqi; }
-  .pc-control-end { inset-inline-end: 7.9cqi; }
-  /* The back chevron points to where the reader came from: left in LTR, right in RTL. */
+   /* The back chevron points to where the reader came from: left in LTR, right in RTL. */
   [dir="rtl"] .pc-control-start svg { transform: scaleX(-1); }
 
   .pc-dots {
