@@ -22,7 +22,7 @@ export async function BrandProducts({ id }: { id: number }) {
   return (
     <div className="flex flex-col">
       <h2 className="mb-8 luca-h2">{t('product.brandProducts')}</h2>
-      <div className="luca-card-grid">
+      <div className="pc-grid">
         {products.map((product, idx) => (
           <SimpleProductCard key={idx} product={product} />
         ))}

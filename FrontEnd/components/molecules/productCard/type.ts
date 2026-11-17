@@ -19,15 +19,23 @@ export interface IDetailedProductCardProps {
   };
   locale: string;
 }
+/**
+ * What the listing card reads. The listing endpoints differ: /Products sends
+ * categoryName and brandName, the category listing sends Persian/English
+ * category names and prices. Every field beyond the basics is optional.
+ */
 export interface ISimpleProduct {
     id: number;
     slug?: string | null;
     name: string;
     description: string;
     mainImage: string | null;
+    imageUrls?: string[] | null;
     suppliers?:IUser[]
-    /** Sent by the /Products listing; shown in the card footer when present. */
     categoryName?: string | null;
+    persianCategoryName?: string | null;
+    englishCategoryName?: string | null;
     brandName?: string | null;
+    price?: number | null;
+    finalPrice?: number | null;
 }
- 

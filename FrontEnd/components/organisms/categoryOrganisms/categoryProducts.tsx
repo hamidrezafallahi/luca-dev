@@ -33,7 +33,7 @@ export async function CategoryProducts({ id }: { id: number }) {
   return (
     <div className="flex flex-col">
       <h2 className="mb-8 luca-h2">{t('title')}</h2>
-      <div className="luca-card-grid">
+      <div className="pc-grid">
         {products.map((product) => (
           <SimpleProductCard
             key={product.id ?? product.slug}

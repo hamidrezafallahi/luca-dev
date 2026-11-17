@@ -7,7 +7,7 @@ import {
   useLocale,
   useTranslations,
 } from 'next-intl';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 
 import { IcChevronLeft, IcChevronRight } from '@components/atoms/lucaIcons';
@@ -18,8 +18,7 @@ import {
   synchronousCart,
 } from '@slice/shoppingCartSlice';
 import { getCookie } from '@utils/core';
-import { CardPlus } from '@components/molecules/productCard/cardParts';
-import { toMediaUrl } from '@utils/toMediaUrl';
+import { PriceLabel, ProductShowcaseCard } from '@components/molecules/productCard/cardParts';
 
 interface ProductsCarouselProps {
   items: IDetailedProductOffer[] | undefined;
@@ -69,10 +68,10 @@ export default function SupplierProductsCarousel({
 
       <div
         ref={scrollRef}
-        className="hidden-show-scrollbar luca-card-rail"
+        className="hidden-show-scrollbar pc-rail"
       >
         {items?.map((p) => (
-          <div key={p.id} className="luca-card-rail-item">
+          <div key={p.id} className="pc-rail-item">
             <ProductCard product={p} />
           </div>
         ))}
@@ -87,6 +86,7 @@ function ProductCard({ product }: { product: IDetailedProductOffer }) {
   const t = useTranslations();
   const [addToShoppingCart] = useGetConditionallyMutation();
   const dispatch = useDispatch();
+  const router = useRouter();
   const handleAddToCart = async (product: IDetailedProductOffer) => {
     if (isAuthenticated) {
       console.log(product)
@@ -123,53 +123,29 @@ dispatch(addToCart({
     }
   };
   const href = `/${locale}/products/${product.productSlug || product.slug || product.productId}`;
-  const hasDiscount =
-    product.finalPrice != null && product.basePrice != null && product.finalPrice < product.basePrice;
 
   return (
-    <article className="luca-card">
-      {/* The title links to the product for keyboard and screen-reader users. */}
-      <Link href={href} className="luca-card-media" tabIndex={-1} aria-hidden="true">
-        {product.productImage && (
-          <img
-            src={toMediaUrl(product.productImage)}
-            alt={product.productName}
-            className="luca-card-img"
-            loading="lazy"
-          />
-        )}
-      </Link>
-
-      <div className="luca-card-body">
-        <h3 className="luca-card-title">
-          <Link href={href}>{product.productName}</Link>
-        </h3>
-        {product.productDescription && (
-          <p className="luca-card-desc">{product.productDescription}</p>
-        )}
-        <div className="luca-card-foot luca-card-actions">
-          <div className="luca-card-price">
-            {hasDiscount && (
-              <span className="luca-card-price-old">{product.basePrice?.toLocaleString()}</span>
-            )}
-            <span className="luca-card-price-now">
-              {(product.finalPrice ?? product.basePrice)?.toLocaleString()}
-            </span>
-            <span className="luca-card-price-unit">{t('common.currency')}</span>
-          </div>
-          <button
-            type="button"
-            onClick={() => {
-              handleAddToCart(product);
-            }}
-            aria-label={t('common.addToCartAria', { name: product.productName })}
-            className="luca-card-action"
-          >
-            {t('common.add')}
-            <CardPlus />
-          </button>
-        </div>
-      </div>
-    </article>
+    <ProductShowcaseCard
+      href={href}
+      name={product.productName}
+      category={product.supplierName}
+      description={product.productDescription}
+      images={[product.productImage]}
+      price={
+        <PriceLabel
+          price={product.basePrice}
+          finalPrice={product.finalPrice}
+          locale={locale}
+          currency={t('common.currency')}
+        />
+      }
+      buy={{
+        onClick: async () => {
+          await handleAddToCart(product);
+          router.push(`/${locale}/shoppingCart`);
+        },
+        ariaLabel: `${t('common.buyNow')}: ${product.productName}`,
+      }}
+    />
   );
 }

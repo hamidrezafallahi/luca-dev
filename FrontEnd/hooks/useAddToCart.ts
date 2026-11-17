@@ -34,8 +34,9 @@ export function useAddToCart() {
   const [addToShoppingCart] = useGetConditionallyMutation();
   const [pending, setPending] = useState(false);
 
-  const add = async (item: AddToCartItem) => {
-    if (pending) return;
+  /** Resolves to true once the item is in the cart (used by "buy now" to go on to it). */
+  const add = async (item: AddToCartItem): Promise<boolean> => {
+    if (pending) return false;
     if (Boolean(getCookie('candySession'))) {
       setPending(true);
       try {
@@ -48,12 +49,13 @@ export function useAddToCart() {
           },
         }).unwrap();
         if (res.isSuccess) dispatch(synchronousCart(res.data));
+        return Boolean(res.isSuccess);
       } catch {
         // baseQueryByToken already showed the reason.
+        return false;
       } finally {
         setPending(false);
       }
-      return;
     }
 
     dispatch(
@@ -72,6 +74,7 @@ export function useAddToCart() {
         },
       }),
     );
+    return true;
   };
 
   return { add, pending };

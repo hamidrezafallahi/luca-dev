@@ -63,7 +63,7 @@ export default function ProductsCarousel({
 
       <div
         ref={scrollRef}
-        className="hidden-show-scrollbar luca-card-rail"
+        className="hidden-show-scrollbar pc-rail"
       >
         {Loading ? (
           <>
@@ -74,7 +74,7 @@ export default function ProductsCarousel({
           </>
         ) : (
           items?.map((p) => (
-            <div key={p.id} className="luca-card-rail-item">
+            <div key={p.id} className="pc-rail-item">
               <VariantProductCard product={p} />
             </div>
           ))
@@ -86,14 +86,16 @@ export default function ProductsCarousel({
 
 function ProductCardSkeleton() {
   return (
-    <div className="luca-card-rail-item" aria-hidden="true">
-      <div className="animate-pulse luca-card">
-        <div className="luca-card-media" />
-        <div className="luca-card-body">
-          <div className="w-3/4 h-4 luca-ph" />
-          <div className="w-1/2 h-3 luca-ph" />
-          <div className="luca-card-foot">
-            <div className="rounded-full w-full h-12 luca-ph" />
+    <div className="pc-rail-item" aria-hidden="true">
+      <div className="animate-pulse pc-card">
+        <div className="pc-panel" />
+        <div className="pc-body">
+          <div className="bg-white/20 w-1/3 h-4" />
+          <div className="bg-white/25 mt-3 w-3/4 h-7" />
+          <div className="bg-white/15 mt-6 w-full h-16" />
+          <div className="pc-actions">
+            <div className="bg-white/40 rounded-full w-2/5 h-14" />
+            <div className="flex-1 border border-white/40 rounded-full h-14" />
           </div>
         </div>
       </div>

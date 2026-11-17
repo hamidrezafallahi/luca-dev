@@ -8,8 +8,8 @@ type EntityGridProps = {
 
 // Luca grid rhythm: 4 / 3 / 2 columns (desktop / tablet / phone).
 const COLS = {
-  // Product cards carry their own surface and shadow (.luca-card-grid in globals.css).
-  products: 'luca-card-grid',
+  // Product cards carry their own surface and shadow (.pc-grid in globals.css).
+  products: 'pc-grid',
   cards:
     'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 md:gap-x-4 lg:gap-x-6 gap-y-6 md:gap-y-8 lg:gap-y-10',
   dense:
