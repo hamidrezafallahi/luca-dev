@@ -167,32 +167,35 @@ export function ProductShowcaseCard({
 
         {options && <div className="z-10 relative pc-options">{options}</div>}
 
-        {'href' in buy ? (
-          <Link
-            href={buy.href}
-            aria-label={`${t('buyNow')}: ${name}`}
-            className={buyClass}
-          >
-            {t('buyNow')}
-          </Link>
-        ) : (
-          <button
-            type="button"
-            onClick={buy.onClick}
-            disabled={buy.disabled}
-            aria-label={buy.ariaLabel}
-            className={buyClass}
-          >
-            {t('buyNow')}
-          </button>
-        )}
+        {/* Always keep a gap above the button; mt-auto still pins it to the bottom in equal-height rows */}
+        <div className="mt-auto pt-4">
+          {'href' in buy ? (
+            <Link
+              href={buy.href}
+              aria-label={`${t('buyNow')}: ${name}`}
+              className={buyClass}
+            >
+              {t('buyNow')}
+            </Link>
+          ) : (
+            <button
+              type="button"
+              onClick={buy.onClick}
+              disabled={buy.disabled}
+              aria-label={buy.ariaLabel}
+              className={buyClass}
+            >
+              {t('buyNow')}
+            </button>
+          )}
+        </div>
       </div>
     </article>
   );
 }
 
 const buyClass = [
-  'relative z-10 mt-auto flex h-11 w-full items-center justify-center rounded-full bg-white',
+  'relative z-10 flex h-11 w-full items-center justify-center rounded-full bg-white',
   'text-sm font-semibold text-[#111114]',
   'transition-colors duration-300 hover:bg-[#ececef] disabled:cursor-not-allowed disabled:opacity-60',
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-[#232326]',
