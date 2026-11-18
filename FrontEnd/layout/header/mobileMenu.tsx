@@ -135,10 +135,10 @@ function MobileMenu() {
             <aside
               id="mobile-nav-drawer"
               aria-label={t("mainNav")}
-              className={`absolute inset-y-0 start-0 flex w-[min(360px,88vw)] flex-col overflow-hidden bg-[color:var(--store-surface-solid)] text-[var(--store-text)] transition-transform duration-300 ease-out ${
-                isOpen
-                  ? "translate-x-0"
-                  : "ltr:-translate-x-full rtl:translate-x-full"
+              className={`absolute inset-y-0 right-0 flex w-[min(360px,88vw)] flex-col overflow-hidden bg-[color:var(--store-surface-solid)] text-[var(--store-text)] transition-transform duration-300 ease-out ${
+                // Always enters and leaves from the physical right edge (right-handed
+                // thumb side), whatever the language direction.
+                isOpen ? "translate-x-0" : "translate-x-full"
               }`}
             >
               <div className="flex justify-between items-center px-2 border-b h-16 luca-line">

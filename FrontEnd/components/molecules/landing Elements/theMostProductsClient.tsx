@@ -46,7 +46,7 @@ export default function TheMostProductsClient({
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-wrap justify-between items-end gap-x-6 gap-y-3">
+      <div className="flex flex-wrap justify-between items-end gap-x-6 gap-y-3 store-section-head">
         <div className="flex flex-col gap-3">
           <h2 className="luca-h2">{t('landing.selectedProducts')}</h2>
           <div className="flex flex-wrap items-center gap-x-6" role="group">

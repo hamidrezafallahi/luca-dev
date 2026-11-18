@@ -33,16 +33,13 @@ function ShoppingCart() {
           type="button"
           aria-label={t("header.shopping cart")}
           aria-expanded={isOpen}
-          className="relative store-icon-btn"
+          className="relative store-icon-btn !w-10"
           onMouseEnter={() => setIsOpen(true)}
           onClick={() => setIsOpen(!isOpen)}
         >
           <IcBag />
           {ShoppingCart?.products.length > 0 && (
-            <span
-              className="top-1 absolute flex justify-center items-center rounded-full min-w-[18px] h-[18px] font-medium text-[11px] text-white end-0"
-              style={{ background: 'var(--primary-color)' }}
-            >
+            <span className="store-cart-badge">
               {ShoppingCart?.products.length}
             </span>
           )}

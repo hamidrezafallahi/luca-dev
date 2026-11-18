@@ -187,24 +187,24 @@ export default function PaymentFailed({}: IPaymentFailedProps) {
           <div className="space-y-4">
             <Card className="bg-white border-line">
               <CardContent className="space-y-3 p-6">
-                <Button onClick={handleRetry} className="w-full h-14">
+                <Button onClick={handleRetry} className="w-full">
                   {t("payment.retry_button")}
                 </Button>
 
                 <Link href={`/${locale}/checkout`}>
-                  <Button variant="outline" className="w-full h-14">
+                  <Button variant="outline" className="w-full">
                     {t("payment.back_to_checkout")}
                   </Button>
                 </Link>
 
                 <Link href={`/${locale}/cart`}>
-                  <Button variant="outline" className="w-full h-14">
+                  <Button variant="outline" className="w-full">
                     {t("payment.view_cart")}
                   </Button>
                 </Link>
 
                 <Link href={`/${locale}`}>
-                  <Button variant="outline" className="w-full h-14">
+                  <Button variant="outline" className="w-full">
                     {t("payment.back_home")}
                   </Button>
                 </Link>

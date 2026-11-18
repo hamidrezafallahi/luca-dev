@@ -148,7 +148,7 @@ function LandingSlider({ slides }: IProps) {
               >
                 <span
                   className={`block rounded-full w-1.5 h-1.5 ${
-                    index === current ? "bg-ink" : "bg-[#c4c4bf]"
+                    index === current ? "bg-primary" : "bg-[#c4c4bf]"
                   }`}
                 />
               </button>

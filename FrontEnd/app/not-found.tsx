@@ -1,4 +1,5 @@
 // app/not-found.tsx
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { fontVariables } from '@lib/fonts';
@@ -13,8 +14,15 @@ export default function NotFound() {
       <body className="bg-store-surface min-h-screen text-store-text antialiased">
     <div className="flex flex-col bg-white min-h-screen text-ink">
       <div className="flex justify-center items-center border-b h-16 md:h-[88px] luca-line">
-        <Link href="/fa" aria-label="LUCA — صفحه اصلی لوکا" className="text-[30px] md:text-[42px] luca-wordmark">
-          LUCA
+        <Link href="/fa" aria-label="LUCA — صفحه اصلی لوکا" className="inline-flex">
+          <Image
+            src="/logo-wordmark.png"
+            alt="LUCA"
+            width={640}
+            height={166}
+            sizes="160px"
+            className="w-auto h-[30px] md:h-11"
+          />
         </Link>
       </div>
       <main className="flex flex-col flex-1 justify-center items-center gap-3.5 px-5 py-14 text-center">
@@ -29,7 +37,7 @@ export default function NotFound() {
           <Link href="/fa" className="store-btn store-btn-primary">
             بازگشت به خانه
           </Link>
-          <Link href="/fa/products" className="!h-14 store-btn">
+          <Link href="/fa/products" className="store-btn">
             مشاهده محصولات
           </Link>
         </div>

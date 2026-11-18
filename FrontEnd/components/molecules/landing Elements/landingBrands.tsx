@@ -19,7 +19,7 @@ export default async function LandingBrands( ) {
    });
   return (
     <section className="flex flex-col gap-8 store-section luca-container">
-      <div className="flex flex-wrap justify-between items-center gap-4">
+      <div className="flex flex-wrap justify-between items-center gap-4 store-section-head">
         <div>
           <h2 className="luca-h2">{t('brandsTitle')}</h2>
           <p className="text-sm luca-muted">{t('brandsSubtitle')}</p>

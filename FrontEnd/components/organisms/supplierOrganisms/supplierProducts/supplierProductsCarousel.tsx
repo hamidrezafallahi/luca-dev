@@ -44,7 +44,7 @@ export default function SupplierProductsCarousel({
 
   return (
     <div className="flex flex-col gap-8 w-full">
-      <div className="flex justify-between items-center gap-4">
+      <div className="flex justify-between items-center gap-4 store-section-head">
         <h2 className="luca-h2">{t('product.supplierProducts')}</h2>
         <div className="hidden sm:flex gap-2" dir="ltr">
           <button

@@ -15,7 +15,7 @@ export default async  function LandingSpecialOffer() {
   return (
     <section className="luca-dark">
       <div className="flex md:flex-row flex-col items-center gap-8 md:gap-12 py-12 md:py-16 luca-container">
-        <div className="flex flex-col flex-1 items-start gap-3 min-w-0 text-start">
+        <div className="flex flex-col flex-1 items-start gap-3 min-w-0 text-start store-section-head">
           <span className="font-medium text-[#d0d0cb] text-[13px]">{t('specialOfferEyebrow')}</span>
           <h2 className="text-white luca-h2">{t('specialOfferTitle')}</h2>
           <p className="max-w-md text-[#d8d8d3] leading-loose">{t('specialOfferDesc')}</p>

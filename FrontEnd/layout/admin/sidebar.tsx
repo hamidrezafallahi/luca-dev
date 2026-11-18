@@ -6,6 +6,7 @@ import {
   useLocale,
   useTranslations,
 } from 'next-intl';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -53,9 +54,16 @@ export default function Sidebar({
               href={`/${locale}/admin`}
               onClick={onClose}
               aria-label={t('admin.dashboardTitle')}
-              className="text-[30px] luca-wordmark"
+              className="inline-flex"
             >
-              LUCA
+              <Image
+            src="/logo-wordmark.png"
+            alt="LUCA"
+            width={640}
+            height={166}
+            sizes="160px"
+            className="w-auto h-8"
+          />
             </Link>
             <p className="pt-1.5 text-[var(--admin-text-muted)] text-xs">
               {t('admin.dashboardTitle')}

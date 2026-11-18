@@ -147,7 +147,7 @@ const CustomPaginationInner: React.FC<PaginationProps> = ({
               variant="outline"
               className={`!px-2 !min-w-11 !h-11 ${
                 active
-                  ? '!bg-ink !text-white !border-ink'
+                  ? '!bg-primary !text-white !border-primary'
                   : '!border-line'
               }`}
               aria-current={active ? 'page' : undefined}

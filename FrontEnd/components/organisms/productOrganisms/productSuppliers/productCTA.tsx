@@ -44,7 +44,7 @@ export default function ProductCTA({
       <button
         type="button"
         onClick={handleAddToCart}
-        className="px-3 w-full h-12 text-sm store-btn store-btn-primary"
+        className="px-3 w-full store-btn store-btn-primary"
       >
         {t('common.addToCart')}
       </button>

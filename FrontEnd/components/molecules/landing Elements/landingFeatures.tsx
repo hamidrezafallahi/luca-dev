@@ -57,7 +57,7 @@ export default async function LandingFeatures() {
           </div>
 
           <div
-            className={`flex flex-col justify-center items-start gap-3.5 px-5 md:px-10 xl:px-24 py-10 min-h-[320px] text-start ${
+            className={`flex flex-col justify-center items-center md:items-start gap-3.5 px-5 md:px-10 xl:px-24 py-10 min-h-[320px] text-center md:text-start ${
               f.reverse ? 'luca-tint md:order-1' : ''
             }`}
           >
