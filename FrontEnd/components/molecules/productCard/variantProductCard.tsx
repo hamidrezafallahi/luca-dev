@@ -15,6 +15,8 @@ type Props = {
   product: ILandingProduct;
   /** `sizes` for the image; the default fits the landing carousel. */
   imageSizes?: string;
+  /** All product photos, main image first; defaults to the main image alone. */
+  images?: (string | null | undefined)[];
 };
 
 /**
@@ -24,7 +26,8 @@ type Props = {
  */
 export default function VariantProductCard({
   product,
-  imageSizes = '(max-width: 640px) 85vw, 360px',
+  imageSizes = '(max-width: 640px) 72vw, 320px',
+  images,
 }: Props) {
   const t = useTranslations();
   const locale = useLocale();
@@ -70,9 +73,9 @@ export default function VariantProductCard({
       category={
         (locale === 'fa' ? product.persianCategoryName : product.englishCategoryName) || product.brand
       }
-      description={product.description}
-      images={[product.mainImage]}
+      images={images ?? [product.mainImage]}
       imageSizes={imageSizes}
+      outOfStock={!canBuy}
       price={
         canBuy ? (
           <PriceLabel
@@ -81,9 +84,7 @@ export default function VariantProductCard({
             locale={locale}
             currency={t('common.currency')}
           />
-        ) : (
-          t('common.outOfStock')
-        )
+        ) : undefined
       }
       options={
         variants.length > 1 ? (

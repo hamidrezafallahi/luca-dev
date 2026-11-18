@@ -935,6 +935,8 @@
     "seePrice": "See price",
     "moreDetails": "More details",
     "previousImage": "Previous image",
+    "nextImage": "Next image",
+    "viewCategory": "Explore category",
     "imageOf": "Image {n} of {total}",
     "productsLabel": "Products",
     "viewProduct": "View product",

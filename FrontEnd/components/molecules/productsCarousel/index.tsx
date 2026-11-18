@@ -87,16 +87,13 @@ export default function ProductsCarousel({
 function ProductCardSkeleton() {
   return (
     <div className="pc-rail-item" aria-hidden="true">
-      <div className="animate-pulse pc-card">
-        <div className="pc-panel" />
-        <div className="pc-body">
-          <div className="bg-white/20 w-1/3 h-4" />
-          <div className="bg-white/25 mt-3 w-3/4 h-7" />
-          <div className="bg-white/15 mt-6 w-full h-16" />
-          <div className="pc-actions">
-            <div className="bg-white/40 rounded-full w-2/5 h-14" />
-            <div className="flex-1 border border-white/40 rounded-full h-14" />
-          </div>
+      <div className="flex flex-col animate-pulse">
+        <div className="bg-[#F8F8F8] rounded-[26px] w-full aspect-[4/5]" />
+        <div className="flex flex-col gap-2 mt-4 px-1">
+          <div className="bg-[#F0F0F0] rounded-full w-1/4 h-3" />
+          <div className="bg-[#F0F0F0] rounded-full w-3/4 h-4" />
+          <div className="bg-[#F0F0F0] rounded-full w-1/3 h-4" />
+          <div className="bg-[#F4F4F5] mt-2 rounded-full w-full h-10" />
         </div>
       </div>
     </div>

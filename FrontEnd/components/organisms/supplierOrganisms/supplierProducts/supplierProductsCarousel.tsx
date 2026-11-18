@@ -129,7 +129,6 @@ dispatch(addToCart({
       href={href}
       name={product.productName}
       category={product.supplierName}
-      description={product.productDescription}
       images={[product.productImage]}
       price={
         <PriceLabel
