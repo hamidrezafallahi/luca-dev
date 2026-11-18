@@ -935,6 +935,8 @@
     "seePrice": "مشاهده قیمت",
     "moreDetails": "جزئیات بیشتر",
     "previousImage": "تصویر قبلی",
+    "nextImage": "تصویر بعدی",
+    "viewCategory": "مشاهده دسته‌بندی",
     "imageOf": "تصویر {n} از {total}",
     "productsLabel": "محصولات",
     "viewProduct": "مشاهده محصول",

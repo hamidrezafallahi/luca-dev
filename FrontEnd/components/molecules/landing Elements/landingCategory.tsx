@@ -31,7 +31,7 @@ export default async  function LandingCategory(props: IProps) {
           {t('viewAllCategories')}
         </Link>
       </div>
-      <div className="gap-x-3 md:gap-x-4 lg:gap-x-6 gap-y-5 grid grid-cols-2 md:grid-cols-4">
+      <div className="cat-grid">
         {categories.map((cat) => (
           <CategoryCard key={cat.id} category={cat} />
         ))}

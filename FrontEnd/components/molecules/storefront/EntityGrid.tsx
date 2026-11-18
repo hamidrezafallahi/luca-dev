@@ -2,7 +2,7 @@ import React from 'react';
 
 type EntityGridProps = {
   children: React.ReactNode;
-  cols?: 'products' | 'cards' | 'dense';
+  cols?: 'products' | 'categories' | 'cards' | 'dense';
   className?: string;
 };
 
@@ -10,6 +10,8 @@ type EntityGridProps = {
 const COLS = {
   // Product cards carry their own surface and shadow (.pc-grid in globals.css).
   products: 'pc-grid',
+  // Category tiles (.cat-grid in globals.css): 1 / 2 / 4 columns.
+  categories: 'cat-grid',
   cards:
     'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 md:gap-x-4 lg:gap-x-6 gap-y-6 md:gap-y-8 lg:gap-y-10',
   dense:

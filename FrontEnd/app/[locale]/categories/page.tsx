@@ -65,7 +65,7 @@ export default async function Page({ params, searchParams }: Props) {
         <EmptyState title={t('empty')} description={t('emptyHint')} />
       ) : (
         <>
-          <EntityGrid cols="dense">
+          <EntityGrid cols="categories">
             {categories.map((cat) => (
               <CategoryCard key={cat.id} category={cat} />
             ))}

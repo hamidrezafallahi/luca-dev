@@ -19,7 +19,7 @@ export default async function ProductCategory({ id }: { id: number }) {
   if (!cat) return null;
 
   return (
-    <div className="gap-3 md:gap-4 lg:gap-6 grid grid-cols-2 md:grid-cols-4">
+    <div className="cat-grid">
       <CategoryCard category={cat} />
     </div>
   );
