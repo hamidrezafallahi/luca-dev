@@ -273,7 +273,7 @@ export default function ContactRequestForm({
         <Button
           type="submit"
           disabled={isLoading}
-          className="bg-primary disabled:opacity-50 px-8 sm:min-w-[220px] h-14 text-[15px] text-white"
+          className="sm:min-w-[220px] store-btn store-btn-primary"
         >
           {isLoading ? t('submitting') : t('submit')}
         </Button>

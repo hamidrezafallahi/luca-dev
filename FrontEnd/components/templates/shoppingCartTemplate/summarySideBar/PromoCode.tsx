@@ -58,7 +58,7 @@ function PromoCode() {
         />
         <button
           onClick={handleSubmitPromoCode}
-          className="px-[18px] h-11 store-btn"
+          className="store-btn"
         >
           {t("general.apply")}
         </button>

@@ -50,9 +50,12 @@ export default function HeaderClient({ announcement = null }: HeaderProps) {
     <header className="store-nav" role="banner">
       {announcement ? <AnnouncementStrip bar={announcement} /> : null}
 
-      {/* Main row: utilities · wordmark · actions */}
-      <div className="items-center grid grid-cols-[1fr_auto_1fr] px-2 md:px-10 xl:px-16 border-b md:border-b-0 h-16 md:h-[72px] xl:h-[88px] store-nav-bar luca-line">
-        <div className="flex items-center gap-6 text-[13px]">
+      {/* Main row: utilities · wordmark · actions.
+          Mobile: the menu button always sits on the physical RIGHT edge (thumb side for
+          right-handers) in both languages, and the account + cart pair sits tight against
+          the left edge as its counterweight. */}
+      <div className="items-center grid grid-cols-[1fr_auto_1fr] px-1 md:px-10 xl:px-16 border-b md:border-b-0 h-16 md:h-[72px] xl:h-[88px] store-nav-bar luca-line">
+        <div className="flex max-md:ltr:justify-end items-center gap-6 max-md:ltr:order-3 text-[13px]">
           <div className="md:hidden flex">
             <MobileMenu />
           </div>
@@ -74,7 +77,7 @@ export default function HeaderClient({ announcement = null }: HeaderProps) {
         <Link
           href={`/${locale}`}
           aria-label={tBrand('homeLink')}
-          className="inline-flex items-center"
+          className="inline-flex items-center max-md:ltr:order-2"
         >
           {/* 640×166 artwork; the height drives the size so the ratio is kept. */}
           <Image
@@ -88,17 +91,21 @@ export default function HeaderClient({ announcement = null }: HeaderProps) {
           />
         </Link>
 
-        <div className="flex justify-end items-center gap-1">
+        <div className="flex max-md:ltr:flex-row-reverse justify-end items-center gap-0 md:gap-1 max-md:ltr:order-1">
           <div className="hidden md:flex">
             <LangSwitcher />
           </div>
-          <Link href={`/${locale}/products`} aria-label={t('search')} className="store-icon-btn">
+          <Link
+            href={`/${locale}/products`}
+            aria-label={t('search')}
+            className="hidden md:inline-flex store-icon-btn"
+          >
             <IcSearch />
           </Link>
           <Link
             href={`/${locale}/register`}
             aria-label={t('register')}
-            className="hidden md:inline-flex store-icon-btn"
+            className="store-icon-btn !w-10"
           >
             <IcUser />
           </Link>

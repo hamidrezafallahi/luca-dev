@@ -58,7 +58,7 @@ function ShoppingCartHeaderComponent({ ...props }: IProps) {
 
   return (
     <div
-      className="top-full z-50 absolute mt-0 end-0"
+      className="top-full z-50 absolute mt-0 end-0 max-md:left-0 max-md:right-auto"
       onMouseLeave={() => setIsOpen(false)}
     >
       <div className="bg-white p-5 border w-[min(340px,92vw)] text-ink text-start luca-line">

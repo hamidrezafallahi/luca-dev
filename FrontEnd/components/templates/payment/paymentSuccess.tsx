@@ -193,26 +193,26 @@ export default function PaymentSuccess({ params }: IPaymentSuccessProps) {
                 <div className="space-y-3">
                   <Button
                     onClick={handlePrint}
-                    variant="outline" className="w-full h-14"
+                    variant="outline" className="w-full"
                   >
                     <Printer config={{className:"ml-2 w-4 h-4"}}   />
                     {t('printReceipt')}
                   </Button>
                   <Button
                     onClick={handleDownloadInvoice}
-                    variant="outline" className="w-full h-14"
+                    variant="outline" className="w-full"
                   >
                     <Download config={{className:"ml-2 w-4 h-4"}} />
                     {t('downloadInvoice')}
                   </Button>
                   <Link href={`/${locale}/orders`}>
-                    <Button className="w-full h-14">
+                    <Button className="w-full">
                       <Package config={{className:"ml-2 w-4 h-4"}} />
                       {t('viewOrders')}
                     </Button>
                   </Link>
                   <Link href={`/${locale}`}>
-                    <Button variant="outline" className="w-full h-14">
+                    <Button variant="outline" className="w-full">
                       <Home config={{className:"ml-2 w-4 h-4"}} />
                       {t('backHome')}
                     </Button>

@@ -37,18 +37,19 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // Luca: accent fill for the one primary action, ink outline for the rest
-        default: "bg-primary text-white hover:brightness-110",
-        destructive: "bg-error text-white hover:brightness-110",
-        outline: "border border-ink bg-white text-ink hover:bg-ink hover:text-white",
-        secondary: "border border-line bg-paper text-ink hover:border-ink",
-        ghost: "text-ink hover:bg-paper",
-        link: "text-ink underline underline-offset-[7px]",
+        // Exactly three button models across the storefront (see globals.css):
+        // filled main colour · outline · text link. Other names alias these.
+        default: "bg-primary text-white border border-primary hover:brightness-110",
+        destructive: "bg-error text-white border border-error hover:brightness-110",
+        outline: "border border-primary bg-white text-primary hover:bg-primary hover:text-white",
+        secondary: "border border-primary bg-white text-primary hover:bg-primary hover:text-white",
+        ghost: "text-ink hover:text-primary",
+        link: "text-ink underline underline-offset-[7px] hover:text-primary",
       },
       size: {
-        default: "h-11 px-[18px]",
-        sm: "h-11 px-3",
-        lg: "h-14 px-8 text-[15px]",
+        default: "h-12 px-8",
+        sm: "h-10 px-4",
+        lg: "h-12 px-8",
         icon: "h-11 w-11",
       },
     },

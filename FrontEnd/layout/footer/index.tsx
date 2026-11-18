@@ -6,26 +6,24 @@ import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { IcPlus } from '@components/atoms/lucaIcons';
+import {
+  InstagramIcon,
+  TelegramIcon,
+  WhatsAppIcon,
+} from '@components/atoms/iconComponents';
 
 // TODO(luca): replace with the brand's real social profiles.
 const SOCIAL = [
-  { href: 'https://instagram.com/lucaloupe.ir', label: 'Instagram', labelKey: 'instagram' as const },
-  { href: 'https://t.me/Raha_aku', label: 'Telegram', labelKey: 'telegram' as const },
-  // { href: 'https://youtube.com', label: 'YouTube', labelKey: 'youtube' as const },
-  { href: 'https://wa.me/989355716386', label: 'WhatsApp', labelKey: 'whatsapp' as const },
+  { icon: <InstagramIcon />, href: 'https://instagram.com/lucaloupe.ir', labelKey: 'instagram' as const },
+  { icon: <TelegramIcon />, href: 'https://t.me/Raha_aku', labelKey: 'telegram' as const },
+  { icon: <WhatsAppIcon />, href: 'https://wa.me/989355716386', labelKey: 'whatsapp' as const },
 ] as const;
 
+/**
+ * Four balanced columns on every screen size (2 × 2 on mobile, 4 across on desktop):
+ * three link columns of 4–5 links each, plus the brand column.
+ */
 const COLUMNS = [
-  {
-    titleKey: 'support' as const,
-    links: [
-      { href: 'order', labelKey: 'trackOrder' as const },
-      { href: 'faq', labelKey: 'faq' as const },
-      { href: 'cooperation', labelKey: 'cooperation' as const },
-      { href: 'sitemap', labelKey: 'sitemap' as const },
-    ],
-  },
   {
     titleKey: 'shop' as const,
     links: [
@@ -33,28 +31,31 @@ const COLUMNS = [
       { href: 'categories', labelKey: 'categories' as const },
       { href: 'brands', labelKey: 'brands' as const },
       { href: 'discounts', labelKey: 'discounts' as const },
+      { href: 'suppliers', labelKey: 'suppliers' as const },
     ],
   },
   {
-    titleKey: 'discover' as const,
+    titleKey: 'guides' as const,
     links: [
       { href: 'blog', labelKey: 'blog' as const },
-      { href: 'suppliers', labelKey: 'suppliers' as const },
       { href: 'tags', labelKey: 'tags' as const },
+      { href: 'faq', labelKey: 'faq' as const },
+      { href: 'story', labelKey: 'story' as const },
     ],
   },
   {
-    titleKey: 'account' as const,
+    titleKey: 'service' as const,
     links: [
       { href: 'register', labelKey: 'register' as const },
       { href: 'shoppingCart', labelKey: 'cart' as const },
-      { href: 'order', labelKey: 'orders' as const },
-      { href: 'story', labelKey: 'story' as const },
+      { href: 'order', labelKey: 'trackOrder' as const },
+      { href: 'cooperation', labelKey: 'cooperation' as const },
+      { href: 'sitemap', labelKey: 'sitemap' as const },
     ],
   },
 ] as const;
 
-const linkClass = 'block py-[9px] text-sm luca-muted';
+const linkClass = 'inline-block py-[7px] text-sm luca-muted';
 
 const Footer: React.FC = () => {
   const locale = useLocale();
@@ -62,81 +63,59 @@ const Footer: React.FC = () => {
   const tBrand = useTranslations('brand');
   const year = new Date().getFullYear();
 
-  const social = (
-    <ul className="flex flex-col">
-      {SOCIAL.map((s) => (
-        <li key={s.label}>
-          <Link href={s.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
-            {t(`social.${s.labelKey}`)}
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-
   return (
     <footer className="store-footer" role="contentinfo">
-      <div className="luca-container">
-        {/* Desktop / tablet: link columns */}
-        <div className="hidden gap-4 lg:gap-8 md:grid grid-cols-5 pb-10 border-[#dcdcd6] border-b">
-          {COLUMNS.map((col) => (
-            <div key={col.titleKey} className="flex flex-col">
-              <h2 className="pb-2 font-body font-semibold text-[13px]">
-                {t(`columns.${col.titleKey}`)}
-              </h2>
-              <ul className="flex flex-col">
-                {col.links.map((link) => (
-                  <li key={`${col.titleKey}-${link.labelKey}`}>
-                    <Link href={`/${locale}/${link.href}`} className={linkClass}>
-                      {t(`links.${link.labelKey}`)}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-          <div className="flex flex-col">
-            <h2 className="pb-2 font-body font-semibold text-[13px]">{t('columns.follow')}</h2>
-            {social}
+      <div className="gap-x-6 gap-y-10 lg:gap-10 grid grid-cols-2 md:grid-cols-4 pb-10 border-[#dcdcd6] border-b text-center md:text-start luca-container">
+        {COLUMNS.map((col) => (
+          <nav key={col.titleKey} aria-label={t(`columns.${col.titleKey}`)} className="flex flex-col">
+            <h2 className="pb-3 font-body font-semibold text-[13px] store-footer-title">
+              {t(`columns.${col.titleKey}`)}
+            </h2>
+            <ul className="flex flex-col">
+              {col.links.map((link) => (
+                <li key={`${col.titleKey}-${link.labelKey}`}>
+                  <Link href={`/${locale}/${link.href}`} className={linkClass}>
+                    {t(`links.${link.labelKey}`)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
+
+        {/* Brand column — the rectangular wordmark is the only logo used inside pages. */}
+        <div className="flex flex-col items-center md:items-start gap-4">
+          <Link href={`/${locale}`} aria-label={tBrand('homeLink')} className="inline-flex">
+            <Image
+              src="/logo-wordmark.png"
+              alt={tBrand('name')}
+              width={640}
+              height={166}
+              sizes="140px"
+              className="w-auto h-8 md:h-9"
+            />
+          </Link>
+          <p className="max-w-xs text-[13px] leading-relaxed luca-muted">{t('tagline')}</p>
+          <div className="flex flex-wrap justify-center md:justify-start gap-1 -mx-2">
+            {SOCIAL.map((s) => (
+              <Link
+                key={s.labelKey}
+                href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t(`social.${s.labelKey}`)}
+                className="store-icon-btn"
+              >
+                {s.icon}
+              </Link>
+            ))}
           </div>
         </div>
-
-        {/* Mobile: accordion */}
-        <div className="md:hidden flex flex-col">
-          {COLUMNS.map((col) => (
-            <details key={col.titleKey} className="group border-[#dcdcd6] border-b">
-              <summary className="[&::-webkit-details-marker]:hidden flex justify-between items-center h-14 font-medium text-sm marker:content-none cursor-pointer list-none">
-                <span>{t(`columns.${col.titleKey}`)}</span>
-                <IcPlus size={18} className="group-open:rotate-45 transition-transform" />
-              </summary>
-              <ul className="flex flex-col pb-3">
-                {col.links.map((link) => (
-                  <li key={`${col.titleKey}-${link.labelKey}`}>
-                    <Link href={`/${locale}/${link.href}`} className={linkClass}>
-                      {t(`links.${link.labelKey}`)}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </details>
-          ))}
-          <details className="group border-[#dcdcd6] border-b">
-            <summary className="[&::-webkit-details-marker]:hidden flex justify-between items-center h-14 font-medium text-sm marker:content-none cursor-pointer list-none">
-              <span>{t('columns.follow')}</span>
-              <IcPlus size={18} className="group-open:rotate-45 transition-transform" />
-            </summary>
-            <div className="pb-3">{social}</div>
-          </details>
-        </div>
-
-        <div className="flex md:flex-row flex-col justify-between items-center gap-3 pt-7">
-          <Image src="/logo.png" alt={tBrand('name')} width={56} height={56} className="w-14 h-14" />
-          <p className="max-w-md text-[13px] text-center luca-muted">{t('tagline')}</p>
-          <p className="text-[13px] luca-muted">
-            {t('copyright', { year, brand: tBrand('name') })}
-          </p>
-        </div>
       </div>
+
+      <p className="pt-7 text-[13px] text-center md:text-start luca-muted luca-container">
+        {t('copyright', { year, brand: tBrand('name') })}
+      </p>
     </footer>
   );
 };

@@ -49,7 +49,7 @@ export default async function BlogSection() {
 
   return (
     <section className="flex flex-col gap-10 store-section luca-container">
-      <div className="flex flex-wrap justify-between items-end gap-4">
+      <div className="flex flex-wrap justify-between items-end gap-4 store-section-head">
         <div className="flex flex-col gap-1">
           <h2 className="luca-h2">{t('landingTitle')}</h2>
           <p className="text-sm luca-muted">{t('landingSubtitle')}</p>

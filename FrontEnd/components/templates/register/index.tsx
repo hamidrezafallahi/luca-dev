@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 
 import { useLocale, useTranslations } from 'next-intl';
+import Image from 'next/image';
 import Link from 'next/link';
 
 import HeroMedia from '@components/organisms/heroMedia';
@@ -50,9 +51,16 @@ function Register({ imageSrc, videoSrc, mediaAlt, playLabel, pauseLabel }: Props
         <Link
           href={`/${locale}`}
           aria-label={tBrand('name')}
-          className="top-8 start-8 z-10 absolute text-[32px] text-white luca-wordmark"
+          className="top-8 start-8 z-10 absolute inline-flex"
         >
-          LUCA
+          <Image
+            src="/logo-wordmark.png"
+            alt="LUCA"
+            width={640}
+            height={166}
+            sizes="160px"
+            className="w-auto h-9"
+          />
         </Link>
       </aside>
 
@@ -64,9 +72,16 @@ function Register({ imageSrc, videoSrc, mediaAlt, playLabel, pauseLabel }: Props
         <Link
           href={`/${locale}`}
           aria-label={tBrand('name')}
-          className="lg:hidden text-[32px] luca-wordmark"
+          className="lg:hidden inline-flex"
         >
-          LUCA
+          <Image
+            src="/logo-wordmark.png"
+            alt="LUCA"
+            width={640}
+            height={166}
+            sizes="160px"
+            className="w-auto h-9"
+          />
         </Link>
 
         <div

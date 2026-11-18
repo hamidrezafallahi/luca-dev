@@ -1,4 +1,5 @@
 import { useLocale, useTranslations } from 'next-intl';
+import Image from 'next/image';
 import Link from 'next/link';
 
 /** Localized 404 for notFound() calls and unknown paths under /fa or /en. */
@@ -13,9 +14,16 @@ export default function LocaleNotFound() {
         <Link
           href={`/${locale}`}
           aria-label={tBrand('homeLink')}
-          className="text-[30px] md:text-[42px] luca-wordmark"
+          className="inline-flex"
         >
-          LUCA
+          <Image
+            src="/logo-wordmark.png"
+            alt="LUCA"
+            width={640}
+            height={166}
+            sizes="160px"
+            className="w-auto h-[30px] md:h-11"
+          />
         </Link>
       </div>
       <main className="flex flex-col flex-1 justify-center items-center gap-3.5 px-5 py-14 text-center">
@@ -28,7 +36,7 @@ export default function LocaleNotFound() {
           <Link href={`/${locale}`} className="store-btn store-btn-primary">
             {t('backHome')}
           </Link>
-          <Link href={`/${locale}/products`} className="!h-14 store-btn">
+          <Link href={`/${locale}/products`} className="store-btn">
             {t('viewProducts')}
           </Link>
         </div>

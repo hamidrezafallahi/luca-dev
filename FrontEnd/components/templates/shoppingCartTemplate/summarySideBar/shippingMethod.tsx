@@ -54,7 +54,7 @@ useEffect(() => {
             key={i}
             aria-pressed={shippingMethod?.id == el.id}
             className={`flex justify-between items-center gap-3 px-4 !h-auto min-h-[56px] border bg-white ${
-              shippingMethod?.id == el.id ? "border-ink" : "border-line"
+              shippingMethod?.id == el.id ? "border-primary" : "border-line"
             }`}
           >
             <div className="flex justify-between w-full">

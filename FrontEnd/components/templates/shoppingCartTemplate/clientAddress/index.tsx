@@ -105,7 +105,7 @@ export default function ClientAddress() {
           {!showAddForm && (
             <button
               onClick={handleShowAddForm}
-              className="px-[18px] h-11 font-body text-sm store-btn"
+              className="font-body store-btn"
             >
               {data?.data?.length === 0
                 ? t("address.addFirstAddress")

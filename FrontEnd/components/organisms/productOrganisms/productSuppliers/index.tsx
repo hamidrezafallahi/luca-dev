@@ -35,7 +35,7 @@ export async function ProductSupplierExtended({
 
   return (
     <section id="product-offers" className="flex flex-col gap-8 scroll-mt-6">
-      <div className="flex flex-wrap justify-between items-center gap-3">
+      <div className="flex flex-wrap justify-between items-center gap-3 store-section-head">
         <h2 className="luca-h2">{t('product.suppliersTitle')}</h2>
         <span className="luca-badge luca-badge-mute">
           {t('product.suppliersCount', { count: suppliers.length })}

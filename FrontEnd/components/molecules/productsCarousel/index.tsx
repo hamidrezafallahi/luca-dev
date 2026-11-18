@@ -39,7 +39,7 @@ export default function ProductsCarousel({
 
   return (
     <div className="flex flex-col gap-8 w-full">
-      <div className="flex justify-between items-center gap-4">
+      <div className="flex justify-between items-center gap-4 store-section-head">
         {heading ? <h2 className="luca-h2">{heading}</h2> : <span />}
         <div className="hidden sm:flex gap-2" dir="ltr">
           <button

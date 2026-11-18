@@ -1456,3 +1456,94 @@ html {
     .pc-card:hover .pc-img { transform: none; }
   }
 }
+
+/* ================== UI/UX consistency layer ==================
+   Loaded last so it wins over the earlier storefront + Luca layers.
+   Colour rule (60-30-10 style, here 70/20/10):
+     • 70% neutral  — white / paper surfaces, ink text, grey lines.
+     • 20% main     — --primary-color: every primary action, the cart badge,
+                      outline buttons, active/hover states, eyebrows, footer titles.
+     • 10% second   — --highlight-color (same family as the main colour):
+                      discount badges, focus rings, small accents only.
+   Buttons: the storefront has exactly THREE button models —
+     .store-btn-primary (filled main colour) · .store-btn (outline) · .store-btn-text (text link). */
+@layer components {
+  :root {
+    --brand-main: var(--primary-color);
+    --brand-main-contrast: #ffffff;
+    --brand-second: var(--highlight-color);
+  }
+
+  /* ---- 1) the three buttons (one height, one padding, one radius) ---- */
+  .store-btn {
+    @apply inline-flex justify-center items-center gap-2 px-8 py-0 h-12 font-medium text-sm whitespace-nowrap transition-colors duration-200;
+    border: 1px solid var(--brand-main);
+    border-radius: 0;
+    background: var(--store-surface-solid);
+    color: var(--brand-main);
+    filter: none;
+  }
+  .store-btn:hover { background: var(--brand-main); border-color: var(--brand-main); color: var(--brand-main-contrast); }
+  .store-btn-primary {
+    @apply h-12 text-sm;
+    background: var(--brand-main);
+    border-color: var(--brand-main);
+    color: var(--brand-main-contrast);
+  }
+  .store-btn-primary:hover { background: var(--brand-main); color: var(--brand-main-contrast); filter: brightness(1.15); }
+  .store-btn-text {
+    @apply inline-flex items-center gap-2 px-0 min-h-[44px] font-medium text-sm whitespace-nowrap transition-colors duration-200;
+    background: transparent;
+    border: 0;
+    color: var(--store-text);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 7px;
+  }
+  .store-btn-text:hover { color: var(--brand-main); }
+  .luca-link:hover { color: var(--brand-main); }
+  .store-btn:focus-visible, .store-btn-text:focus-visible, .store-icon-btn:focus-visible {
+    outline: 2px solid var(--brand-second);
+    outline-offset: 2px;
+  }
+  .store-btn:disabled, .store-btn[aria-disabled="true"] { opacity: 0.45; cursor: not-allowed; filter: none; }
+
+  /* ---- 2) cart badge: always the main colour, same as the primary button ---- */
+  .store-cart-badge {
+    @apply absolute top-1 end-0.5 flex justify-center items-center px-1 rounded-full min-w-[18px] h-[18px] font-medium text-[11px] leading-none pointer-events-none;
+    background: var(--brand-main);
+    color: var(--brand-main-contrast);
+    box-shadow: 0 0 0 2px var(--store-surface-solid);
+  }
+
+  /* ---- 3) main colour (20%) on the recurring UI accents ---- */
+  .store-icon-btn:hover { color: var(--brand-main); }
+  .store-nav-link:hover, .store-nav-link[aria-current="page"] {
+    color: var(--brand-main);
+    text-decoration: underline;
+    text-decoration-color: var(--brand-main);
+    text-underline-offset: 8px;
+  }
+  .store-eyebrow, .luca-eyebrow { color: var(--brand-main); }
+  .store-card:hover { border-color: var(--brand-main); }
+  .luca-chip:hover, .luca-chip[aria-pressed="true"] { border-color: var(--brand-main); color: var(--brand-main); }
+  .luca-input:focus { border-color: var(--brand-main); }
+  .store-footer-title { color: var(--brand-main); }
+
+  /* ---- second colour (10%): sale / discount badges only ---- */
+  .luca-badge-accent { background: var(--brand-second); border-color: var(--brand-second); color: #ffffff; }
+
+  /* ---- 4) mobile: every section / page heading is centred ---- */
+  @media (max-width: 767.98px) {
+    .luca-h1, .luca-h2, .store-section-title, .store-page-title, .store-page-header { text-align: center; }
+    .store-page-header { align-items: center; }
+    .store-section-head {
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+    .store-section-head > * { align-items: center; text-align: center; }
+  }
+}
