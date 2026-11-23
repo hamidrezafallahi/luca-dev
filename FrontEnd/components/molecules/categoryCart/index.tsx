@@ -18,7 +18,7 @@ type CategoryCardProps = {
 };
 
 /**
- * Light category tile (#F8F8F8, 28px corners, faint shadow): name, a short
+ * Category tile: name, a short
  * description and an "explore" link at the top; the cover photo anchored to
  * the bottom-right corner, shown whole and clipped by the rounded card.
  *
@@ -50,26 +50,26 @@ export default async function CategoryCard({
     <Link
       href={`/${locale}/categories/${category.slug || id}`}
       className={[
-        'group relative isolate flex min-h-[220px] w-full min-w-0 flex-col overflow-hidden',
+        'group relative isolate flex min-h-[220px] w-full min-w-0 flex-col overflow-hidden font-body',
         'aspect-[1.08/1] md:aspect-[1.1/1]',
-        'rounded-[28px] bg-[#F8F8F8] p-6 md:p-8 lg:p-10',
+        'rounded-[28px] bg-store-muted p-6 md:p-8 lg:p-10',
         'shadow-[0_2px_4px_rgba(17,17,17,0.015),0_16px_36px_-20px_rgba(17,17,17,0.08)]',
         'transition-[transform,box-shadow] duration-300 ease-out',
         'hover:-translate-y-1 hover:shadow-[0_18px_38px_-22px_rgba(20,20,20,0.16)]',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B1B1D]/30 focus-visible:ring-offset-2',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-store-surface',
         'motion-reduce:transition-none motion-reduce:hover:translate-y-0',
       ].join(' ')}
     >
       <span className="z-10 relative flex flex-col items-start gap-2 md:gap-3 max-w-[78%] md:max-w-[62%] text-start">
-        <h3 className="font-normal text-[#1B1B1D] text-[22px] md:text-[26px] lg:text-[32px] line-clamp-2 leading-tight tracking-tight">
+        <h3 className="font-display text-store-text text-[22px] md:text-[26px] lg:text-[32px] line-clamp-2 leading-tight tracking-tight">
           {name}
         </h3>
         {desc ? (
-          <span className="text-[#77777A] text-[12px] md:text-[13px] lg:text-[14px] line-clamp-3 leading-6">
+          <span className="text-store-subtle text-[12px] md:text-[13px] lg:text-[14px] line-clamp-3 leading-relaxed">
             {desc}
           </span>
         ) : null}
-        <span className="inline-flex items-center gap-1.5 mt-2 pb-1 border-[#1B1B1D]/70 border-b font-medium text-[#1B1B1D] text-[12px] md:text-[13px]">
+        <span className="inline-flex items-center gap-1.5 mt-2 pb-1 border-store-strong border-b font-medium text-store-text text-[12px] md:text-[13px]">
           {t('viewCategory')}
           <svg
             width="14"

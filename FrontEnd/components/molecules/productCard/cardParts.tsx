@@ -6,8 +6,8 @@ import Link from 'next/link';
 import { ProductImageSlider } from './productImageSlider';
 
 /**
- * Light product card. Two parts:
- *  1. the photo panel (#F8F8F8, 26px corners, faint shadow) with the product
+ * Product card. Two parts:
+ *  1. the photo panel (rounded with a faint shadow) with the product
  *     centred and cross-fading through its photos every 2s, main image first;
  *  2. the details below it on the page background: category/brand, name,
  *     price (old price struck through when discounted) or stock state, option
@@ -58,7 +58,7 @@ export function ProductShowcaseCard({
   const t = useTranslations('common');
 
   return (
-    <article className="group relative flex flex-col w-full min-w-0 h-full">
+    <article className="group relative flex flex-col w-full min-w-0 h-full font-body">
       <ProductImageSlider
         href={href}
         name={name}
@@ -68,11 +68,11 @@ export function ProductShowcaseCard({
       />
 
       <div className="flex flex-col flex-1 mt-3 md:mt-4 px-1 text-start">
-        <p className="min-h-[1.25rem] font-normal text-[#77777A] text-[11px] md:text-[12px] uppercase truncate tracking-[0.06em] leading-5">
+        <p className="font-normal text-store-subtle text-[11px] md:text-[12px] uppercase truncate tracking-[0.06em] leading-relaxed">
           {category || t('productsLabel')}
         </p>
 
-        <h3 className="mt-0.5 min-h-[3rem] md:min-h-[3.25rem] font-normal text-[#1B1B1D] text-[14px] md:text-[17px] line-clamp-2 leading-6 md:leading-[1.625rem]">
+        <h3 className="mt-0.5 min-h-[2lh] font-display text-store-text text-[14px] md:text-[17px] line-clamp-2 leading-snug">
           {/* Stretched link: the card's text area opens the product too. */}
           <Link
             href={href}
@@ -83,17 +83,17 @@ export function ProductShowcaseCard({
         </h3>
 
         <div
-          className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mt-1 min-h-[1.5rem] font-normal tabular-nums text-[#1B1B1D] text-[13px] md:text-[14px] leading-6"
+          className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5 mt-1 min-h-[1.5rem] font-normal tabular-nums text-store-text text-[13px] md:text-[14px] leading-relaxed"
           aria-live="polite"
         >
           {outOfStock ? (
-            <span className="text-[#77777A]">{t('outOfStock')}</span>
+            <span className="text-store-subtle">{t('outOfStock')}</span>
           ) : price ? (
             price
           ) : (
             <Link
               href={href}
-              className="z-10 relative text-[#1B1B1D] hover:underline underline-offset-4"
+              className="z-10 relative text-store-text hover:underline underline-offset-4"
             >
               {t('seePrice')}
             </Link>
@@ -126,11 +126,11 @@ export function ProductShowcaseCard({
 }
 
 const buyClass = [
-  'relative z-10 flex h-10 w-full items-center justify-center rounded-full',
-  'bg-[var(--primary-color)] text-[13px] font-medium text-white',
+  'relative z-10 flex min-h-10 w-full items-center justify-center rounded-full px-2 py-1 text-center leading-snug',
+  'bg-primary text-[13px] font-medium text-primary-foreground',
   'transition-[filter,opacity] duration-300 hover:brightness-110',
   'disabled:cursor-not-allowed disabled:opacity-45 disabled:hover:brightness-100',
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary-color)] focus-visible:ring-offset-2',
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-store-surface',
 ].join(' ');
 
 /** Formats a toman amount for the price line: old price (struck) when discounted, then the price. */
@@ -152,10 +152,10 @@ export function PriceLabel({
     <>
       <span>
         {money.format(now)}{' '}
-        <span className="font-normal text-[#77777A] text-[11px] md:text-[12px]">{currency}</span>
+        <span className="font-normal text-store-subtle text-[11px] md:text-[12px]">{currency}</span>
       </span>
       {price && price > now ? (
-        <span className="font-normal text-[#9A9A9D] text-[11px] md:text-[12px] line-through">
+        <span className="font-normal text-store-subtle text-[11px] md:text-[12px] line-through">
           {money.format(price)}
         </span>
       ) : null}

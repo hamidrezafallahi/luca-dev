@@ -88,12 +88,12 @@ function ProductCardSkeleton() {
   return (
     <div className="pc-rail-item" aria-hidden="true">
       <div className="flex flex-col animate-pulse">
-        <div className="bg-[#F8F8F8] rounded-[26px] w-full aspect-[4/5]" />
+        <div className="bg-store-muted rounded-[28px] w-full aspect-[1/1.05]" />
         <div className="flex flex-col gap-2 mt-4 px-1">
-          <div className="bg-[#F0F0F0] rounded-full w-1/4 h-3" />
-          <div className="bg-[#F0F0F0] rounded-full w-3/4 h-4" />
-          <div className="bg-[#F0F0F0] rounded-full w-1/3 h-4" />
-          <div className="bg-[#F4F4F5] mt-2 rounded-full w-full h-10" />
+          <div className="bg-store-border rounded-full w-1/4 h-3" />
+          <div className="bg-store-border rounded-full w-3/4 h-4" />
+          <div className="bg-store-border rounded-full w-1/3 h-4" />
+          <div className="bg-store-muted mt-2 rounded-full w-full h-10" />
         </div>
       </div>
     </div>

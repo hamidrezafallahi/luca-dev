@@ -1411,19 +1411,23 @@ html {
   .pc-card :is(a, button):focus-visible { outline: 2px solid #ffffff; outline-offset: 3px; }
   .pc-panel :is(a, button):focus-visible { outline-color: #111111; }
 
-  /* Option chips (e.g. magnification) on the light product card. */
+  /* Option chips (e.g. magnification) on the product card. */
   .pc-options [role="radio"] {
+    height: auto;
+    min-height: 2rem;
+    padding-block: 0.25rem;
+    line-height: 1.5;
     border-radius: 9999px;
-    border-color: #E6E6E8;
+    border-color: var(--store-border);
     background: transparent;
-    color: #1B1B1D;
+    color: var(--store-text);
     font-family: var(--font-body);
   }
-  .pc-options [role="radio"]:hover { border-color: #BDBDC0; }
+  .pc-options [role="radio"]:hover { border-color: var(--store-border-strong); }
   .pc-options [role="radio"][aria-checked="true"] {
     border-color: var(--primary-color);
     background: var(--primary-color);
-    color: #ffffff;
+    color: var(--store-surface-solid);
   }
 
   /* ---- listing layouts ---- */

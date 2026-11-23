@@ -8,7 +8,7 @@ import Link from 'next/link';
 import MediaImage from '@components/atoms/MediaImage';
 
 /**
- * Product photo box for the light product card: a #F8F8F8 rounded panel with
+ * Product photo box: a rounded panel with
  * the photo centred and shown whole (object-contain, never cropped).
  *
  * With two or more photos it cross-fades through them every 2s, main image
@@ -217,7 +217,7 @@ export function ProductImageSlider({
       onTouchStart={many ? onTouchStart : undefined}
       onTouchEnd={many ? onTouchEnd : undefined}
       className={[
-        'group/slider relative isolate z-10 aspect-[1/1.05] w-full shrink-0 overflow-hidden rounded-[28px] bg-[#F8F8F8]',
+        'group/slider relative isolate z-10 aspect-[1/1.05] w-full shrink-0 overflow-hidden rounded-[28px] bg-store-muted',
         'shadow-[0_2px_4px_rgba(17,17,17,0.015),0_16px_36px_-20px_rgba(17,17,17,0.08)]',
         'transition-[transform,box-shadow] duration-300 ease-out',
         'group-hover:-translate-y-1 group-hover:shadow-[0_18px_38px_-22px_rgba(20,20,20,0.16)]',
@@ -292,7 +292,7 @@ export function ProductImageSlider({
                     <span
                       className={[
                         'block h-[4px] rounded-full transition-all duration-300 ease-out motion-reduce:transition-none',
-                        i === index ? 'w-[18px] bg-[#242424]' : 'w-[5px] bg-[#D4D4D4] group-hover/dot:bg-[#a9a9a9]',
+                        i === index ? 'w-[18px] bg-primary' : 'w-[5px] bg-store-border group-hover/dot:bg-store-subtle',
                       ].join(' ')}
                     />
                   </button>
@@ -300,7 +300,7 @@ export function ProductImageSlider({
               </div>
             ) : (
               <span
-                className="bg-white/85 shadow-[0_3px_10px_rgba(0,0,0,0.06)] backdrop-blur-sm px-2.5 py-1 rounded-full font-medium tabular-nums text-[#1B1B1D] text-[11px] leading-4"
+                className="bg-store-surface shadow-[0_3px_10px_rgba(0,0,0,0.06)] backdrop-blur-sm px-2.5 py-1 rounded-full font-medium tabular-nums text-store-text text-[11px] leading-snug"
                 aria-live="polite"
               >
                 {money.format(index + 1)} / {money.format(count)}
@@ -334,11 +334,11 @@ function SlideButton({
       className={[
         'absolute top-1/2 z-20 -translate-y-1/2 flex size-8 items-center justify-center rounded-full',
         side === 'start' ? 'start-2.5' : 'end-2.5',
-        'bg-white/85 text-[#1B1B1D] shadow-[0_2px_8px_rgba(0,0,0,0.08)] backdrop-blur-sm',
-        'transition-[opacity,background-color] duration-300 ease-out hover:bg-white',
+        'bg-store-surface text-store-text shadow-[0_2px_8px_rgba(0,0,0,0.08)] backdrop-blur-sm',
+        'transition-[opacity,background-color] duration-300 ease-out hover:bg-store-muted',
         // Hidden until hover/focus where a mouse exists; touch screens always see them.
         '[@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover/slider:opacity-100 focus-visible:opacity-100',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B1B1D]/40',
+        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
       ].join(' ')}
     >
       {/* Chevron points "back" at the start side and "forward" at the end side in either direction. */}
@@ -363,7 +363,7 @@ function SlideButton({
 /** Neutral stand-in when a product has no photo or its file fails to load. */
 function PhotoPlaceholder() {
   return (
-    <span className="absolute inset-0 flex justify-center items-center text-[#C9C9CC]">
+    <span className="absolute inset-0 flex justify-center items-center text-store-subtle">
       <svg
         width="44"
         height="44"
