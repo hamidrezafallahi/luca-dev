@@ -12,7 +12,7 @@ export default function RedirectToPayment({
   const t = useTranslations();
 
   return (
-    <div className="flex justify-center items-center bg-white py-10 text-ink">
+    <div className="flex justify-center items-center bg-store-surface py-10 text-ink">
       <div className="text-center">
         <div className="mx-auto mb-4 border-line border-t-ink border-[3px] rounded-full w-[76px] h-[76px] animate-spin"></div>
         <p className="luca-h3">{t('payment.redirect')}</p>

@@ -9,7 +9,7 @@ export default function LocaleNotFound() {
   const tBrand = useTranslations('brand');
 
   return (
-    <div className="flex flex-col bg-white min-h-screen text-ink">
+    <div className="flex flex-col bg-store-surface min-h-screen text-ink">
       <div className="flex justify-center items-center border-b h-16 md:h-[88px] luca-line">
         <Link
           href={`/${locale}`}

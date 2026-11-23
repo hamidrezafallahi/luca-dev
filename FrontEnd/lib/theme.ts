@@ -87,11 +87,13 @@ export function themeToCss(theme: SiteTheme | null, customFonts: FontOption[] = 
     ['--store-border-strong', theme.textColor],
     ['--store-text', theme.textColor],
     ['--store-text-muted', theme.textMutedColor],
+    ['--store-placeholder', theme.surfaceMutedColor],
     // Luca's admin panel shares the storefront palette.
     ['--admin-surface', theme.surfaceColor],
     ['--admin-surface-elevated', theme.surfaceColor],
     ['--admin-surface-muted', theme.surfaceMutedColor],
     ['--admin-hover', theme.surfaceMutedColor],
+    ['--admin-active', theme.surfaceColor],
     ['--admin-border', theme.borderColor],
     ['--admin-text', theme.textColor],
     ['--admin-text-muted', theme.textMutedColor],

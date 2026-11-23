@@ -22,7 +22,7 @@ function InvoiceList() {
 
   return (
     <div
-      className={`flex flex-col gap-4 p-6 bg-white border cursor-pointer transition-colors ${
+      className={`flex flex-col gap-4 p-6 bg-store-surface border cursor-pointer transition-colors ${
         true ? "border-primary shadow-primary shadow-lg" : "border-gray-700"
       }`}
     >

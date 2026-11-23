@@ -61,7 +61,7 @@ function ShoppingCartHeaderComponent({ ...props }: IProps) {
       className="top-full z-50 absolute mt-0 end-0 max-md:left-0 max-md:right-auto"
       onMouseLeave={() => setIsOpen(false)}
     >
-      <div className="bg-white p-5 border w-[min(340px,92vw)] text-ink text-start luca-line">
+      <div className="bg-store-surface p-5 border w-[min(340px,92vw)] text-ink text-start luca-line">
         <div className="flex justify-between items-center gap-3 mb-1">
           <h2 className="luca-h3">
             {t("shoppingCart.header.yourCart")}

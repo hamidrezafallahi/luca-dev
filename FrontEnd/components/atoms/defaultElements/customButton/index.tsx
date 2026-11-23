@@ -41,8 +41,8 @@ const buttonVariants = cva(
         // filled main colour · outline · text link. Other names alias these.
         default: "bg-primary text-white border border-primary hover:brightness-110",
         destructive: "bg-error text-white border border-error hover:brightness-110",
-        outline: "border border-primary bg-white text-primary hover:bg-primary hover:text-white",
-        secondary: "border border-primary bg-white text-primary hover:bg-primary hover:text-white",
+        outline: "border border-primary bg-store-surface text-primary hover:bg-primary hover:text-white",
+        secondary: "border border-primary bg-store-surface text-primary hover:bg-primary hover:text-white",
         ghost: "text-ink hover:text-primary",
         link: "text-ink underline underline-offset-[7px] hover:text-primary",
       },

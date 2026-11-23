@@ -143,7 +143,7 @@ export default function SpecialOfferCarouselClient({ spacialOffers }: Props) {
             type="button"
             onClick={handlePrev}
             aria-label={t('common.previous')}
-            className="top-[150px] left-2 z-30 absolute flex justify-center items-center bg-white hover:bg-ink rounded-full w-11 h-11 text-ink hover:text-white transition-colors -translate-y-1/2"
+            className="top-[150px] left-2 z-30 absolute flex justify-center items-center bg-store-surface hover:bg-ink rounded-full w-11 h-11 text-ink hover:text-store-surface transition-colors -translate-y-1/2"
           >
             <IcChevronLeft size={18} />
           </button>
@@ -151,7 +151,7 @@ export default function SpecialOfferCarouselClient({ spacialOffers }: Props) {
             type="button"
             onClick={handleNext}
             aria-label={t('common.next')}
-            className="top-[150px] right-2 z-30 absolute flex justify-center items-center bg-white hover:bg-ink rounded-full w-11 h-11 text-ink hover:text-white transition-colors -translate-y-1/2"
+            className="top-[150px] right-2 z-30 absolute flex justify-center items-center bg-store-surface hover:bg-ink rounded-full w-11 h-11 text-ink hover:text-store-surface transition-colors -translate-y-1/2"
           >
             <IcChevronRight size={18} />
           </button>
@@ -214,7 +214,7 @@ function CompactOfferCard({
           <button
             type="button"
             onClick={onAdd}
-            className="text-[13px] text-white hover:text-white luca-link"
+            className="text-[13px] text-white hover:text-store-surface luca-link"
           >
             {t('common.addToCart')}
           </button>

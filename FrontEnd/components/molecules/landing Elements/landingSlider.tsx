@@ -104,7 +104,7 @@ function LandingSlider({ slides }: IProps) {
                     href={href}
                     tabIndex={index === current ? undefined : -1}
                     aria-label={title || t('slideDetailsAria', { index: index + 1 })}
-                    className="bottom-6 absolute inline-flex justify-center items-center bg-white hover:bg-ink px-8 h-[52px] font-medium text-ink hover:text-white text-sm transition-colors start-6 md:start-10"
+                    className="bottom-6 absolute inline-flex justify-center items-center bg-store-surface hover:bg-ink px-8 h-[52px] font-medium text-ink hover:text-store-surface text-sm transition-colors start-6 md:start-10"
                   >
                     {t('slideCta')}
                   </Link>
@@ -119,7 +119,7 @@ function LandingSlider({ slides }: IProps) {
                 type="button"
                 onClick={prevSlide}
                 aria-label={t('prevSlide')}
-                className="top-1/2 left-3 z-20 absolute flex justify-center items-center bg-white hover:bg-ink w-11 h-11 text-ink hover:text-white transition-colors -translate-y-1/2"
+                className="top-1/2 left-3 z-20 absolute flex justify-center items-center bg-store-surface hover:bg-ink w-11 h-11 text-ink hover:text-store-surface transition-colors -translate-y-1/2"
               >
                 <IcChevronLeft size={18} />
               </button>
@@ -127,7 +127,7 @@ function LandingSlider({ slides }: IProps) {
                 type="button"
                 onClick={nextSlide}
                 aria-label={t('nextSlide')}
-                className="top-1/2 right-3 z-20 absolute flex justify-center items-center bg-white hover:bg-ink w-11 h-11 text-ink hover:text-white transition-colors -translate-y-1/2"
+                className="top-1/2 right-3 z-20 absolute flex justify-center items-center bg-store-surface hover:bg-ink w-11 h-11 text-ink hover:text-store-surface transition-colors -translate-y-1/2"
               >
                 <IcChevronRight size={18} />
               </button>

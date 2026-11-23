@@ -65,14 +65,14 @@ export default function FinalizeOrder({
 
   if (redirecting || isLoading) {
     return (
-      <Card className="bg-white w-full max-w-[560px] text-start">
+      <Card className="bg-store-surface w-full max-w-[560px] text-start">
         <RedirectToPayment paymentMethodTitle={snapshot.paymentMethodTitle} />
       </Card>
     );
   }
 
   return (
-    <Card className="bg-white w-full max-w-[560px] text-start">
+    <Card className="bg-store-surface w-full max-w-[560px] text-start">
       <CardHeader>
         <CardTitle>{t('payment.final_confirm_title')}</CardTitle>
         <CardDescription>{t('payment.final_confirm_desc')}</CardDescription>

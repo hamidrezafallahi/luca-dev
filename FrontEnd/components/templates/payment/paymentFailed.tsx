@@ -83,7 +83,7 @@ export default function PaymentFailed({}: IPaymentFailedProps) {
 
         <div className="gap-6 grid grid-cols-1 lg:grid-cols-3">
           <div className="space-y-6 lg:col-span-2">
-            <Card className="bg-white border-line">
+            <Card className="bg-store-surface border-line">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <div className="flex flex-shrink-0 justify-center items-center border border-line w-11 h-11 [&_svg]:!text-ink">
@@ -101,7 +101,7 @@ export default function PaymentFailed({}: IPaymentFailedProps) {
                           <span className="text-mute text-sm">
                             {t("payment.error_code")}
                           </span>
-                          <code className="bg-white px-2 py-1 rounded font-mono text-sm">
+                          <code className="bg-store-surface px-2 py-1 rounded font-mono text-sm">
                             {errorCode}
                           </code>
                         </div>
@@ -112,7 +112,7 @@ export default function PaymentFailed({}: IPaymentFailedProps) {
               </CardContent>
             </Card>
 
-            <Card className="bg-white border-line">
+            <Card className="bg-store-surface border-line">
               <CardContent className="p-6">
                 <h3 className="mb-4 font-body font-semibold text-[15px]">
                   {t("payment.solutions_title")}
@@ -159,7 +159,7 @@ export default function PaymentFailed({}: IPaymentFailedProps) {
             </Card>
 
             {orderId && (
-              <Card className="bg-white border-line">
+              <Card className="bg-store-surface border-line">
                 <CardContent className="p-6">
                   <h3 className="mb-4 font-body font-semibold text-[15px]">
                     {t("payment.order_title")}
@@ -185,7 +185,7 @@ export default function PaymentFailed({}: IPaymentFailedProps) {
           </div>
 
           <div className="space-y-4">
-            <Card className="bg-white border-line">
+            <Card className="bg-store-surface border-line">
               <CardContent className="space-y-3 p-6">
                 <Button onClick={handleRetry} className="w-full">
                   {t("payment.retry_button")}

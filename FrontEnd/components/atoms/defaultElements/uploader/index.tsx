@@ -89,7 +89,7 @@ const Uploader = ({ ...props }: UploaderProps) => {
     <label
       className={cn(
         'relative flex flex-col justify-center items-center w-full min-h-36 h-36',
-        'border border-dashed border-gray-300 bg-white rounded-lg',
+        'border border-dashed border-gray-300 bg-store-surface rounded-lg',
         'text-gray-400 text-sm overflow-hidden cursor-pointer',
         className,
       )}

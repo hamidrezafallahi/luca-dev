@@ -101,7 +101,7 @@ const removeImage = (e: React.MouseEvent, id: number) => {
               <button
                 type="button"
                 onClick={(e) => removeImage(e, item.id)}
-                className="bg-white border rounded-full text-red-600 text-sm"
+                className="bg-store-surface border rounded-full text-red-600 text-sm"
               >
                 <CloseIcon config={{ size: 16 }} />
               </button>
@@ -113,7 +113,7 @@ const removeImage = (e: React.MouseEvent, id: number) => {
       <button
         type="button"
         onClick={addImageRow}
-        className="bg-white p-2 border border-blue-600 rounded-full text-blue-600 text-sm"
+        className="bg-store-surface p-2 border border-blue-600 rounded-full text-blue-600 text-sm"
       >
         <PlusIcon />
       </button>

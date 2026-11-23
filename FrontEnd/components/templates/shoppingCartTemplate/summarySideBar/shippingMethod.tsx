@@ -53,7 +53,7 @@ useEffect(() => {
             onClick={() => handleChangeShippingMethod(el)}
             key={i}
             aria-pressed={shippingMethod?.id == el.id}
-            className={`flex justify-between items-center gap-3 px-4 !h-auto min-h-[56px] border bg-white ${
+            className={`flex justify-between items-center gap-3 px-4 !h-auto min-h-[56px] border bg-store-surface ${
               shippingMethod?.id == el.id ? "border-primary" : "border-line"
             }`}
           >

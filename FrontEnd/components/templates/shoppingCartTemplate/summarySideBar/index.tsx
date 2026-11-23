@@ -20,7 +20,7 @@ function SummarySideBar({ ...props }: IProps) {
   const t = useTranslations();
 
   return (
-    <div className="flex flex-col gap-4 bg-white p-6 border w-full text-start luca-line">
+    <div className="flex flex-col gap-4 bg-store-surface p-6 border w-full text-start luca-line">
       <h2 className="luca-h3">
         {t("shoppingCart.shoppingCartSummary")}
       </h2>

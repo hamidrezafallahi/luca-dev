@@ -70,7 +70,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
         <button
           ref={buttonRef as React.RefObject<HTMLButtonElement>}
           type="button"
-          className="flex justify-between items-center bg-white hover:bg-gray-50 px-3 py-2 border border-input rounded-md focus-visible:ring-2 focus-visible:ring-ring w-full h-10 text-sm transition-colors cursor-pointer"
+          className="flex justify-between items-center bg-store-surface hover:bg-store-muted px-3 py-2 border border-input rounded-md focus-visible:ring-2 focus-visible:ring-ring w-full h-10 text-sm transition-colors cursor-pointer"
           onClick={() => setIsOpen(!isOpen)}
           tabIndex={0}
           onKeyDown={(e) => e.key === "Enter" && setIsOpen(!isOpen)}
@@ -105,7 +105,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
                 width: buttonRef.current?.clientWidth,
               }}
               className={cn(
-                "bg-white shadow-lg mt-1 border border-input rounded-md w-fit",
+                "bg-store-surface shadow-lg mt-1 border border-input rounded-md w-fit",
                 dropdownClassName,
               )}
               onScroll={handleScroll}

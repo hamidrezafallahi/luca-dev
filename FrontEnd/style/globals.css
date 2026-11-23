@@ -10,7 +10,7 @@
   --secondary-color: #111111; /* ink */
   --highlight-color: #1e3a8a;
   --neutral-color: #f6f6f3;   /* paper */
-  --tint-color: color-mix(in srgb, var(--primary-color) 8%, #ffffff);
+  --tint-color: color-mix(in srgb, var(--primary-color) 8%, var(--store-surface-solid));
   --success-color: #1d5c3f;
   --error-color: #a3262e;
   --warning-color: #8a5a00;
@@ -40,7 +40,7 @@
   --secondary-color: #f3f3f0;
   --highlight-color: #8fa5e8;
   --neutral-color: #1d1d1b;
-  --tint-color: color-mix(in srgb, var(--primary-color) 12%, #111111);
+  --tint-color: color-mix(in srgb, var(--primary-color) 12%, var(--store-surface-solid));
   --success-color: #6fc79b;
   --error-color: #f08a90;
   --warning-color: #e0b354;
@@ -68,20 +68,13 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
-  * {
-    @apply border-border;
-  }
   body {
-    background: #ffffff;
-    color: #111111;
+    background: var(--store-surface-solid);
+    color: var(--store-text);
     font-family: var(--font-body);
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.8;
-  }
-  [data-theme="dark"] body {
-    background: #111111;
-    color: #f3f3f0;
   }
   h1, h2, h3 {
     font-family: var(--font-display);
@@ -109,12 +102,12 @@ html {
   scroll-behavior: smooth;
 }
 *::-webkit-scrollbar-track {
-  background-color: #ecedf2 !important;
+  background-color: var(--store-surface-muted) !important;
   border-radius: 10px !important;
 }
 
 *::-webkit-scrollbar-thumb {
-  background: #999 !important;
+  background: var(--store-text-muted) !important;
   border-radius: 10px !important;
 }
 
@@ -128,7 +121,7 @@ html {
   --admin-text-muted: #5c5c58;
   --admin-hover: #f6f6f3;
   --admin-active: #ffffff;
-  --admin-danger-soft: color-mix(in srgb, var(--error-color) 10%, white);
+  --admin-danger-soft: color-mix(in srgb, var(--error-color) 10%, var(--admin-surface));
   --admin-shadow: none;
   --admin-radius: 0;
   --admin-radius-sm: 0;
@@ -143,7 +136,7 @@ html {
   --admin-text-muted: #a9a9a4;
   --admin-hover: #262624;
   --admin-active: #2a2a28;
-  --admin-danger-soft: color-mix(in srgb, var(--error-color) 22%, #111111);
+  --admin-danger-soft: color-mix(in srgb, var(--error-color) 22%, var(--admin-surface));
   --admin-shadow: none;
 }
 
@@ -483,7 +476,7 @@ html {
   --store-radius: 0;
   --store-radius-sm: 0;
   --store-hero-overlay: #1d1d1b;
-  --store-placeholder: #eeeeea;
+  --store-placeholder: var(--store-surface-muted);
 }
 
 [data-theme="dark"] {
@@ -496,7 +489,7 @@ html {
   --store-border-strong: #f3f3f0;
   --store-text-on-dark: #ffffff;
   --store-shadow: none;
-  --store-placeholder: #262624;
+  --store-placeholder: var(--store-surface-muted);
 }
 
 @layer components {
@@ -555,7 +548,7 @@ html {
   }
 
   .store-btn:hover {
-    background: color-mix(in srgb, var(--primary-color) 8%, white);
+    background: color-mix(in srgb, var(--primary-color) 8%, var(--store-surface-solid));
   }
 
   .store-btn-primary {
@@ -758,7 +751,7 @@ html {
   .luca-input {
     @apply block px-4 outline-none w-full h-[52px] text-[15px] transition-colors;
     background: var(--store-surface-solid);
-    border: 1px solid #8a8a85;
+    border: 1px solid var(--store-border-strong);
     color: var(--store-text);
   }
   .luca-input:focus { border-color: var(--store-text); }
@@ -772,7 +765,7 @@ html {
   }
   .luca-badge-solid { background: var(--store-text); color: var(--store-surface-solid); }
   .luca-badge-accent { background: var(--primary-color); border-color: var(--primary-color); color: #ffffff; }
-  .luca-badge-mute { background: var(--store-surface-muted); border-color: #c9c9c4; color: var(--store-text-muted); }
+  .luca-badge-mute { background: var(--store-surface-muted); border-color: var(--store-border); color: var(--store-text-muted); }
   .luca-chip {
     @apply inline-flex items-center gap-2 px-4 h-[44px] text-sm transition-colors;
     border: 1px solid var(--store-border);
@@ -921,7 +914,7 @@ html {
   .admin-btn-primary:hover { background: var(--primary-color); color: #ffffff; filter: brightness(1.12); }
   .admin-btn-ghost:hover { background: var(--admin-hover); color: var(--admin-text); }
   .admin-icon-btn { @apply w-11 h-11; border: 0; border-radius: 0; background: transparent; color: var(--admin-text); }
-  .admin-search input { @apply py-0 h-[44px]; border-radius: 0; background: var(--admin-surface-elevated); border-color: #8a8a85; }
+  .admin-search input { @apply py-0 h-[44px]; border-radius: 0; background: var(--admin-surface-elevated); border-color: var(--admin-border); }
   .admin-search input:focus { border-color: var(--admin-text); box-shadow: none; }
   .admin-table { @apply text-start; color: var(--admin-text); }
   .admin-table thead { background: var(--admin-surface-muted); color: var(--admin-text-muted); }
@@ -933,7 +926,7 @@ html {
   .admin-stat-card:hover { transform: none; }
   .admin-badge { @apply px-2.5 py-0 h-[26px]; border-radius: 0; border: 1px solid currentColor; }
   .admin-badge-success { background: var(--admin-text); color: var(--admin-surface-elevated); border-color: var(--admin-text); }
-  .admin-badge-warning { background: var(--admin-surface-muted); color: var(--admin-text-muted); border-color: #c9c9c4; }
+  .admin-badge-warning { background: var(--admin-surface-muted); color: var(--admin-text-muted); border-color: var(--admin-border); }
   .admin-dock { @apply px-0; padding-bottom: 0; }
   .admin-dock-bar {
     @apply p-0 max-w-none;
@@ -952,8 +945,7 @@ html {
 
 /* Long-form article body (blog). */
 @layer components {
-  .luca-article { @apply text-[16px] md:text-[17px]; line-height: 2.1; color: #2a2a28; }
-  [data-theme="dark"] .luca-article { color: #e4e4e0; }
+  .luca-article { @apply text-[16px] md:text-[17px]; line-height: 2.1; color: var(--store-text); }
   .luca-article :is(h2, h3, h4) { @apply mt-8 mb-3; font-family: var(--font-display); font-weight: 500; line-height: 1.3; color: var(--store-text); }
   .luca-article h2 { font-size: 2.125rem; }
   .luca-article h3 { font-size: 1.75rem; }
@@ -1136,17 +1128,15 @@ html {
 }
 
 .admin-alert-success {
-  background: rgba(16, 185, 129, 0.12);
-  color: #047857;
+  background: color-mix(in srgb, var(--success-color) 12%, var(--admin-surface));
+  color: var(--success-color);
 }
 
 .admin-alert-warning {
-  background: rgba(245, 158, 11, 0.14);
-  color: #b45309;
+  background: color-mix(in srgb, var(--warning-color) 14%, var(--admin-surface));
+  color: var(--warning-color);
 }
 
-[data-theme="dark"] .admin-alert-success { color: #6ee7b7; }
-[data-theme="dark"] .admin-alert-warning { color: #fcd34d; }
 
 /* Spinner + progress */
 .admin-spinner {
@@ -1210,207 +1200,8 @@ html {
   }
 }
 
-/* ================== Product showcase card ==================
-   One card for every product listing, measured from the approved reference
-   (a 380px-wide card: white rounded image panel over a graphite body).
-   The card is a size container, so every measure is written in cqi
-   (1cqi = 1% of the card's width) and scales with the card: at 380px wide,
-   7.9cqi = 30px, the reference's padding. clamp() keeps narrow and wide cards
-   readable. Unlike the rest of the storefront these cards are rounded. */
-:root {
-  --pc-body: #575757;
-  --pc-panel: #ffffff;
-  --pc-control: #eeeeee;
-  --pc-text: #ffffff;
-  --pc-muted: #d6d6d6;
-  --pc-ink: #3a3a3a;
-  /* The reference is set in a classic serif. Markazi Text is always loaded and
-     covers Persian and Latin; the card uses it whatever heading font the theme picks.
-     Markazi runs small for its size, so the sizes below sit above the reference's px. */
-  --pc-serif: var(--font-markazi), 'Noto Naskh Arabic', Georgia, serif;
-}
-
+/* Product listing layouts and option chips used by the current product card. */
 @layer components {
-  .pc-card {
-    container-type: inline-size;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    min-width: 0;
-    overflow: hidden;
-    border-radius: clamp(24px, 7.9cqi, 32px);
-    background: var(--pc-body);
-    color: var(--pc-text);
-    transition: transform 250ms ease, box-shadow 250ms ease;
-  }
-
-  /* ---- white image panel (reference: 380 x 455, all four corners rounded) ---- */
-  .pc-panel {
-    position: relative;
-    flex-shrink: 0;
-    aspect-ratio: 380 / 455;
-    overflow: hidden;
-    border-radius: inherit;
-    background: var(--pc-panel);
-  }
-  .pc-photo {
-    position: absolute;
-    inset: 14% 7% 11%;
-    display: block;
-  }
-  .pc-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    /* Product shots are on near-white; multiply drops that backdrop into the white panel. */
-    mix-blend-mode: multiply;
-    transition: transform 250ms ease;
-  }
-  .pc-control {
-    position: absolute;
-    z-index: 2;
-    top: 7.9cqi;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: clamp(36px, 11cqi, 44px);
-    height: clamp(36px, 11cqi, 44px);
-    border-radius: clamp(10px, 3.2cqi, 13px);
-    background: var(--pc-control);
-    color: #111111;
-    transition: background-color 200ms ease;
-  }
-  .pc-control:hover { background: #e2e2e2; }
-  .pc-control-start { inset-inline-start: 7.9cqi; }
-   /* The back chevron points to where the reader came from: left in LTR, right in RTL. */
-  [dir="rtl"] .pc-control-start svg { transform: scaleX(-1); }
-
-  .pc-dots {
-    position: absolute;
-    z-index: 2;
-    bottom: 6.5cqi;
-    left: 50%;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    transform: translateX(-50%);
-  }
-  /* 24px hit area around the small marks. */
-  .pc-dot {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 24px;
-    padding: 0 2px;
-  }
-  .pc-dot::before {
-    content: "";
-    display: block;
-    width: 6px;
-    height: 6px;
-    border-radius: 9999px;
-    background: #8f8f8f;
-    transition: width 250ms ease, background-color 250ms ease;
-  }
-  .pc-dot[aria-current="true"]::before { width: 24px; background: #4a4a4a; }
-
-  /* ---- graphite information body ---- */
-  .pc-body {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    padding: clamp(26px, 9.5cqi, 40px) 7.9cqi clamp(24px, 8.4cqi, 34px);
-    font-family: var(--pc-serif);
-  }
-  .pc-category {
-    font-size: clamp(18px, 5.3cqi, 22px);
-    font-weight: 500;
-    line-height: 1.25;
-    color: var(--pc-muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .pc-title {
-    margin-top: clamp(2px, 1cqi, 6px);
-    font-family: var(--pc-serif);
-    font-size: clamp(28px, 9.5cqi, 38px);
-    font-weight: 600;
-    line-height: 1.15;
-    overflow-wrap: anywhere;
-    color: var(--pc-text);
-  }
-  .pc-title a { color: inherit; text-decoration: none; }
-  .pc-title a:hover { text-decoration: underline; text-underline-offset: 6px; text-decoration-thickness: 1px; }
-  /* The reference shows four lines; longer catalogue descriptions stop there. */
-  .pc-desc {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-    overflow: hidden;
-    margin-top: clamp(14px, 6.6cqi, 28px);
-    font-size: clamp(18px, 5.3cqi, 21px);
-    line-height: 1.3;
-    color: var(--pc-muted);
-  }
-
-  /* Price pill and buy button share a row; the price keeps its natural width
-     and the buy button takes the rest (reference: 135px + 178px). */
-  .pc-actions {
-    display: flex;
-    align-items: center;
-    gap: clamp(8px, 2.6cqi, 12px);
-    margin-top: auto;
-    padding-top: clamp(22px, 8.4cqi, 34px);
-  }
-  .pc-pill {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.35em;
-    min-width: 0;
-    height: clamp(48px, 14.5cqi, 56px);
-    padding-inline: clamp(16px, 5.5cqi, 24px);
-    border-radius: 9999px;
-    font-family: var(--pc-serif);
-    font-size: clamp(20px, 6cqi, 24px);
-    font-weight: 600;
-    line-height: 1;
-    white-space: nowrap;
-    text-decoration: none;
-    transition: background-color 250ms ease, color 250ms ease, opacity 250ms ease;
-  }
-  .pc-price {
-    flex: 0 1 auto;
-    min-width: 35.5cqi;
-    background: var(--pc-panel);
-    color: var(--pc-ink);
-  }
-  a.pc-price:hover { background: #ececec; }
-  .pc-price-old {
-    font-size: 0.72em;
-    font-weight: 500;
-    text-decoration: line-through;
-    color: #8a8a8a;
-  }
-  .pc-price-unit { font-size: 0.72em; font-weight: 500; }
-  .pc-buy {
-    flex: 1 1 0;
-    min-width: 7.5rem;
-    border: 1.5px solid rgba(255, 255, 255, 0.92);
-    background: transparent;
-    color: var(--pc-text);
-    cursor: pointer;
-  }
-  :lang(en) .pc-buy { text-transform: uppercase; letter-spacing: 0.02em; }
-  .pc-buy:hover { background: var(--pc-text); color: var(--pc-body); }
-  .pc-buy:disabled { opacity: 0.45; cursor: not-allowed; background: transparent; color: var(--pc-text); }
-
-  .pc-card :is(a, button):focus-visible { outline: 2px solid #ffffff; outline-offset: 3px; }
-  .pc-panel :is(a, button):focus-visible { outline-color: #111111; }
-
   /* Option chips (e.g. magnification) on the product card. */
   .pc-options [role="radio"] {
     height: auto;

@@ -78,7 +78,7 @@ function AddressCart({...props}: IProps) {
 
   return (
     <div
-      className={`flex flex-col gap-3 p-5 border cursor-pointer bg-white text-start ${
+      className={`flex flex-col gap-3 p-5 border cursor-pointer bg-store-surface text-start ${
         selectedAddress?.id === address.id
           ? "border-ink"
           : "border-line"

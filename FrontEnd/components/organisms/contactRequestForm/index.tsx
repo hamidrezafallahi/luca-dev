@@ -30,7 +30,7 @@ const EMPTY_VALUES: ContactRequestFormValues = {
   website: '',
 };
 
-const FIELD_CLASS = 'bg-white text-ink';
+const FIELD_CLASS = 'bg-store-surface text-ink';
 const ERROR_CLASS = '!border-error';
 
 /** Persian / Arabic digits -> Latin, and drop spaces and dashes. */

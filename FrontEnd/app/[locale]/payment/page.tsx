@@ -35,7 +35,7 @@ export default async function Page({ params, searchParams }: Props) {
     return (
       <Suspense
         fallback={
-          <div className="flex justify-center items-center bg-white min-h-[70vh] text-ink">
+          <div className="flex justify-center items-center bg-store-surface min-h-[70vh] text-ink">
             <div className="mx-auto border-line border-t-ink border-[3px] rounded-full w-[76px] h-[76px] animate-spin" />
           </div>
         }

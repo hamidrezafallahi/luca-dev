@@ -12,7 +12,7 @@ export default function NotFound() {
   return (
     <html lang="fa" dir="rtl" className={fontVariables}>
       <body className="bg-store-surface min-h-screen text-store-text antialiased">
-    <div className="flex flex-col bg-white min-h-screen text-ink">
+    <div className="flex flex-col bg-store-surface min-h-screen text-ink">
       <div className="flex justify-center items-center border-b h-16 md:h-[88px] luca-line">
         <Link href="/fa" aria-label="LUCA — صفحه اصلی لوکا" className="inline-flex">
           <Image

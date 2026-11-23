@@ -11,9 +11,9 @@ interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const variantClasses: Record<string, string> = {
   default: "border border-[#c9c9c4] bg-paper text-mute",
-  destructive: "border border-error text-error bg-white",
-  outline: "border border-ink text-ink bg-white",
-  secondary: "border border-line bg-white text-ink",
+  destructive: "border border-error text-error bg-store-surface",
+  outline: "border border-ink text-ink bg-store-surface",
+  secondary: "border border-line bg-store-surface text-ink",
   success: "border border-ink bg-ink text-white",
   warning: "border border-[#c9c9c4] bg-paper text-mute",
   accent: "border border-primary bg-primary text-white",

@@ -87,7 +87,7 @@ export default function PaymentSuccess({ params }: IPaymentSuccessProps) {
           {/* بخش اصلی اطلاعات */}
           <div className="space-y-6 lg:col-span-2">
             {/* کارت تبریک */}
-            <Card className="bg-white border-line">
+            <Card className="bg-store-surface border-line">
               <CardContent className="p-6">
                 <div className="flex items-start gap-4">
                   <div className="flex flex-shrink-0 justify-center items-center border border-line w-11 h-11 [&_svg]:!text-ink">
@@ -106,7 +106,7 @@ export default function PaymentSuccess({ params }: IPaymentSuccessProps) {
             </Card>
 
             {/* جزئیات سفارش */}
-            <Card className="bg-white border-line">
+            <Card className="bg-store-surface border-line">
               <CardContent className="p-6">
                 <h3 className="mb-4 font-body font-semibold text-[15px]">
                   {t('orderDetails')}
@@ -146,7 +146,7 @@ export default function PaymentSuccess({ params }: IPaymentSuccessProps) {
             </Card>
 
             {/* مراحل بعدی */}
-            <Card className="bg-white border-line">
+            <Card className="bg-store-surface border-line">
               <CardContent className="p-6">
                 <h3 className="mb-4 font-body font-semibold text-[15px]">
                   {t('nextSteps')}
@@ -185,7 +185,7 @@ export default function PaymentSuccess({ params }: IPaymentSuccessProps) {
 
           {/* سایدبار اقدامات */}
           <div className="space-y-4">
-            <Card className="bg-white border-line">
+            <Card className="bg-store-surface border-line">
               <CardContent className="p-6">
                 <h3 className="mb-4 font-body font-semibold text-[15px]">
                   {t('actions')}
@@ -222,7 +222,7 @@ export default function PaymentSuccess({ params }: IPaymentSuccessProps) {
             </Card>
 
             {/* پشتیبانی */}
-            <Card className="bg-white border-line">
+            <Card className="bg-store-surface border-line">
               <CardContent className="p-6">
                 <h4 className="mb-2 font-semibold">
                   {t('needHelp')}

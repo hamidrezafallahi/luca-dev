@@ -69,7 +69,7 @@ function OrderList({...props}: OrderListProps) {
           key={order.id}
           variant="ghost"
           aria-pressed={order.id == selectedOrderId}
-          className={`!block bg-white hover:bg-paper border !h-auto px-5 py-4 text-start font-normal whitespace-normal ${
+          className={`!block bg-store-surface hover:bg-paper border !h-auto px-5 py-4 text-start font-normal whitespace-normal ${
             order.id == selectedOrderId ? "border-ink" : "border-line"
           }`}
           onClick={() => {

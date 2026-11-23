@@ -25,7 +25,7 @@ export default async  function LandingSpecialOffer() {
             {spacialOffers.isSuccess ? (
               <SpecialOfferCarouselClient spacialOffers={spacialOffers.data.records} />
             ) : (
-              <ApiErrorNotice message={spacialOffers.error} className="bg-white" />
+              <ApiErrorNotice message={spacialOffers.error} className="bg-store-surface" />
             )}
           </div>
         </div>

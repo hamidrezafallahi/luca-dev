@@ -51,7 +51,7 @@ export default function SupplierProductsCarousel({
             type="button"
             onClick={scrollLeft}
             aria-label={t('common.scrollPrev')}
-            className="flex justify-center items-center bg-white border hover:border-ink rounded-full w-11 h-11 transition-colors luca-line"
+            className="flex justify-center items-center bg-store-surface border hover:border-ink rounded-full w-11 h-11 transition-colors luca-line"
           >
             <IcChevronLeft size={18} />
           </button>
@@ -59,7 +59,7 @@ export default function SupplierProductsCarousel({
             type="button"
             onClick={scrollRight}
             aria-label={t('common.scrollNext')}
-            className="flex justify-center items-center bg-white border border-ink rounded-full w-11 h-11"
+            className="flex justify-center items-center bg-store-surface border border-ink rounded-full w-11 h-11"
           >
             <IcChevronRight size={18} />
           </button>
