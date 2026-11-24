@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { RialIcon } from '@components/atoms/iconComponents';
 import DecreaseButton
   from '@components/molecules/shoppingCartButtons/decreaseButton';
 import IncreaseButton
@@ -12,6 +11,22 @@ import { toMediaUrl } from '@utils/toMediaUrl';
 
 function ItemCart({ ...props }: { item: ICartProduct }) {
   const { item } = props;
+ const discountAmount =  new Intl.NumberFormat("fa-IR", {
+  style: "currency",
+  currency: "IRR",
+  maximumFractionDigits: 0,
+}).format(item.price * item.quantity);
+ const finalPrice =  new Intl.NumberFormat("fa-IR", {
+  style: "currency",
+  currency: "IRR",
+  maximumFractionDigits: 0,
+}).format(item.finalPrice * item.quantity);
+
+
+
+
+
+
   return (
     <div className="flex gap-3 py-3 border-t luca-line">
       <div className="flex-shrink-0 w-16 h-16 overflow-hidden luca-ph">
@@ -53,13 +68,13 @@ function ItemCart({ ...props }: { item: ICartProduct }) {
 
           <div className="text-end">
             <div className="flex items-center gap-1.5 font-medium text-sm">
-              {item.finalPrice * item.quantity}
-              <RialIcon config={{ size: 18 }} />
+              {finalPrice}
+              {/* <RialIcon config={{ size: 18 }} /> */}
             </div>
             {item.discountAmount > 0 && (
               <div className="flex items-center gap-1.5 text-xs line-through luca-muted">
-                {item.price * item.quantity}
-                <RialIcon config={{ size: 16 }} />
+                {discountAmount}
+                {/* <RialIcon config={{ size: 16 }} /> */}
               </div>
             )}
           </div>

@@ -5,7 +5,6 @@ import { shallowEqual } from 'react-redux';
 import {
   MinusIcon,
   PlusIcon2,
-  RialIcon,
 } from '@components/atoms/iconComponents';
 import MediaImage from '@components/atoms/MediaImage';
 import { useAppSelector } from '@store/index';
@@ -28,12 +27,22 @@ function ShoppingCartComponent({ ...props }: IProps) {
     }),
     shallowEqual,
   );
-
+   
   return (
     <>
       <Header locale={locale} />
       <div className="flex flex-col border-b luca-line">
         {ShoppingCart.products.map((item, index) => {
+ const price =  new Intl.NumberFormat("fa-IR", {
+  style: "currency",
+  currency: "IRR",
+  maximumFractionDigits: 0,
+}).format(item.finalPrice * item.quantity);
+ const discount =  new Intl.NumberFormat("fa-IR", {
+  style: "currency",
+  currency: "IRR",
+  maximumFractionDigits: 0,
+}).format(item.price * item.quantity);
           return (
             <div key={index} className="flex gap-4 py-5 border-t luca-line">
               <div className="flex-shrink-0 w-24 md:w-[120px] h-24 md:h-[120px] overflow-hidden luca-ph">
@@ -52,12 +61,12 @@ function ShoppingCartComponent({ ...props }: IProps) {
                 <p className="text-[13px] line-clamp-2 luca-muted">{item.description}</p>
 
                 <div className="flex items-center gap-2 font-medium text-[15px]">
-                  {item.finalPrice * item.quantity}
-                  <RialIcon />
+                  {price}
+                  {/* <RialIcon /> */}
                   {item.discountAmount > 0 && (
                     <span className="flex items-center gap-1.5 font-normal text-[13px] line-through luca-muted">
-                      {item.price * item.quantity}
-                      <RialIcon config={{ size: 16 }} />
+                      {discount}
+                      {/* <RialIcon config={{ size: 16 }} /> */}
                     </span>
                   )}
                 </div>

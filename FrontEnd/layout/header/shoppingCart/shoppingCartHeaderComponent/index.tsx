@@ -14,7 +14,6 @@ import {
   useDispatch,
 } from 'react-redux';
 
-import { RialIcon } from '@components/atoms/iconComponents';
 import { isPlaceholder } from '@lib/placeholder';
 import { IShippingMethod } from '@models/shippingMethod';
 import { useGetData } from '@services/base';
@@ -56,9 +55,25 @@ function ShoppingCartHeaderComponent({ ...props }: IProps) {
     (ShoppingCart?.finalTotal ?? 0) +
     (ShoppingCart?.shippingMethod?.price ?? 0);
 
+    const totalDiscount =  new Intl.NumberFormat("fa-IR", {
+  style: "currency",
+  currency: "IRR",
+  maximumFractionDigits: 0,
+}).format(ShoppingCart?.totalDiscount);
+    const formattedKol =  new Intl.NumberFormat("fa-IR", {
+  style: "currency",
+  currency: "IRR",
+  maximumFractionDigits: 0,
+}).format(kol);
+    const shippingMethod =  new Intl.NumberFormat("fa-IR", {
+  style: "currency",
+  currency: "IRR",
+  maximumFractionDigits: 0,
+}).format(ShoppingCart?.shippingMethod?.price??0);
+
   return (
     <div
-      className="top-full z-50 absolute mt-0 end-0 max-md:left-0 max-md:right-auto"
+      className="top-full max-md:right-auto max-md:left-0 z-50 absolute mt-0 end-0"
       onMouseLeave={() => setIsOpen(false)}
     >
       <div className="bg-store-surface p-5 border w-[min(340px,92vw)] text-ink text-start luca-line">
@@ -90,24 +105,24 @@ function ShoppingCartHeaderComponent({ ...props }: IProps) {
           <div className="luca-row">
             <span>{t("shoppingCart.header.totalDiscount")}</span>
             <span className="flex items-center gap-2">
-              {ShoppingCart?.totalDiscount.toFixed()}{" "}
-              <RialIcon config={{ size: 20 }} />
+              {totalDiscount}
+              {/* <RialIcon config={{ size: 20 }} /> */}
             </span>
           </div>
           <div className="luca-row">
             <span>{t("shoppingCart.header.shipping")}</span>
             {ShoppingCart.products.length !== 0 && (
               <span className="flex items-center gap-2">
-                {ShoppingCart?.shippingMethod?.price || 0}
-                <RialIcon config={{ size: 20 }} />
+                {shippingMethod || 0}
+                {/* <RialIcon config={{ size: 20 }} /> */}
               </span>
             )}
           </div>
           <div className="mt-2 pt-2 border-t luca-line luca-row luca-row-strong">
             <span>{t("shoppingCart.header.total")}</span>
             <span className="flex items-center gap-2">
-              {ShoppingCart?.products?.length > 0 ? kol : 0}
-              <RialIcon />
+              {ShoppingCart?.products?.length > 0 ? formattedKol : 0}
+              {/* <RialIcon /> */}
             </span>
           </div>
         </div>

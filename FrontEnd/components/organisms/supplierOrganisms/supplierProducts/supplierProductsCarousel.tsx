@@ -1,7 +1,5 @@
 "use client"
-import {
-  useRef,
-} from 'react';
+import { useRef } from 'react';
 
 import {
   useLocale,
@@ -10,7 +8,14 @@ import {
 import { useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 
-import { IcChevronLeft, IcChevronRight } from '@components/atoms/lucaIcons';
+import {
+  IcChevronLeft,
+  IcChevronRight,
+} from '@components/atoms/lucaIcons';
+import {
+  PriceLabel,
+  ProductShowcaseCard,
+} from '@components/molecules/productCard/cardParts';
 import { IDetailedProductOffer } from '@models/product';
 import { useGetConditionallyMutation } from '@services/base';
 import {
@@ -18,7 +23,6 @@ import {
   synchronousCart,
 } from '@slice/shoppingCartSlice';
 import { getCookie } from '@utils/core';
-import { PriceLabel, ProductShowcaseCard } from '@components/molecules/productCard/cardParts';
 
 interface ProductsCarouselProps {
   items: IDetailedProductOffer[] | undefined;
@@ -141,7 +145,7 @@ dispatch(addToCart({
       buy={{
         onClick: async () => {
           await handleAddToCart(product);
-          router.push(`/${locale}/shoppingCart`);
+          //router.push(`/${locale}/shoppingCart`);
         },
         ariaLabel: `${t('common.buyNow')}: ${product.productName}`,
       }}

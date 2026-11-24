@@ -1,7 +1,6 @@
 // app/[locale]/payment/success/page.tsx
 "use client";
 
-import StoreShell from '@components/templates/storeShell';
 import { useEffect } from 'react';
 
 import {
@@ -25,8 +24,8 @@ import {
   Home,
   Package,
   Printer,
-  RialIcon,
 } from '@components/atoms/iconComponents';
+import StoreShell from '@components/templates/storeShell';
 
 interface IPaymentSuccessProps {
   params?: {};
@@ -45,7 +44,12 @@ export default function PaymentSuccess({ params }: IPaymentSuccessProps) {
 
   const orderId = searchParams.get('orderId') || 'N/A';
   const transactionId = searchParams.get('transactionId') || 'N/A';
-  const amount = searchParams.get('amount') || '0';
+ 
+      const amount =  new Intl.NumberFormat("fa-IR", {
+  style: "currency",
+  currency: "IRR",
+  maximumFractionDigits: 0,
+}).format(Number(searchParams.get('amount')) || 0);
   const date = new Date().toLocaleDateString(
     locale === 'fa' ? 'fa-IR' : 'en-US',
   );
@@ -137,7 +141,7 @@ export default function PaymentSuccess({ params }: IPaymentSuccessProps) {
                       </p>
                       <div className="flex items-center gap-1 font-semibold">
                         {amount}
-                        <RialIcon config={{className:"w-4 h-4"}} />
+                        {/* <RialIcon config={{className:"w-4 h-4"}} /> */}
                       </div>
                     </div>
                   </div>

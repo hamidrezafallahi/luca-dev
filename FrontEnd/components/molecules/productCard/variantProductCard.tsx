@@ -1,15 +1,26 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import {
+  useMemo,
+  useState,
+} from 'react';
 
-import { useLocale, useTranslations } from 'next-intl';
+import {
+  useLocale,
+  useTranslations,
+} from 'next-intl';
 import { useRouter } from 'next/navigation';
 
-import VariantPicker, { pickDefaultVariant } from '@components/molecules/variantPicker';
 import { useAddToCart } from '@/hooks/useAddToCart';
+import VariantPicker, {
+  pickDefaultVariant,
+} from '@components/molecules/variantPicker';
 import type { ILandingProduct } from '@models/product';
 
-import { PriceLabel, ProductShowcaseCard } from './cardParts';
+import {
+  PriceLabel,
+  ProductShowcaseCard,
+} from './cardParts';
 
 type Props = {
   product: ILandingProduct;
@@ -63,7 +74,7 @@ export default function VariantProductCard({
       discountIsPercent,
       mainImage: product.mainImage,
     });
-    if (added) router.push(`/${locale}/shoppingCart`);
+    //if (added) router.push(`/${locale}/shoppingCart`);
   };
 
   return (

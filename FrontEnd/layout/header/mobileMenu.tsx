@@ -141,7 +141,9 @@ function MobileMenu() {
                 isOpen ? "translate-x-0" : "translate-x-full"
               }`}
             >
-              <div className="flex justify-between items-center px-2 border-b h-16 luca-line">
+              <div className="flex justify-between items-center px-2 border-b h-16 luca-line"
+              dir='ltr'
+              >
                 <button
                   type="button"
                   onClick={closeDrawer}
