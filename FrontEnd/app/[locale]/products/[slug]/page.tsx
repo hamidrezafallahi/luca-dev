@@ -1,26 +1,43 @@
 import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
-import { notFound, permanentRedirect } from 'next/navigation';
+import {
+  getTranslations,
+  setRequestLocale,
+} from 'next-intl/server';
+import {
+  notFound,
+  permanentRedirect,
+} from 'next/navigation';
 
-import ProductBrand from '@components/organisms/productOrganisms/productBrand';
-import ProductCategory from '@components/organisms/productOrganisms/productCategory';
-import { ProductDetailsTabs } from '@components/organisms/productOrganisms/productDetailsTabs';
-import ProductHero from '@components/organisms/productOrganisms/productHero';
-import { ProductSupplierExtended } from '@components/organisms/productOrganisms/productSuppliers';
-import ProductTags from '@components/organisms/productOrganisms/productTags';
 import JsonLd from '@components/molecules/storefront/JsonLd';
 import RelatedSeoLinks from '@components/molecules/storefront/RelatedSeoLinks';
 import SeoHighlight from '@components/molecules/storefront/SeoHighlight';
-import StoreBreadcrumbs from '@components/molecules/storefront/StoreBreadcrumbs';
-import { serverApiBaseUrl, siteBaseUrl } from '@lib/api';
+import StoreBreadcrumbs
+  from '@components/molecules/storefront/StoreBreadcrumbs';
+import ProductCategory
+  from '@components/organisms/productOrganisms/productCategory';
+import {
+  ProductDetailsTabs,
+} from '@components/organisms/productOrganisms/productDetailsTabs';
+import ProductHero from '@components/organisms/productOrganisms/productHero';
+import ProductTags from '@components/organisms/productOrganisms/productTags';
+import {
+  serverApiBaseUrl,
+  siteBaseUrl,
+} from '@lib/api';
+import {
+  ApiRequestError,
+  describeStatus,
+} from '@lib/apiError';
 import { safeFetchJson } from '@lib/safeFetch';
-import { absoluteUrl, buildPageMetadata } from '@lib/seo';
-import { pickLocalized } from '@lib/utils';
+import {
+  absoluteUrl,
+  buildPageMetadata,
+} from '@lib/seo';
 import { fetchStaticSlugParams } from '@lib/staticParams';
+import { pickLocalized } from '@lib/utils';
 import { SimpleResponse } from '@models/base';
 import { IDetailedProduct } from '@models/product';
 import { toMediaUrl } from '@utils/toMediaUrl';
-import { ApiRequestError, describeStatus } from '@lib/apiError';
 
 export const dynamicParams = true;
 
@@ -194,7 +211,7 @@ export default async function ProductPage({
   const productsLabel = tNav('products');
 
   return (
-    <article className="store-page !pt-6">
+    <article className="!pt-6 store-page">
       <JsonLd data={productLd} />
       <StoreBreadcrumbs
         locale={locale}
@@ -218,7 +235,7 @@ export default async function ProductPage({
       <ProductDetailsTabs product={product} />
       <ProductTags id={product.id} />
       <ProductCategory id={product.categoryId} />
-      <ProductBrand id={product.brandId} />
+      {/* <ProductBrand id={product.brandId} /> */}
       <RelatedSeoLinks
         locale={locale}
         links={[
