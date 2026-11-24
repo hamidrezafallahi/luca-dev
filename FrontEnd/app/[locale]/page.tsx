@@ -5,8 +5,6 @@ import {
 } from 'next-intl/server';
 
 import BlogSection from '@components/molecules/landing Elements/blogSection';
-import LandingBrands
-  from '@components/molecules/landing Elements/landingBrands';
 import LandingCategory
   from '@components/molecules/landing Elements/landingCategory';
 import LandingContactBand
@@ -130,7 +128,7 @@ const organizationLd = {
         <LandingCategory categories={categories} error={categoriesError} />
         <LandingFeatures />
         <LandingSpecialOffer />
-        <LandingBrands />
+        {/* <LandingBrands /> */}
         <LandingExperience />
         <USPSection />
         <TrustSection />
