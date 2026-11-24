@@ -142,7 +142,7 @@ function MobileMenu() {
               }`}
             >
               <div className="flex justify-between items-center px-2 border-b h-16 luca-line"
-              dir='ltr'
+              dir='rtl'
               >
                 <button
                   type="button"
