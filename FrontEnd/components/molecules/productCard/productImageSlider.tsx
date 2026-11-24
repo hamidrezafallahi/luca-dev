@@ -5,21 +5,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 
+import { IcChevronRight } from '@components/atoms/lucaIcons';
 import MediaImage from '@components/atoms/MediaImage';
+import { CardPhotoPlaceholder } from '@components/molecules/storefront/CardPhoto';
 
 /**
- * Product photo box: a rounded panel with
- * the photo centred and shown whole (object-contain, never cropped).
- *
- * With two or more photos it cross-fades through them every 2s, main image
- * first, looping forever. Autoplay pauses while the card is off screen, the tab
- * is hidden, the pointer or focus is on the card, or the visitor prefers
- * reduced motion. Indicators, prev/next buttons (hover on desktop, always on
- * touch) and swipe change the photo by hand, which restarts the 2s timer.
- *
- * Only the main photo is in the server HTML. The others mount once the card
- * has been on screen, one step ahead of the one showing, and a slide is only
- * revealed after its file has loaded, so changing slides never flashes empty.
+ * Product photos fill the frame and the current slide stays visible while the
+ * next one loads. Only the main photo is mounted before the gallery is seen.
  */
 
 export const SLIDE_INTERVAL_MS = 2000;
@@ -128,11 +120,13 @@ export function ProductImageSlider({
   const [onScreen, setOnScreen] = useState(false);
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
+  const [rotationPaused, setRotationPaused] = useState(false);
   const pageVisible = usePageVisible();
   const reducedMotion = usePrefersReducedMotion();
 
   const boxRef = useRef<HTMLDivElement>(null);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const swiped = useRef(false);
 
   // A different product (or photo list): start again from its main image.
   useEffect(() => {
@@ -164,15 +158,16 @@ export function ProductImageSlider({
     if (index !== shown && isReady(index)) setShown(index);
   }, [index, shown, isReady]);
 
-  const autoplay = many && onScreen && pageVisible && !hovered && !focused && !reducedMotion;
+  const autoplay = many && onScreen && pageVisible && !hovered && !focused && !reducedMotion && !rotationPaused;
+  const readyToAdvance = index === shown && isReady(shown);
 
   // One timeout per slide change: every change (timer or hand) restarts the 2s,
   // and Strict Mode's double effect run cleans up the first timer.
   useEffect(() => {
-    if (!autoplay) return;
+    if (!autoplay || !readyToAdvance) return;
     const id = window.setTimeout(() => setIndex((i) => (i + 1) % count), SLIDE_INTERVAL_MS);
     return () => window.clearTimeout(id);
-  }, [autoplay, index, count]);
+  }, [autoplay, readyToAdvance, shown, count]);
 
   const go = useCallback(
     (i: number) => {
@@ -185,57 +180,76 @@ export function ProductImageSlider({
   const next = () => go(index + 1);
   const prev = () => go(index - 1);
 
-  const onTouchStart = (e: React.TouchEvent) => {
-    const p = e.touches[0];
-    touchStart.current = { x: p.clientX, y: p.clientY };
+  const onPointerDown = (e: React.PointerEvent<HTMLAnchorElement>) => {
+    if (!e.isPrimary) return;
+    swiped.current = false;
+    touchStart.current = e.pointerType === 'touch' ? { x: e.clientX, y: e.clientY } : null;
   };
-  const onTouchEnd = (e: React.TouchEvent) => {
+  const onPointerUp = (e: React.PointerEvent<HTMLAnchorElement>) => {
+    if (!e.isPrimary) return;
     const start = touchStart.current;
     touchStart.current = null;
-    if (!start || !many) return;
-    const p = e.changedTouches[0];
-    const dx = p.clientX - start.x;
-    const dy = p.clientY - start.y;
+    if (!start) return;
+    const dx = e.clientX - start.x;
+    const dy = e.clientY - start.y;
     if (Math.abs(dx) < SWIPE_MIN_PX || Math.abs(dx) < Math.abs(dy) * 1.5) return;
-    // Content flows right-to-left in Persian, so a rightward swipe moves forward.
+    swiped.current = true;
     const forward = rtl ? dx > 0 : dx < 0;
     if (forward) next();
     else prev();
   };
 
-  const money = new Intl.NumberFormat(rtl ? 'fa-IR' : 'en-US');
+  const number = new Intl.NumberFormat(rtl ? 'fa-IR' : 'en-US');
+  const shownLabel = t('imageOf', { n: number.format(shown + 1), total: number.format(count) });
 
   return (
     <div
       ref={boxRef}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      role={many ? 'group' : undefined}
+      aria-label={many ? t('productGallery', { name }) : undefined}
+      onPointerEnter={(e) => { if (e.pointerType === 'mouse') setHovered(true); }}
+      onPointerLeave={(e) => { if (e.pointerType === 'mouse') setHovered(false); }}
       onFocus={() => setFocused(true)}
       onBlur={(e) => {
         if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setFocused(false);
       }}
-      onTouchStart={many ? onTouchStart : undefined}
-      onTouchEnd={many ? onTouchEnd : undefined}
-      className={[
-        'group/slider relative isolate z-10 aspect-[1/1.05] w-full shrink-0 overflow-hidden rounded-[28px] bg-store-muted',
-        'shadow-[0_2px_4px_rgba(17,17,17,0.015),0_16px_36px_-20px_rgba(17,17,17,0.08)]',
-        'transition-[transform,box-shadow] duration-300 ease-out',
-        'group-hover:-translate-y-1 group-hover:shadow-[0_18px_38px_-22px_rgba(20,20,20,0.16)]',
-        'group-focus-within:-translate-y-1',
-        'motion-reduce:transition-none motion-reduce:group-hover:translate-y-0 motion-reduce:group-focus-within:translate-y-0',
-      ].join(' ')}
+      className="product-gallery group/slider relative isolate z-10 aspect-[4/3] w-full shrink-0 overflow-hidden bg-store-muted"
     >
+      {many && !reducedMotion ? (
+        <button
+          type="button"
+          aria-label={t(rotationPaused ? 'resumeImages' : 'pauseImages')}
+          onClick={() => setRotationPaused((paused) => !paused)}
+          className={`${controlClass} end-0 top-0 motion-reduce:hidden`}
+        >
+          <span className={controlIconClass}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              {rotationPaused ? <path d="m9 5 11 7-11 7Z" /> : <path d="M9 5v14m6-14v14" />}
+            </svg>
+          </span>
+        </button>
+      ) : null}
+
       {/* The photo itself opens the product; the title link is the one screen readers get. */}
       <Link
         href={href}
         tabIndex={-1}
         aria-hidden="true"
-        className="absolute inset-0 flex justify-center items-center"
+        className={`product-gallery__link absolute flex items-center justify-center ${many ? 'product-gallery__link--with-controls touch-pan-y touch-pinch-zoom' : 'touch-manipulation'}`}
         draggable={false}
+        onPointerDown={many ? onPointerDown : undefined}
+        onPointerUp={many ? onPointerUp : undefined}
+        onPointerCancel={many ? () => { touchStart.current = null; } : undefined}
+        onClick={many ? (e) => {
+          if (swiped.current) {
+            e.preventDefault();
+            swiped.current = false;
+          }
+        } : undefined}
       >
-        <span className="relative w-[78%] h-[78%] group-hover:scale-[1.02] motion-reduce:group-hover:scale-100 transition-transform duration-500 ease-out">
+        <span className="product-gallery__photo pointer-events-none relative motion-safe:transition-transform motion-safe:duration-300 motion-safe:[@media(hover:hover)]:group-hover/slider:scale-[1.02]">
           {count === 0 ? (
-            <PhotoPlaceholder />
+            <CardPhotoPlaceholder />
           ) : (
             slides.map((src, i) => {
               if (i > reach && i !== 0) return null;
@@ -243,15 +257,15 @@ export function ProductImageSlider({
               return failed[src] ? (
                 <span
                   key={src}
-                  className={`absolute inset-0 transition-opacity duration-[450ms] ${active ? 'opacity-100' : 'opacity-0'}`}
+                  className={`absolute inset-0 motion-safe:transition-opacity motion-safe:duration-300 ${active ? 'opacity-100' : 'opacity-0'}`}
                 >
-                  <PhotoPlaceholder />
+                  <CardPhotoPlaceholder />
                 </span>
               ) : (
                 <MediaImage
                   key={src}
                   src={src}
-                  alt={i === 0 ? name : `${name} - ${i + 1}`}
+                  alt=""
                   fill
                   sizes={sizes}
                   priority={priority && i === 0}
@@ -260,9 +274,9 @@ export function ProductImageSlider({
                   onLoad={() => setLoaded((m) => (m[src] ? m : { ...m, [src]: true }))}
                   onError={() => setFailed((m) => (m[src] ? m : { ...m, [src]: true }))}
                   className={[
-                    'object-contain object-center select-none',
-                    'transition-[opacity,transform] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none',
-                    active ? 'opacity-100 scale-100' : 'opacity-0 scale-[1.015]',
+                    'object-cover object-center select-none',
+                    'motion-safe:transition-opacity motion-safe:duration-300',
+                    active ? 'opacity-100' : 'opacity-0',
                   ].join(' ')}
                 />
               );
@@ -271,47 +285,53 @@ export function ProductImageSlider({
         </span>
       </Link>
 
-      {many && (
+      {many ? (
         <>
-          {/* Prev / next: shown on hover or focus with a mouse; always on touch screens. */}
           <SlideButton side="start" label={t('previousImage')} onClick={prev} />
           <SlideButton side="end" label={t('nextImage')} onClick={next} />
 
-          <div className="bottom-3 md:bottom-3.5 z-20 absolute inset-x-0 flex justify-center pointer-events-none">
+          <div className="product-gallery__pager pointer-events-none absolute z-20 flex justify-center">
             {count <= MAX_DOTS ? (
-              <div className="flex items-center gap-1 pointer-events-auto">
+              <div className="product-gallery__dots pointer-events-auto bg-store-surface">
                 {slides.map((src, i) => (
                   <button
                     key={src}
                     type="button"
                     onClick={() => go(i)}
-                    aria-label={t('imageOf', { n: money.format(i + 1), total: money.format(count) })}
-                    aria-current={i === index ? 'true' : undefined}
-                    className="group/dot flex justify-center items-center px-[3px] h-6"
+                    aria-label={t('imageOf', { n: number.format(i + 1), total: number.format(count) })}
+                    aria-current={i === shown ? 'true' : undefined}
+                    className="group/dot grid size-6 touch-manipulation place-items-center focus-visible:outline-offset-[-2px]"
                   >
                     <span
                       className={[
-                        'block h-[4px] rounded-full transition-all duration-300 ease-out motion-reduce:transition-none',
-                        i === index ? 'w-[18px] bg-primary' : 'w-[5px] bg-store-border group-hover/dot:bg-store-subtle',
+                        'h-0.5',
+                        i === shown ? 'w-4 bg-store-text' : 'w-2 bg-store-subtle group-hover/dot:bg-store-text',
                       ].join(' ')}
                     />
                   </button>
                 ))}
               </div>
-            ) : (
-              <span
-                className="bg-store-surface shadow-[0_3px_10px_rgba(0,0,0,0.06)] backdrop-blur-sm px-2.5 py-1 rounded-full font-medium tabular-nums text-store-text text-[11px] leading-snug"
-                aria-live="polite"
-              >
-                {money.format(index + 1)} / {money.format(count)}
-              </span>
-            )}
+            ) : null}
+            <span
+              aria-hidden="true"
+              className={`product-gallery__count ${count <= MAX_DOTS ? 'product-gallery__narrow-count' : ''} bg-store-surface py-0.5 text-xs font-medium leading-snug tabular-nums text-store-text`}
+            >
+              {number.format(shown + 1)} / {number.format(count)}
+            </span>
           </div>
+          <span className="sr-only" aria-live={autoplay ? 'off' : 'polite'}>{shownLabel}</span>
         </>
-      )}
+      ) : null}
     </div>
   );
 }
+
+const controlClass = [
+  'product-gallery__control group/control absolute z-20 grid size-11 touch-manipulation place-items-center text-store-text focus-visible:outline-offset-[-2px]',
+  'motion-safe:transition-opacity motion-safe:duration-200',
+].join(' ');
+
+const controlIconClass = 'grid size-7 place-items-center border border-store-border bg-store-surface group-hover/control:border-store-strong group-focus-visible/control:border-store-strong';
 
 function SlideButton({
   side,
@@ -326,59 +346,12 @@ function SlideButton({
     <button
       type="button"
       aria-label={label}
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        onClick();
-      }}
-      className={[
-        'absolute top-1/2 z-20 -translate-y-1/2 flex size-8 items-center justify-center rounded-full',
-        side === 'start' ? 'start-2.5' : 'end-2.5',
-        'bg-store-surface text-store-text shadow-[0_2px_8px_rgba(0,0,0,0.08)] backdrop-blur-sm',
-        'transition-[opacity,background-color] duration-300 ease-out hover:bg-store-muted',
-        // Hidden until hover/focus where a mouse exists; touch screens always see them.
-        '[@media(hover:hover)]:opacity-0 [@media(hover:hover)]:group-hover/slider:opacity-100 focus-visible:opacity-100',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary',
-      ].join(' ')}
+      onClick={onClick}
+      className={`${controlClass} product-gallery__step ${side === 'start' ? 'start-0' : 'end-0'}`}
     >
-      {/* Chevron points "back" at the start side and "forward" at the end side in either direction. */}
-      <svg
-        width="14"
-        height="14"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={1.6}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-        className={side === 'start' ? 'rtl:-scale-x-100' : '-scale-x-100 rtl:scale-x-100'}
-      >
-        <path d="M14 6l-6 6 6 6" />
-      </svg>
+      <span className={controlIconClass}>
+        <IcChevronRight size={16} className={side === 'start' ? '-scale-x-100 rtl:scale-x-100' : 'rtl:-scale-x-100'} />
+      </span>
     </button>
-  );
-}
-
-/** Neutral stand-in when a product has no photo or its file fails to load. */
-function PhotoPlaceholder() {
-  return (
-    <span className="absolute inset-0 flex justify-center items-center text-store-subtle">
-      <svg
-        width="44"
-        height="44"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={1.2}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        aria-hidden="true"
-      >
-        <rect x="3.5" y="5" width="17" height="14" rx="2.5" />
-        <circle cx="9" cy="10" r="1.6" />
-        <path d="M20.5 16l-5-5-8 8" />
-      </svg>
-    </span>
   );
 }

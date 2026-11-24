@@ -1,5 +1,12 @@
-import { serverApiBaseUrl, siteBaseUrl } from '@lib/api';
-import { absoluteUrl, DEFAULT_LOCALE, LOCALES } from '@lib/seo';
+import {
+  serverApiBaseUrl,
+  siteBaseUrl,
+} from '@lib/api';
+import {
+  absoluteUrl,
+  DEFAULT_LOCALE,
+  LOCALES,
+} from '@lib/seo';
 import { toMediaUrl } from '@utils/toMediaUrl';
 
 // Must be rendered per request: the backend is unreachable during `next build`,
@@ -157,13 +164,13 @@ ${imageXml}
 export async function GET() {
   const fallbackLastmod = toW3cDate(new Date().toISOString())!;
 
-  const [products, blogs, brands, categories, suppliers, tags, discounts] =
+  const [products, blogs, brands, categories, tags, discounts] =
     await Promise.all([
       fetchRecords('products/getslugs'),
       fetchRecords('blogs/getslugs'),
       fetchRecordsWithFallback('brands/getslugs', 'brands/getids'),
       fetchRecordsWithFallback('categories/getslugs', 'categories/getids'),
-      fetchRecordsWithFallback('users/getslugs', 'productOffers/suppliersIds'),
+      // fetchRecordsWithFallback('users/getslugs', 'productOffers/suppliersIds'),
       fetchRecordsWithFallback('tags/getslugs', 'tags/getids'),
       fetchRecordsWithFallback('discounts/getslugs', 'discounts/active'),
     ]);
@@ -174,7 +181,7 @@ export async function GET() {
     { path: 'blog', priority: 0.9, changeFrequency: 'weekly' },
     { path: 'brands', priority: 0.8, changeFrequency: 'weekly' },
     { path: 'categories', priority: 0.8, changeFrequency: 'weekly' },
-    { path: 'suppliers', priority: 0.8, changeFrequency: 'weekly' },
+    // { path: 'suppliers', priority: 0.8, changeFrequency: 'weekly' },
     { path: 'tags', priority: 0.7, changeFrequency: 'weekly' },
     { path: 'discounts', priority: 0.8, changeFrequency: 'daily' },
     { path: 'faq', priority: 0.6, changeFrequency: 'weekly' },
@@ -222,15 +229,15 @@ export async function GET() {
         item.images,
       ),
     ),
-    ...suppliers.map((item) =>
-      buildUrlXml(
-        `suppliers/${item.key}`,
-        0.6,
-        'monthly',
-        item.lastmod || fallbackLastmod,
-        item.images,
-      ),
-    ),
+    // ...suppliers.map((item) =>
+    //   buildUrlXml(
+    //     `suppliers/${item.key}`,
+    //     0.6,
+    //     'monthly',
+    //     item.lastmod || fallbackLastmod,
+    //     item.images,
+    //   ),
+    // ),
     ...tags.map((item) =>
       buildUrlXml(
         `tags/${item.key}`,

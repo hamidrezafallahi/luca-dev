@@ -214,7 +214,7 @@ export default async function ProductPage({
       />
       <SeoHighlight locale={locale} title={seoTitle} description={seoDescription} />
       <ProductHero product={product} />
-      <ProductSupplierExtended productId={product.id} />
+      {/* <ProductSupplierExtended productId={product.id} /> */}
       <ProductDetailsTabs product={product} />
       <ProductTags id={product.id} />
       <ProductCategory id={product.categoryId} />

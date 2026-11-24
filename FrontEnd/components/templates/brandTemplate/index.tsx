@@ -7,7 +7,6 @@ import {
   BrandCategories,
   BrandDescription,
   BrandProducts,
-  BrandSuppliers,
 } from '@components/organisms/brandOrganisms';
 import { IBrand } from '@models/brand';
 
@@ -39,7 +38,7 @@ export default async  function BrandTemplate({ brand }: { brand: IBrand}) {
 
       <BrandCategories id={brand.id} />
       <BrandProducts id={brand.id} />
-      <BrandSuppliers id={brand.id} />
+      {/* <BrandSuppliers id={brand.id} /> */}
     </div>
   );
 }

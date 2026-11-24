@@ -10,7 +10,6 @@ import { Banner } from '@components/molecules/banner';
 import {
   CategoryDescription,
   CategoryProducts,
-  CategorySupplierExtended,
   SubCategories,
 } from '@components/organisms/categoryOrganisms';
 import { pickLocalized } from '@lib/utils';
@@ -60,7 +59,7 @@ export default async function CategoryTemplate({
 
       <SubCategories sub={category.subCategories ?? []} />
       <CategoryProducts id={category.id} />
-      <CategorySupplierExtended id={category.id} />
+      {/* <CategorySupplierExtended id={category.id} /> */}
     </div>
   );
 }

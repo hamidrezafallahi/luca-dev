@@ -1,36 +1,25 @@
-import React from 'react';
-
 import { getLocale, getTranslations } from 'next-intl/server';
 import Link from 'next/link';
 
-import MediaImage from '@components/atoms/MediaImage';
+import { IcChevronRight } from '@components/atoms/lucaIcons';
+import CardPhoto from '@components/molecules/storefront/CardPhoto';
 import { pickLocalized } from '@lib/utils';
-import { ICategory } from '@models/category';
+import type { ICategory } from '@models/category';
 
 type CategoryCardProps = {
   category: ICategory;
   /** Extra scale for the cover (1 = default size); for covers that look small or large. */
   imageScale?: number;
-  /** CSS object-position for the cover inside its corner box. Default: bottom right. */
+  /** CSS object-position for the cover. Default: center. */
   imagePosition?: string;
   /** Extra classes for the cover's box, e.g. a different width/height for one category. */
   imageClassName?: string;
 };
 
-/**
- * Category tile: name, a short
- * description and an "explore" link at the top; the cover photo anchored to
- * the bottom-right corner, shown whole and clipped by the rounded card.
- *
- * The cover sits on the physical right in both directions (right-0, not end-0)
- * and the text block is kept clear of it. Covers read best as transparent
- * PNG/WebP cut-outs; a photo with its own white background shows as a white
- * rectangle on the grey card, and should be re-exported without it.
- */
 export default async function CategoryCard({
   category,
   imageScale = 1,
-  imagePosition = 'right bottom',
+  imagePosition = 'center',
   imageClassName = '',
 }: CategoryCardProps) {
   const {
@@ -41,69 +30,39 @@ export default async function CategoryCard({
     categoryPersianDesc,
     categoryEnglishDesc,
   } = category;
-  const locale = await getLocale();
-  const t = await getTranslations('common');
-  const name = pickLocalized(locale, persianName, englishName);
-  const desc = pickLocalized(locale, categoryPersianDesc, categoryEnglishDesc);
+  const [locale, t] = await Promise.all([getLocale(), getTranslations('common')]);
+  const name = pickLocalized(locale, persianName, englishName).trim() || t('viewCategory');
+  const desc = pickLocalized(locale, categoryPersianDesc, categoryEnglishDesc).trim();
 
   return (
-    <Link
-      href={`/${locale}/categories/${category.slug || id}`}
-      className={[
-        'group relative isolate flex min-h-[220px] w-full min-w-0 flex-col overflow-hidden font-body',
-        'aspect-[1.08/1] md:aspect-[1.1/1]',
-        'rounded-[28px] bg-store-muted p-6 md:p-8 lg:p-10',
-        'shadow-[0_2px_4px_rgba(17,17,17,0.015),0_16px_36px_-20px_rgba(17,17,17,0.08)]',
-        'transition-[transform,box-shadow] duration-300 ease-out',
-        'hover:-translate-y-1 hover:shadow-[0_18px_38px_-22px_rgba(20,20,20,0.16)]',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-store-surface',
-        'motion-reduce:transition-none motion-reduce:hover:translate-y-0',
-      ].join(' ')}
-    >
-      <span className="z-10 relative flex flex-col items-start gap-2 md:gap-3 max-w-[78%] md:max-w-[62%] text-start">
-        <h3 className="font-display text-store-text text-[22px] md:text-[26px] lg:text-[32px] line-clamp-2 leading-tight tracking-tight">
-          {name}
-        </h3>
-        {desc ? (
-          <span className="text-store-subtle text-[12px] md:text-[13px] lg:text-[14px] line-clamp-3 leading-relaxed">
-            {desc}
-          </span>
-        ) : null}
-        <span className="inline-flex items-center gap-1.5 mt-2 pb-1 border-store-strong border-b font-medium text-store-text text-[12px] md:text-[13px]">
-          {t('viewCategory')}
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth={1.4}
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-            className="group-hover:translate-x-[3px] rtl:group-hover:-translate-x-[3px] rtl:-scale-x-100 transition-transform duration-300 ease-out motion-reduce:transition-none"
-          >
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
-        </span>
-      </span>
-
-      {/* Cover: bottom-right corner, whole photo, clipped by the card's rounded edge. */}
-      <span
-        aria-hidden="true"
-        className={`pointer-events-none absolute bottom-0 right-0 h-[52%] w-[62%] ${imageClassName}`}
-        style={imageScale !== 1 ? { transform: `scale(${imageScale})`, transformOrigin: 'right bottom' } : undefined}
+    <div className="category-card min-w-0">
+      <Link
+        href={`/${locale}/categories/${category.slug || id}`}
+        aria-label={name}
+        className="category-card__link group/category grid h-full w-full min-w-0 touch-manipulation border border-store-border bg-store-surface text-start font-body text-store-text hover:border-store-strong"
       >
-        <MediaImage
-          src={categoryCover}
-          alt={name}
-          fill
-          sizes="(max-width: 767px) 62vw, 400px"
-          loading="lazy"
-          style={{ objectPosition: imagePosition }}
-          className="group-hover:scale-[1.04] motion-reduce:group-hover:scale-100 object-contain origin-bottom-right transition-transform duration-500 ease-out"
-        />
-      </span>
-    </Link>
+        <div className="category-card__media relative min-w-0 overflow-hidden bg-store-muted">
+          <span
+            className={`absolute inset-0 ${imageClassName}`}
+            style={imageScale !== 1 ? { transform: `scale(${imageScale})` } : undefined}
+          >
+            <CardPhoto
+              src={categoryCover}
+              sizes="(max-width: 767px) 100vw, (max-width: 920px) 50vw, 28vw"
+              position={imagePosition}
+            />
+          </span>
+        </div>
+        <div className="category-card__caption grid min-w-0 items-center gap-3">
+          <div className="min-w-0 [overflow-wrap:anywhere]">
+            <h3 className="category-card__title text-pretty font-display font-medium leading-tight underline-offset-4 group-hover/category:underline">
+              {name}
+            </h3>
+            {desc ? <p className="mt-1.5 line-clamp-3 text-sm leading-relaxed text-store-subtle">{desc}</p> : null}
+          </div>
+          <IcChevronRight size={22} className="justify-self-end rtl:-scale-x-100" />
+        </div>
+      </Link>
+    </div>
   );
 }

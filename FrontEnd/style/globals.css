@@ -1200,25 +1200,79 @@ html {
   }
 }
 
-/* Product listing layouts and option chips used by the current product card. */
+/* Storefront cards and listing layouts. */
 @layer components {
-  /* Option chips (e.g. magnification) on the product card. */
+  /* A small heading preset can scale titles below the surrounding body text. */
+  .product-card__title { font-size: max(1em, calc(1.125rem * var(--text-scale, 1))); }
+  .category-card__title { font-size: max(1em, calc(1.5rem * var(--text-scale, 1))); }
+  @media (min-width: 768px) {
+    .product-card__title { font-size: max(1em, calc(1.25rem * var(--text-scale, 1))); }
+  }
+
   .pc-options [role="radio"] {
     height: auto;
-    min-height: 2rem;
+    min-height: 2.25rem;
+    max-inline-size: 100%;
     padding-block: 0.25rem;
     line-height: 1.5;
-    border-radius: 9999px;
+    overflow-wrap: anywhere;
+    touch-action: manipulation;
     border-color: var(--store-border);
     background: transparent;
-    color: var(--store-text);
-    font-family: var(--font-body);
   }
+  .pc-options [role="radio"] > span { min-inline-size: 0; }
   .pc-options [role="radio"]:hover { border-color: var(--store-border-strong); }
   .pc-options [role="radio"][aria-checked="true"] {
-    border-color: var(--primary-color);
-    background: var(--primary-color);
-    color: var(--store-surface-solid);
+    border-color: var(--store-text);
+    background: var(--store-surface-muted);
+    color: var(--store-text);
+  }
+
+  .product-gallery { container-type: inline-size; }
+  .product-gallery__link { inset: 0; }
+  .product-gallery__photo { inline-size: 100%; block-size: 100%; }
+  .product-gallery__step { inset-block-start: 50%; transform: translateY(-50%); }
+  .product-gallery__pager { inset-inline: 0; inset-block-end: 0.25rem; }
+  .product-gallery__dots { display: flex; }
+  .product-gallery__count { padding-inline: 0.5rem; }
+  .product-gallery__narrow-count { display: none; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .product-gallery__control { opacity: 0; pointer-events: none; }
+    .product-gallery:is(:hover, :focus-within) .product-gallery__control { opacity: 1; pointer-events: auto; }
+  }
+
+  @container (max-width: 9.5rem) {
+    .product-gallery__dots { display: none; }
+    .product-gallery__narrow-count { display: block; }
+  }
+
+  @media (hover: none), (pointer: coarse) {
+    @container (max-width: 14rem) {
+      .product-gallery__step { inset-block-start: auto; inset-block-end: 0; transform: none; }
+      .product-gallery__pager { inset-inline: 2.75rem; inset-block-end: 0; block-size: 2.75rem; align-items: center; }
+      .product-gallery__dots { display: none; }
+      .product-gallery__count { max-inline-size: 100%; padding-inline: 0.125rem; text-align: center; }
+      .product-gallery__narrow-count { display: block; }
+    }
+  }
+
+  .category-card { container-type: inline-size; }
+  .category-card__media { aspect-ratio: 3 / 2; }
+  .category-card__caption {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-content: center;
+    padding: clamp(1rem, 4cqi, 1.5rem);
+  }
+
+  @container (min-width: 24rem) {
+    .category-card__link { grid-template-columns: minmax(0, 56fr) minmax(0, 44fr); }
+    .category-card__media { aspect-ratio: 4 / 3; align-self: stretch; }
+    .category-card__caption {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: 1fr auto;
+      align-content: stretch;
+    }
   }
 
   /* ---- listing layouts ---- */
@@ -1246,23 +1300,13 @@ html {
   @media (min-width: 1024px) {
     .cat-grid { gap: 1.75rem; }
   }
-  /* Padding leaves room for the hover lift, which a horizontal scroller would clip. */
+  /* Padding keeps the cards' focus outlines inside the horizontal scroller. */
   .pc-rail {
     @apply flex gap-4 md:gap-6 -mx-5 -my-6 px-5 py-6 overflow-x-auto scroll-smooth;
     scroll-padding-inline: 1.25rem;
   }
   .pc-rail-item { @apply flex-shrink-0 w-[min(290px,72vw)] xl:w-[320px]; }
 
-  @media (hover: hover) and (pointer: fine) {
-    .pc-card:hover { transform: translateY(-3px); box-shadow: 0 18px 36px -20px rgba(0, 0, 0, 0.45); }
-    .pc-card:hover .pc-img { transform: scale(1.025); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .pc-card, .pc-img, .pc-dot::before, .pc-pill, .pc-control { transition: none; }
-    .pc-card:hover { transform: none; }
-    .pc-card:hover .pc-img { transform: none; }
-  }
 }
 
 /* ================== UI/UX consistency layer ==================
