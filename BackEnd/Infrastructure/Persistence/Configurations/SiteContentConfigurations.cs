@@ -49,6 +49,7 @@ namespace OnlineShop.Infrastructure.Persistence.Configurations
             builder.Property(x => x.LinkTextFa).IsRequired().HasMaxLength(AboutSection.MaxShortLength);
             builder.Property(x => x.LinkTextEn).IsRequired().HasMaxLength(AboutSection.MaxShortLength);
             builder.Property(x => x.LinkUrl).IsRequired().HasMaxLength(AboutSection.MaxShortLength);
+            builder.Property(x => x.ImageUrl).IsRequired().HasMaxLength(300);
             builder.HasIndex(x => x.SectionKey).IsUnique().HasFilter("\"IsDeleted\" = false");
             builder.ToTable("AboutSections");
 
@@ -109,6 +110,7 @@ namespace OnlineShop.Infrastructure.Persistence.Configurations
                 LinkTextFa = linkTextFa,
                 LinkTextEn = linkTextEn,
                 LinkUrl = linkUrl,
+                ImageUrl = "",
                 IsActive = true,
                 IsDeleted = false,
                 CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, DateTimeKind.Utc),

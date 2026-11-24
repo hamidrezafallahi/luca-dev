@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { getTranslations, setRequestLocale } from 'next-intl/server';
-import Image, { type StaticImageData } from 'next/image';
+import type { StaticImageData } from 'next/image';
 import Link from 'next/link';
+import MediaImage from '@components/atoms/MediaImage';
 
 // Keep filenames URL-safe (no commas): /_next/image decodes the url param and
 // a comma path makes its internal fetch 404.
@@ -65,7 +66,7 @@ function StoryImage({
   priority = false,
   contain = false,
 }: {
-  src: StaticImageData;
+  src: StaticImageData | string;
   alt: string;
   sizes: string;
   className?: string;
@@ -74,13 +75,13 @@ function StoryImage({
 }) {
   return (
     <div className={`relative overflow-hidden bg-[#2b2b2b] ${className}`}>
-      <Image
+      <MediaImage
         src={src}
         alt={alt}
         fill
         sizes={sizes}
         priority={priority}
-        placeholder="blur"
+        placeholder={typeof src === 'string' ? 'empty' : 'blur'}
         className={contain ? 'object-contain' : 'object-cover'}
       />
     </div>
@@ -96,6 +97,8 @@ export default async function Page({ params }: Props) {
   // cannot be reached (e.g. at build time) the page falls back to the bundled
   // messages, whose template placeholders ([سال] ...) stay off the page.
   const content = await getAboutContent(locale);
+  const sectionImage = (key: string, fallback: StaticImageData) =>
+    content?.get(key)?.imageUrl || fallback;
   const fallback = (key: string) => (isPlaceholder(t(key)) ? '' : t(key));
   /** A field of a section; a missing (switched-off) section or an empty text gives ''. */
   const text = (section: string, field: Field, fallbackKey?: string) =>
@@ -140,7 +143,7 @@ export default async function Page({ params }: Props) {
       {/* Hero */}
       <section className="flex flex-col items-center px-5 md:px-10 pb-10 md:pb-14 h-[480px] md:h-[460px] xl:h-[560px] text-center luca-dark">
         <StoryImage
-          src={heroPicture}
+          src={sectionImage('hero', heroPicture)}
           alt={t('images.hero')}
           sizes="100vw"
           priority
@@ -167,7 +170,7 @@ export default async function Page({ params }: Props) {
       {chapters.map((chapter) => (
         <section key={chapter.key} className="grid grid-cols-1 md:grid-cols-2">
           <StoryImage
-            src={chapter.image}
+            src={sectionImage(`chapter-${chapter.key}`, chapter.image)}
             contain={chapter.contain}
             alt={t(`images.${chapter.key}`)}
             sizes="(max-width: 768px) 100vw, 50vw"
@@ -227,7 +230,7 @@ export default async function Page({ params }: Props) {
           {tiles.map((tile) => (
             <div key={tile.key} className="flex flex-col">
               <StoryImage
-                src={tile.image}
+                src={sectionImage(tile.section, tile.image)}
                 contain={tile.contain}
                 alt={t(`images.${tile.key}`)}
                 sizes="(max-width: 768px) 100vw, 50vw"

@@ -11,4 +11,12 @@ export async function revalidateEntity(endPoint: string) {
   revalidatePath(`/fa/admin/${normalized}`);
   revalidatePath(`/en/admin/${normalized}`);
   revalidateTag(normalized);
+  if (normalized.toLowerCase() === 'aboutsections') {
+    revalidatePath('/fa/story');
+    revalidatePath('/en/story');
+  }
+  if (normalized.toLowerCase() === 'landingfeatures') {
+    revalidatePath('/fa');
+    revalidatePath('/en');
+  }
 }

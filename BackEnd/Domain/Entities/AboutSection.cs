@@ -29,6 +29,13 @@ namespace OnlineShop.Domain.Entities
         public string LinkTextEn { get; private set; } = string.Empty;
         /// <summary>آدرس داخلی لینک (مثل cooperation)؛ خالی = آدرس پیش‌فرض همان بخش.</summary>
         public string LinkUrl { get; private set; } = string.Empty;
+        public string ImageUrl { get; private set; } = string.Empty;
+
+        public void SetImage(string? imageUrl, int currentUserId)
+        {
+            ImageUrl = Limit(imageUrl, 300, "Image URL");
+            MarkUpdated(currentUserId);
+        }
 
         public static AboutSection Create(string sectionKey, int? displayOrder, AboutSectionText text, int currentUserId)
         {

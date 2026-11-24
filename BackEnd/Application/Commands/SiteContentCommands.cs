@@ -48,6 +48,8 @@ namespace Application.Commands
         public string? LinkTextFa { get; set; }
         public string? LinkTextEn { get; set; }
         public string? LinkUrl { get; set; }
+        public IFormFile? ImageUrl { get; set; }
+        public bool RemoveImage { get; set; }
     }
 
     public class ActiveAboutSectionCommand : ActiveCommand, IRequest<ServiceResult<IdDto>> { }

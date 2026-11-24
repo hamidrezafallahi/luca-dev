@@ -38,6 +38,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
     const [selectedValue, setSelectedValue] = React.useState(value);
     const buttonRef = React.useRef<HTMLElement>(null);
     const popupRef = React.useRef<HTMLDivElement>(null);
+    const isAdmin = Boolean(buttonRef.current?.closest('.admin-shell, .admin-dialog'));
 
     const selectedOption = React.useMemo(
       () => options?.find((opt) => opt.value === selectedValue),
@@ -70,7 +71,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
         <button
           ref={buttonRef as React.RefObject<HTMLButtonElement>}
           type="button"
-          className="flex justify-between items-center bg-store-surface hover:bg-store-muted px-3 py-2 border border-input rounded-md focus-visible:ring-2 focus-visible:ring-ring w-full h-10 text-sm transition-colors cursor-pointer"
+          className="luca-select-trigger flex justify-between items-center px-3 py-2 w-full h-10 text-sm transition-colors cursor-pointer"
           onClick={() => setIsOpen(!isOpen)}
           tabIndex={0}
           onKeyDown={(e) => e.key === "Enter" && setIsOpen(!isOpen)}
@@ -100,12 +101,12 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
                 overflowY: "scroll",
                 overflowX: "hidden",
                 zIndex: 1050,
-                background: "#fff",
                 maxHeight,
                 width: buttonRef.current?.clientWidth,
               }}
               className={cn(
-                "bg-store-surface shadow-lg mt-1 border border-input rounded-md w-fit",
+                "luca-select-popup mt-1 w-fit",
+                isAdmin && 'luca-select-popup-admin',
                 dropdownClassName,
               )}
               onScroll={handleScroll}
@@ -113,7 +114,7 @@ const Select = React.forwardRef<HTMLDivElement, SelectProps>(
               {options.map((opt) => (
                 <div
                   key={String(opt.value)}
-                  className="hover:bg-gray-100 px-3 py-2 text-sm transition-colors cursor-pointer"
+                  className="luca-select-option px-3 py-2 text-sm transition-colors cursor-pointer"
                   onClick={(e) => {
                     setSelectedValue(opt.value);
                     onChange?.(opt.value);

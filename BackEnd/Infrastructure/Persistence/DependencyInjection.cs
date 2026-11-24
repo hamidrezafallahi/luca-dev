@@ -90,6 +90,7 @@ namespace OnlineShop.Infrastructure
             services.AddScoped<IAnnouncementBarRepository, AnnouncementBarRepository>();
             services.AddScoped<IHomeSlideRepository, HomeSlideRepository>();
             services.AddScoped<IAboutSectionRepository, AboutSectionRepository>();
+            services.AddScoped<ILandingFeatureRepository, LandingFeatureRepository>();
             services.AddScoped<ICustomFontRepository, CustomFontRepository>();
             services.AddScoped<IContactRequestRepository, ContactRequestRepository>();
             services.AddScoped<IBlogContentQualityService, BlogContentQualityService>();

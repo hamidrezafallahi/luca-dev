@@ -95,7 +95,8 @@ namespace OnlineShop.Infrastructure.Configurations
                 CreateAnnouncementBarsEntity(),
                 CreateHomeSlidesEntity(),
                 CreateAboutSectionsEntity(),
-                CreateCustomFontsEntity()
+                CreateCustomFontsEntity(),
+                CreateLandingFeaturesEntity()
             //CreateCartsEntity(),
             //CreateOrdersEntity(),
 
@@ -2754,6 +2755,8 @@ namespace OnlineShop.Infrastructure.Configurations
                 new FormFieldDefinition { Name = "linkTextEn", Caption = "متن لینک (انگلیسی)", Type = "text" },
                 new FormFieldDefinition { Name = "linkUrl", Caption = "آدرس لینک", Type = "text", PlaceHolder = "مثلاً cooperation" },
                 new FormFieldDefinition { Name = "displayOrder", Caption = "ترتیب", Type = "number" },
+                new FormFieldDefinition { Name = "imageUrl", Caption = "Section image", Type = "file" },
+                new FormFieldDefinition { Name = "removeImage", Caption = "Remove image", Type = "checkbox" },
             }),
             IsActive = true,
             CreatedAt = new DateTime(2026, 1, 1),
@@ -2762,6 +2765,43 @@ namespace OnlineShop.Infrastructure.Configurations
         };
 
         /// <summary>فونت‌های آپلودی؛ افزودن از «تم سایت»، مدیریت (ویرایش نام، غیرفعال، حذف) از همین لیست.</summary>
+        private static object CreateLandingFeaturesEntity() => new
+        {
+            Id = 37,
+            EntityName = "landingFeatures",
+            PersianDisplayName = "ویژگی‌های صفحه اصلی",
+            EnglishDisplayName = "Landing features",
+            EndPoint = "landingFeatures",
+            EntityIconBase64 = AboutIcon,
+            ActionsJson = JsonSerializer.Serialize(new List<string> { "active", "edit", "delete", "new" }),
+            ColumnsJson = JsonSerializer.Serialize(new List<JsonDefinition>
+            {
+                new JsonDefinition { Header = "Image", Accessor = "imageUrl", Type = "image" },
+                new JsonDefinition { Header = "Title", Accessor = "titleFa", Type = "text" },
+                new JsonDefinition { Header = "Order", Accessor = "displayOrder", Type = "number" },
+            }),
+            FormFieldsJson = JsonSerializer.Serialize(new List<FormFieldDefinition>
+            {
+                new FormFieldDefinition { Name = "eyebrowFa", Caption = "برچسب فارسی", Type = "text" },
+                new FormFieldDefinition { Name = "eyebrowEn", Caption = "English eyebrow", Type = "text" },
+                new FormFieldDefinition { Name = "titleFa", Caption = "عنوان فارسی", Type = "text" },
+                new FormFieldDefinition { Name = "titleEn", Caption = "English title", Type = "text" },
+                new FormFieldDefinition { Name = "bodyFa", Caption = "متن فارسی", Type = "textarea" },
+                new FormFieldDefinition { Name = "bodyEn", Caption = "English body", Type = "textarea" },
+                new FormFieldDefinition { Name = "linkTextFa", Caption = "متن لینک فارسی", Type = "text" },
+                new FormFieldDefinition { Name = "linkTextEn", Caption = "English link text", Type = "text" },
+                new FormFieldDefinition { Name = "linkUrl", Caption = "Link URL", Type = "text" },
+                new FormFieldDefinition { Name = "imageUrl", Caption = "Image", Type = "file" },
+                new FormFieldDefinition { Name = "removeImage", Caption = "Remove image", Type = "checkbox" },
+                new FormFieldDefinition { Name = "displayOrder", Caption = "Order", Type = "number" },
+                new FormFieldDefinition { Name = "reverse", Caption = "Image on the right", Type = "checkbox" },
+            }),
+            IsActive = true,
+            CreatedAt = new DateTime(2026, 1, 1),
+            CreatedBy = 1,
+            IsDeleted = false
+        };
+
         private static object CreateCustomFontsEntity() => new
         {
             Id = 36,

@@ -41,6 +41,7 @@ Derived tokens in `globals.css` include `--tint-color`, `--store-placeholder`, `
 - Use `color-mix(in srgb, var(--token) …, transparent)` for translucent variants; do not put a hex color or `hsl(var(--primary-color))` in a utility. Theme fields are hex, not HSL channels. Avoid `bg-white`, `text-black`, and fixed gray utilities for theme owned surfaces and text.
 - Use CSS logical properties and `dir` aware layouts for `fa` (RTL) and `en` (LTR). Keep locale labels in `next-intl`. Add accessible focus, hover, disabled, empty, error, and loading states using semantic tokens.
 - The dashboard's `storefrontPreview.tsx` deliberately uses local `--t-*` variables so an unsaved preview cannot recolor the rest of the admin UI. Do not replace these with global tokens in the preview.
+- The shared select menu is portaled to `document.body`. Keep popup colors on semantic store tokens, and use `--admin-surface-elevated`, `--admin-text`, `--admin-border`, and `--admin-hover` for popups opened from `.admin-shell` or `.admin-dialog`. Native admin select options use the same admin tokens.
 - If adding a backend theme field, update the DTO/domain, `SiteTheme` and `themeToCss`, editor palette and preview, fallback CSS, Tailwind mapping when relevant, this table, and tests. Do not add a setting that only the editor knows how to render.
 
 ## Review checks

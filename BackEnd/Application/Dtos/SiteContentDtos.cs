@@ -27,6 +27,7 @@ namespace Application.Dtos
         public string LinkTextFa { get; set; } = string.Empty;
         public string LinkTextEn { get; set; } = string.Empty;
         public string LinkUrl { get; set; } = string.Empty;
+        public string ImageUrl { get; set; } = string.Empty;
     }
 
     public class CustomFontDto

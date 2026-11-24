@@ -88,6 +88,30 @@ public class HeroAboutFontsDomainTests
         Assert.Equal("t", section.TitleEn);
         Assert.Equal(string.Empty, section.BodyFa);
         Assert.Equal("b", section.BodyEn);
+        section.SetImage(" uploads/aboutsections/1/photo.webp ", 1);
+        Assert.Equal("uploads/aboutsections/1/photo.webp", section.ImageUrl);
+        section.SetImage(null, 1);
+        Assert.Empty(section.ImageUrl);
+    }
+
+    [Fact]
+    public void Landing_feature_preserves_bilingual_text_on_partial_update()
+    {
+        var feature = LandingFeature.Create(new LandingFeatureText(
+            "Fa eyebrow", "En eyebrow", "Fa title", "En title", "Fa body", "En body",
+            "Fa link", "En link", "story", 2, true), 1);
+
+        feature.Update(new LandingFeatureText(null, null, "New title", null,
+            "", null, null, null, null, null, null), 1);
+        feature.SetImage("uploads/landingfeatures/1/photo.webp", 1);
+
+        Assert.Equal("New title", feature.TitleFa);
+        Assert.Equal("En title", feature.TitleEn);
+        Assert.Empty(feature.BodyFa);
+        Assert.Equal("En body", feature.BodyEn);
+        Assert.Equal("uploads/landingfeatures/1/photo.webp", feature.ImageUrl);
+        Assert.True(feature.Reverse);
+        Assert.Equal(2, feature.DisplayOrder);
     }
 
     // ===== Text sizes =====

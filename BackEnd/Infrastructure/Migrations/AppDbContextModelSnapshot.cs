@@ -227,6 +227,11 @@ namespace Infrastructure.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
@@ -288,6 +293,7 @@ namespace Infrastructure.Migrations
                             DisplayOrder = 1,
                             EyebrowEn = "About us",
                             EyebrowFa = "درباره ما",
+                            ImageUrl = "",
                             IsActive = true,
                             IsDeleted = false,
                             LinkTextEn = "",
@@ -307,6 +313,7 @@ namespace Infrastructure.Migrations
                             DisplayOrder = 2,
                             EyebrowEn = "",
                             EyebrowFa = "",
+                            ImageUrl = "",
                             IsActive = true,
                             IsDeleted = false,
                             LinkTextEn = "",
@@ -326,6 +333,7 @@ namespace Infrastructure.Migrations
                             DisplayOrder = 3,
                             EyebrowEn = "01 — Optics",
                             EyebrowFa = "۰۱ — اپتیک",
+                            ImageUrl = "",
                             IsActive = true,
                             IsDeleted = false,
                             LinkTextEn = "",
@@ -345,6 +353,7 @@ namespace Infrastructure.Migrations
                             DisplayOrder = 4,
                             EyebrowEn = "02 — Ergonomics",
                             EyebrowFa = "۰۲ — ارگونومی",
+                            ImageUrl = "",
                             IsActive = true,
                             IsDeleted = false,
                             LinkTextEn = "",
@@ -364,6 +373,7 @@ namespace Infrastructure.Migrations
                             DisplayOrder = 5,
                             EyebrowEn = "03 — Custom build",
                             EyebrowFa = "۰۳ — ساخت سفارشی",
+                            ImageUrl = "",
                             IsActive = true,
                             IsDeleted = false,
                             LinkTextEn = "Book a measurement",
@@ -383,6 +393,7 @@ namespace Infrastructure.Migrations
                             DisplayOrder = 6,
                             EyebrowEn = "",
                             EyebrowFa = "",
+                            ImageUrl = "",
                             IsActive = true,
                             IsDeleted = false,
                             LinkTextEn = "",
@@ -402,6 +413,7 @@ namespace Infrastructure.Migrations
                             DisplayOrder = 7,
                             EyebrowEn = "",
                             EyebrowFa = "",
+                            ImageUrl = "",
                             IsActive = true,
                             IsDeleted = false,
                             LinkTextEn = "",
@@ -421,6 +433,7 @@ namespace Infrastructure.Migrations
                             DisplayOrder = 8,
                             EyebrowEn = "",
                             EyebrowFa = "",
+                            ImageUrl = "",
                             IsActive = true,
                             IsDeleted = false,
                             LinkTextEn = "",
@@ -440,6 +453,7 @@ namespace Infrastructure.Migrations
                             DisplayOrder = 9,
                             EyebrowEn = "",
                             EyebrowFa = "",
+                            ImageUrl = "",
                             IsActive = true,
                             IsDeleted = false,
                             LinkTextEn = "",
@@ -459,6 +473,7 @@ namespace Infrastructure.Migrations
                             DisplayOrder = 10,
                             EyebrowEn = "",
                             EyebrowFa = "",
+                            ImageUrl = "",
                             IsActive = true,
                             IsDeleted = false,
                             LinkTextEn = "Shop",
@@ -478,6 +493,7 @@ namespace Infrastructure.Migrations
                             DisplayOrder = 11,
                             EyebrowEn = "",
                             EyebrowFa = "",
+                            ImageUrl = "",
                             IsActive = true,
                             IsDeleted = false,
                             LinkTextEn = "Book a consultation",
@@ -1929,7 +1945,7 @@ namespace Infrastructure.Migrations
                             EnglishDisplayName = "Our story",
                             EntityIconBase64 = "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\" class=\"size-6\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25\" /></svg>",
                             EntityName = "aboutSections",
-                            FormFieldsJson = "[{\"Name\":\"eyebrowFa\",\"Caption\":\"\\u0628\\u0631\\u0686\\u0633\\u0628 \\u0628\\u0627\\u0644\\u0627\\u06CC \\u062A\\u06CC\\u062A\\u0631 (\\u0641\\u0627\\u0631\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":\"\\u062E\\u0627\\u0644\\u06CC = \\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0627\\u062F\\u0647 \\u0646\\u0645\\u06CC\\u200C\\u0634\\u0648\\u062F.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"eyebrowEn\",\"Caption\":\"\\u0628\\u0631\\u0686\\u0633\\u0628 \\u0628\\u0627\\u0644\\u0627\\u06CC \\u062A\\u06CC\\u062A\\u0631 (\\u0627\\u0646\\u06AF\\u0644\\u06CC\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"titleFa\",\"Caption\":\"\\u062A\\u06CC\\u062A\\u0631 (\\u0641\\u0627\\u0631\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":\"\\u062F\\u0631 \\u0628\\u062E\\u0634\\u200C\\u0647\\u0627\\u06CC \\u00ABfact\\u00BB \\u0639\\u062F\\u062F \\u06CC\\u0627 \\u0645\\u0642\\u062F\\u0627\\u0631 \\u0628\\u0632\\u0631\\u06AF\\u061B \\u062F\\u0631 \\u00ABquote\\u00BB \\u0646\\u0627\\u0645 \\u06AF\\u0648\\u06CC\\u0646\\u062F\\u0647.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"titleEn\",\"Caption\":\"\\u062A\\u06CC\\u062A\\u0631 (\\u0627\\u0646\\u06AF\\u0644\\u06CC\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"bodyFa\",\"Caption\":\"\\u0645\\u062A\\u0646 (\\u0641\\u0627\\u0631\\u0633\\u06CC)\",\"Type\":\"textarea\",\"PlaceHolder\":null,\"Help\":\"\\u062F\\u0631 \\u0628\\u062E\\u0634 \\u00ABquote\\u00BB \\u0645\\u062A\\u0646 \\u0646\\u0642\\u0644\\u200C\\u0642\\u0648\\u0644\\u061B \\u062F\\u0631 \\u00ABfact\\u00BB \\u062A\\u0648\\u0636\\u06CC\\u062D \\u0632\\u06CC\\u0631 \\u0639\\u062F\\u062F.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"bodyEn\",\"Caption\":\"\\u0645\\u062A\\u0646 (\\u0627\\u0646\\u06AF\\u0644\\u06CC\\u0633\\u06CC)\",\"Type\":\"textarea\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"linkTextFa\",\"Caption\":\"\\u0645\\u062A\\u0646 \\u0644\\u06CC\\u0646\\u06A9 (\\u0641\\u0627\\u0631\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":\"\\u0627\\u062E\\u062A\\u06CC\\u0627\\u0631\\u06CC\\u061B \\u0641\\u0642\\u0637 \\u0628\\u062E\\u0634\\u200C\\u0647\\u0627\\u06CC\\u06CC \\u06A9\\u0647 \\u0644\\u06CC\\u0646\\u06A9 \\u062F\\u0627\\u0631\\u0646\\u062F.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"linkTextEn\",\"Caption\":\"\\u0645\\u062A\\u0646 \\u0644\\u06CC\\u0646\\u06A9 (\\u0627\\u0646\\u06AF\\u0644\\u06CC\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"linkUrl\",\"Caption\":\"\\u0622\\u062F\\u0631\\u0633 \\u0644\\u06CC\\u0646\\u06A9\",\"Type\":\"text\",\"PlaceHolder\":\"\\u0645\\u062B\\u0644\\u0627\\u064B cooperation\",\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"displayOrder\",\"Caption\":\"\\u062A\\u0631\\u062A\\u06CC\\u0628\",\"Type\":\"number\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null}]",
+                            FormFieldsJson = "[{\"Name\":\"eyebrowFa\",\"Caption\":\"\\u0628\\u0631\\u0686\\u0633\\u0628 \\u0628\\u0627\\u0644\\u0627\\u06CC \\u062A\\u06CC\\u062A\\u0631 (\\u0641\\u0627\\u0631\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":\"\\u062E\\u0627\\u0644\\u06CC = \\u0646\\u0645\\u0627\\u06CC\\u0634 \\u062F\\u0627\\u062F\\u0647 \\u0646\\u0645\\u06CC\\u200C\\u0634\\u0648\\u062F.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"eyebrowEn\",\"Caption\":\"\\u0628\\u0631\\u0686\\u0633\\u0628 \\u0628\\u0627\\u0644\\u0627\\u06CC \\u062A\\u06CC\\u062A\\u0631 (\\u0627\\u0646\\u06AF\\u0644\\u06CC\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"titleFa\",\"Caption\":\"\\u062A\\u06CC\\u062A\\u0631 (\\u0641\\u0627\\u0631\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":\"\\u062F\\u0631 \\u0628\\u062E\\u0634\\u200C\\u0647\\u0627\\u06CC \\u00ABfact\\u00BB \\u0639\\u062F\\u062F \\u06CC\\u0627 \\u0645\\u0642\\u062F\\u0627\\u0631 \\u0628\\u0632\\u0631\\u06AF\\u061B \\u062F\\u0631 \\u00ABquote\\u00BB \\u0646\\u0627\\u0645 \\u06AF\\u0648\\u06CC\\u0646\\u062F\\u0647.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"titleEn\",\"Caption\":\"\\u062A\\u06CC\\u062A\\u0631 (\\u0627\\u0646\\u06AF\\u0644\\u06CC\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"bodyFa\",\"Caption\":\"\\u0645\\u062A\\u0646 (\\u0641\\u0627\\u0631\\u0633\\u06CC)\",\"Type\":\"textarea\",\"PlaceHolder\":null,\"Help\":\"\\u062F\\u0631 \\u0628\\u062E\\u0634 \\u00ABquote\\u00BB \\u0645\\u062A\\u0646 \\u0646\\u0642\\u0644\\u200C\\u0642\\u0648\\u0644\\u061B \\u062F\\u0631 \\u00ABfact\\u00BB \\u062A\\u0648\\u0636\\u06CC\\u062D \\u0632\\u06CC\\u0631 \\u0639\\u062F\\u062F.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"bodyEn\",\"Caption\":\"\\u0645\\u062A\\u0646 (\\u0627\\u0646\\u06AF\\u0644\\u06CC\\u0633\\u06CC)\",\"Type\":\"textarea\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"linkTextFa\",\"Caption\":\"\\u0645\\u062A\\u0646 \\u0644\\u06CC\\u0646\\u06A9 (\\u0641\\u0627\\u0631\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":\"\\u0627\\u062E\\u062A\\u06CC\\u0627\\u0631\\u06CC\\u061B \\u0641\\u0642\\u0637 \\u0628\\u062E\\u0634\\u200C\\u0647\\u0627\\u06CC\\u06CC \\u06A9\\u0647 \\u0644\\u06CC\\u0646\\u06A9 \\u062F\\u0627\\u0631\\u0646\\u062F.\",\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"linkTextEn\",\"Caption\":\"\\u0645\\u062A\\u0646 \\u0644\\u06CC\\u0646\\u06A9 (\\u0627\\u0646\\u06AF\\u0644\\u06CC\\u0633\\u06CC)\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"linkUrl\",\"Caption\":\"\\u0622\\u062F\\u0631\\u0633 \\u0644\\u06CC\\u0646\\u06A9\",\"Type\":\"text\",\"PlaceHolder\":\"\\u0645\\u062B\\u0644\\u0627\\u064B cooperation\",\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"displayOrder\",\"Caption\":\"\\u062A\\u0631\\u062A\\u06CC\\u0628\",\"Type\":\"number\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"imageUrl\",\"Caption\":\"Section image\",\"Type\":\"file\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"removeImage\",\"Caption\":\"Remove image\",\"Type\":\"checkbox\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null}]",
                             IsActive = true,
                             IsDeleted = false,
                             PersianDisplayName = "داستان لوکا (درباره ما)"
@@ -1949,6 +1965,22 @@ namespace Infrastructure.Migrations
                             IsActive = true,
                             IsDeleted = false,
                             PersianDisplayName = "فونت‌های آپلودی"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            ActionsJson = "[\"active\",\"edit\",\"delete\",\"new\"]",
+                            ColumnsJson = "[{\"Header\":\"Image\",\"Accessor\":\"imageUrl\",\"Type\":\"image\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"Title\",\"Accessor\":\"titleFa\",\"Type\":\"text\",\"Sortable\":false,\"Filterable\":false,\"Options\":null},{\"Header\":\"Order\",\"Accessor\":\"displayOrder\",\"Type\":\"number\",\"Sortable\":false,\"Filterable\":false,\"Options\":null}]",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = 1,
+                            EndPoint = "landingFeatures",
+                            EnglishDisplayName = "Landing features",
+                            EntityIconBase64 = "<svg xmlns=\"http://www.w3.org/2000/svg\" fill=\"none\" viewBox=\"0 0 24 24\" stroke-width=\"1.5\" stroke=\"currentColor\" class=\"size-6\"><path stroke-linecap=\"round\" stroke-linejoin=\"round\" d=\"M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25\" /></svg>",
+                            EntityName = "landingFeatures",
+                            FormFieldsJson = "[{\"Name\":\"eyebrowFa\",\"Caption\":\"\\u0628\\u0631\\u0686\\u0633\\u0628 \\u0641\\u0627\\u0631\\u0633\\u06CC\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"eyebrowEn\",\"Caption\":\"English eyebrow\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"titleFa\",\"Caption\":\"\\u0639\\u0646\\u0648\\u0627\\u0646 \\u0641\\u0627\\u0631\\u0633\\u06CC\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"titleEn\",\"Caption\":\"English title\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"bodyFa\",\"Caption\":\"\\u0645\\u062A\\u0646 \\u0641\\u0627\\u0631\\u0633\\u06CC\",\"Type\":\"textarea\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"bodyEn\",\"Caption\":\"English body\",\"Type\":\"textarea\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"linkTextFa\",\"Caption\":\"\\u0645\\u062A\\u0646 \\u0644\\u06CC\\u0646\\u06A9 \\u0641\\u0627\\u0631\\u0633\\u06CC\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"linkTextEn\",\"Caption\":\"English link text\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"linkUrl\",\"Caption\":\"Link URL\",\"Type\":\"text\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"imageUrl\",\"Caption\":\"Image\",\"Type\":\"file\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"removeImage\",\"Caption\":\"Remove image\",\"Type\":\"checkbox\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"displayOrder\",\"Caption\":\"Order\",\"Type\":\"number\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null},{\"Name\":\"reverse\",\"Caption\":\"Image on the right\",\"Type\":\"checkbox\",\"PlaceHolder\":null,\"Help\":null,\"Order\":0,\"FetchConfig\":null,\"Options\":null,\"Rules\":null}]",
+                            IsActive = true,
+                            IsDeleted = false,
+                            PersianDisplayName = "ویژگی‌های صفحه اصلی"
                         });
                 });
 
@@ -2067,6 +2099,143 @@ namespace Infrastructure.Migrations
                     b.HasIndex("IsActive", "DisplayOrder");
 
                     b.ToTable("HomeSlides", (string)null);
+                });
+
+            modelBuilder.Entity("OnlineShop.Domain.Entities.LandingFeature", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BodyEn")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<string>("BodyFa")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("EyebrowEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("EyebrowFa")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LinkTextEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("LinkTextFa")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("LinkUrl")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<bool>("Reverse")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("TitleEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("TitleFa")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsActive", "DisplayOrder");
+
+                    b.ToTable("LandingFeatures", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BodyEn = "The declination angle of Luca loupes is set for each clinician, so head and neck stay in a natural position through the working day.",
+                            BodyFa = "زاویه شیب لوپ‌های لوکا برای هر دندانپزشک جداگانه تنظیم می‌شود تا در طول روز کاری، سر و گردن در وضعیت طبیعی بماند.",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = 1,
+                            DisplayOrder = 1,
+                            EyebrowEn = "Ergonomics",
+                            EyebrowFa = "ارگونومی",
+                            ImageUrl = "/images/landingPage/Black%20Eyeglasses%20with%20LUCA%20Magnifying%20Loupe.png",
+                            IsActive = true,
+                            IsDeleted = false,
+                            LinkTextEn = "Explore ergonomic loupes",
+                            LinkTextFa = "آشنایی با لوپ‌های ارگونومیک",
+                            LinkUrl = "products",
+                            Reverse = false,
+                            TitleEn = "A straight neck, a direct view",
+                            TitleFa = "گردن صاف، نگاه مستقیم"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BodyEn = "Multi-coated lenses give a bright, distortion-free image across the whole field of view; tissue colour appears as it is.",
+                            BodyFa = "عدسی‌های چندلایه تصویری روشن و بدون اعوجاج در تمام میدان دید می‌دهند؛ رنگ بافت همان‌طور که هست دیده می‌شود.",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CreatedBy = 1,
+                            DisplayOrder = 2,
+                            EyebrowEn = "Optics",
+                            EyebrowFa = "اپتیک",
+                            ImageUrl = "/images/landingPage/luca-onex-loupe.png",
+                            IsActive = true,
+                            IsDeleted = false,
+                            LinkTextEn = "The Luca story",
+                            LinkTextFa = "داستان لوکا",
+                            LinkUrl = "story",
+                            Reverse = true,
+                            TitleEn = "Clarity, centre to edge",
+                            TitleFa = "وضوح، از مرکز تا لبه"
+                        });
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Order", b =>

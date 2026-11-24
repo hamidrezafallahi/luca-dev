@@ -1,5 +1,6 @@
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 import { serverApiBaseUrl } from '@lib/api';
 import {
@@ -45,6 +46,19 @@ async function proxyToBackend(req: NextRequest, pathParts: string[]) {
   }
 
   const method = req.method.toUpperCase();
+  const refreshContent = (response: Response) => {
+    if (!response.ok || !['POST', 'PUT', 'PATCH', 'DELETE'].includes(method)) return;
+    const entity = pathParts[0]?.toLowerCase();
+    if (entity === 'landingfeatures') {
+      revalidateTag('landingFeatures');
+      revalidatePath('/fa');
+      revalidatePath('/en');
+    } else if (entity === 'aboutsections') {
+      revalidateTag('aboutSections');
+      revalidatePath('/fa/story');
+      revalidatePath('/en/story');
+    }
+  };
 
   // Backup restore uploads can be hundreds of MB: stream the body straight through
   // instead of buffering it in memory. A streamed body cannot be replayed, so there
@@ -93,6 +107,7 @@ async function proxyToBackend(req: NextRequest, pathParts: string[]) {
       });
 
       const res = toClientResponse(upstream);
+      refreshContent(upstream);
       writeSessionCookies(res.cookies, refreshed);
       return res;
     }
@@ -105,7 +120,9 @@ async function proxyToBackend(req: NextRequest, pathParts: string[]) {
     }
   }
 
-  return toClientResponse(upstream);
+  const res = toClientResponse(upstream);
+  refreshContent(upstream);
+  return res;
 }
 
 function toClientResponse(upstream: Response) {

@@ -167,6 +167,7 @@ namespace Application.Handler.QueryHandler
             LinkTextFa = s.LinkTextFa,
             LinkTextEn = s.LinkTextEn,
             LinkUrl = s.LinkUrl,
+            ImageUrl = s.ImageUrl,
         };
 
         internal static CustomFontDto ToDto(CustomFont f) => new()

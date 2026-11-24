@@ -140,6 +140,39 @@ html {
   --admin-shadow: none;
 }
 
+/* Select menus render under document.body, outside the admin shell. */
+.luca-select-trigger,
+.luca-select-popup {
+  background: var(--store-surface);
+  color: var(--store-text);
+  border: 1px solid var(--store-border);
+  border-radius: 0;
+}
+.luca-select-trigger:hover,
+.luca-select-option:hover { background: var(--store-surface-muted); }
+.luca-select-trigger:focus-visible { outline: 2px solid var(--primary-color); }
+.luca-select-popup-admin {
+  background: var(--admin-surface-elevated);
+  color: var(--admin-text);
+  border-color: var(--admin-border);
+}
+.luca-select-popup-admin .luca-select-option:hover { background: var(--admin-hover); }
+.admin-shell .luca-select-trigger,
+.admin-dialog .luca-select-trigger,
+.admin-shell select,
+.admin-dialog select {
+  background-color: var(--admin-surface-elevated);
+  color: var(--admin-text);
+  border-color: var(--admin-border);
+}
+.admin-shell .luca-select-trigger:hover,
+.admin-dialog .luca-select-trigger:hover { background: var(--admin-hover); }
+.admin-shell select option,
+.admin-dialog select option {
+  background: var(--admin-surface-elevated);
+  color: var(--admin-text);
+}
+
 @layer components {
   .admin-shell {
     @apply relative flex flex-col w-full h-dvh overflow-hidden;

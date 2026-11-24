@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 import { useGetConditionallyMutation } from '@services/base';
 
@@ -11,6 +11,7 @@ import { TrashbinIcon } from '../../iconComponents';
 function DeleteComponent({ ...props }: { id: string }) {
   const { id } = props;
   const params = useParams()!;
+  const router = useRouter();
   const [deleteRecord, { isLoading }] = useGetConditionallyMutation();
   const handleDeleteRecord = async () => {
     const deleteRes = await deleteRecord({
@@ -18,9 +19,7 @@ function DeleteComponent({ ...props }: { id: string }) {
       method: 'DELETE',
     });
 
-    if (deleteRes) {
-      console.log(deleteRes);
-    }
+    if ('data' in deleteRes && deleteRes.data?.isSuccess) router.refresh();
   };
   return (
     <button

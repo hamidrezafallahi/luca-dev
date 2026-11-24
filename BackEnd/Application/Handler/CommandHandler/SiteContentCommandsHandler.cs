@@ -155,7 +155,7 @@ namespace Application.Handler.CommandHandler
     }
 
     /// <summary>بخش‌های ثابت صفحه‌ی درباره ما: فقط ویرایش متن و روشن/خاموش (کلیدها با migration ساخته می‌شوند).</summary>
-    public class AboutSectionCommandHandler(IAboutSectionRepository _repo, IHttpContextAccessor _accessor) :
+    public class AboutSectionCommandHandler(IAboutSectionRepository _repo, IHttpContextAccessor _accessor, IUploaderService _uploader) :
         IRequestHandler<UpdateAboutSectionCommand, ServiceResult<IdDto>>,
         IRequestHandler<ActiveAboutSectionCommand, ServiceResult<IdDto>>
     {
@@ -183,7 +183,18 @@ namespace Application.Handler.CommandHandler
                 return ServiceResult<IdDto>.Failed(ex.Message);
             }
 
+            var previousImage = section.ImageUrl;
+            if (request.ImageUrl is { Length: > 0 })
+            {
+                var stored = await _uploader.UploadAsWebp(new UploadDTO { File = request.ImageUrl, Path = UploadPaths.AboutSections(section.Id) });
+                if (!UploadPaths.IsStoredPath(stored)) return ServiceResult<IdDto>.Failed("Image upload failed");
+                section.SetImage(stored, userId.Value);
+            }
+            else if (request.RemoveImage) section.SetImage(null, userId.Value);
+
             await _repo.SaveChangesAsync(ct);
+            if (previousImage != section.ImageUrl && UploadPaths.IsStoredPath(previousImage))
+                await _uploader.DeleteStoredFile(previousImage, UploadPaths.AboutSections(section.Id));
             return ServiceResult<IdDto>.Ok(new IdDto { Id = section.Id });
         }
 

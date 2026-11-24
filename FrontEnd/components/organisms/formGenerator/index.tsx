@@ -142,6 +142,9 @@ export default function FormGenerator({
     formFields.forEach((field) => {
       if (field.Type === "json" && data[field.Name]) {
         cleanedData[field.Name] = JSON.stringify(data[field.Name]);
+      } else if (field.Type === "file" && !(data[field.Name] instanceof File)) {
+        // Existing media URLs are preview values, not replacement uploads.
+        cleanedData[field.Name] = undefined;
       } else {
         cleanedData[field.Name] = coerceFieldValue(field, data[field.Name]);
       }

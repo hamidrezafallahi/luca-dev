@@ -16,6 +16,7 @@ type AboutSectionDto = {
   linkTextFa: string;
   linkTextEn: string;
   linkUrl: string;
+  imageUrl: string;
 };
 
 /** A section in the visitor's language; empty strings mean "not shown". */
@@ -26,6 +27,7 @@ export type AboutSection = {
   body: string;
   linkText: string;
   linkUrl: string;
+  imageUrl: string;
 };
 
 /** Active sections by key, or null when the API could not be reached (callers fall back to messages). */
@@ -44,7 +46,7 @@ export async function getAboutContent(locale: string): Promise<AboutContent> {
   const url = `${serverApiBaseUrl}/AboutSections/public`;
   try {
     const res = await fetch(url, {
-      next: { revalidate: 300, tags: ['aboutSections'] },
+      next: { revalidate: 60, tags: ['aboutSections'] },
       signal: AbortSignal.timeout(4000),
     });
     if (!res.ok) {
@@ -65,6 +67,7 @@ export async function getAboutContent(locale: string): Promise<AboutContent> {
           body: pick(locale, r.bodyFa, r.bodyEn),
           linkText: pick(locale, r.linkTextFa, r.linkTextEn),
           linkUrl: (r.linkUrl ?? '').trim(),
+          imageUrl: (r.imageUrl ?? '').trim(),
         },
       ]),
     );
