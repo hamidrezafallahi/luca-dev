@@ -40,6 +40,6 @@
     "**/*.jsx",
     "**/*.json",
     ".next/types/**/*.ts"
-  ],
+, "app/[locale]/suppliers/page2.tsx", "app/[locale]/suppliers/[slug]/page2.tsx"  ],
   "exclude": ["node_modules"]
 }

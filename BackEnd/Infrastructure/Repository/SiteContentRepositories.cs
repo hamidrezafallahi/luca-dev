@@ -13,6 +13,14 @@ namespace OnlineShop.Infrastructure.Repositories
     {
     }
 
+    public class LandingExperienceRepository(AppDbContext context) : Repository<LandingExperience>(context), ILandingExperienceRepository
+    {
+    }
+
+    public class LandingPageComponentRepository(AppDbContext context) : Repository<LandingPageComponent>(context), ILandingPageComponentRepository
+    {
+    }
+
     public class CustomFontRepository(AppDbContext context) : Repository<CustomFont>(context), ICustomFontRepository
     {
         public async Task<bool> IsActiveKeyAsync(string? key, CancellationToken cancellationToken = default)

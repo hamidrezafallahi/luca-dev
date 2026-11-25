@@ -1,6 +1,7 @@
 # Feature implementation contract
 
 Read this document and `AGENTS.md` before adding a feature. For frontend UI, also read `.docs/frontend-design-system.md` first.
+For landing-page sections and composition, read `.docs/landing-page-cms.md` for the stable component key contract, caching, administration, and media audit.
 
 ## Trace an existing feature
 

@@ -47,6 +47,9 @@ namespace OnlineShop.Infrastructure.Persistence
         public DbSet<HomeSlide> HomeSlides => Set<HomeSlide>();
         public DbSet<AboutSection> AboutSections => Set<AboutSection>();
         public DbSet<LandingFeature> LandingFeatures => Set<LandingFeature>();
+        public DbSet<LandingExperience> LandingExperiences => Set<LandingExperience>();
+        public DbSet<LandingExperienceCard> LandingExperienceCards => Set<LandingExperienceCard>();
+        public DbSet<LandingPageComponent> LandingPageComponents => Set<LandingPageComponent>();
         public DbSet<CustomFont> CustomFonts => Set<CustomFont>();
 
 

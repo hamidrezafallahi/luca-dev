@@ -19,4 +19,9 @@ export async function revalidateEntity(endPoint: string) {
     revalidatePath('/fa');
     revalidatePath('/en');
   }
+  if (normalized.toLowerCase() === 'landingexperiences' || normalized.toLowerCase() === 'landingpagecomponents') {
+    revalidateTag(normalized.toLowerCase() === 'landingexperiences' ? 'landingExperience' : 'landingPageComponents');
+    revalidatePath('/fa');
+    revalidatePath('/en');
+  }
 }

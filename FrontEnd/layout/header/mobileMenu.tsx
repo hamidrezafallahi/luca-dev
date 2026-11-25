@@ -28,7 +28,7 @@ const LINKS = [
   {href: "products", labelKey: "products" as const},
   {href: "categories", labelKey: "categories" as const},
   {href: "brands", labelKey: "brands" as const},
-  {href: "suppliers", labelKey: "suppliers" as const},
+  // {href: "suppliers", labelKey: "suppliers" as const},
   {href: "tags", labelKey: "tags" as const},
   {href: "discounts", labelKey: "discounts" as const},
   {href: "blog", labelKey: "blogs" as const},

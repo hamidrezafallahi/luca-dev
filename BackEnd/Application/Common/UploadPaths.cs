@@ -19,6 +19,7 @@ public static class UploadPaths
     public static string AnnouncementBars(int id) => $"{Root}/announcementbars/{id}";
     public static string HomeSlides(int id) => $"{Root}/homeslides/{id}";
     public static string LandingFeatures(int id) => $"{Root}/landingfeatures/{id}";
+    public static string LandingExperience(int id) => $"{Root}/landingexperience/{id}";
     public static string AboutSections(int id) => $"{Root}/aboutsections/{id}";
     public static string Fonts(int id) => $"{Root}/fonts/{id}";
 

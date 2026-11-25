@@ -2101,6 +2101,244 @@ namespace Infrastructure.Migrations
                     b.ToTable("HomeSlides", (string)null);
                 });
 
+            modelBuilder.Entity("OnlineShop.Domain.Entities.LandingExperience", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("SiteKey")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<string>("TitleEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("TitleFa")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SiteKey")
+                        .IsUnique()
+                        .HasFilter("\"IsDeleted\" = false");
+
+                    b.ToTable("LandingExperiences", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            IsActive = true,
+                            IsDeleted = false,
+                            SiteKey = "home",
+                            TitleEn = "The Luca experience",
+                            TitleFa = "تجربه لوکا"
+                        });
+                });
+
+            modelBuilder.Entity("OnlineShop.Domain.Entities.LandingExperienceCard", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BodyEn")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<string>("BodyFa")
+                        .IsRequired()
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<string>("CardKey")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("CtaLink")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<string>("CtaTextEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("CtaTextFa")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ImageAltEn")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("ImageAltFa")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("LandingExperienceId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("MobileImageUrl")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<string>("TitleEn")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("TitleFa")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LandingExperienceId", "CardKey")
+                        .IsUnique()
+                        .HasFilter("\"IsDeleted\" = false");
+
+                    b.ToTable("LandingExperienceCards", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BodyEn = "In person or online, a Luca specialist recommends the magnification, working distance and frame that suit you.",
+                            BodyFa = "حضوری یا آنلاین، متخصص لوکا بزرگنمایی، فاصله کاری و فریم مناسب شما را پیشنهاد می‌کند.",
+                            CardKey = "appointment",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            CtaLink = "/cooperation",
+                            CtaTextEn = "Send a request",
+                            CtaTextFa = "ارسال درخواست",
+                            ImageAltEn = "",
+                            ImageAltFa = "",
+                            ImageUrl = "",
+                            IsActive = true,
+                            IsDeleted = false,
+                            LandingExperienceId = 1,
+                            MobileImageUrl = "",
+                            TitleEn = "Book a consultation",
+                            TitleFa = "رزرو مشاوره"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BodyEn = "Your pupillary distance and viewing angle are measured so the loupes are built exactly for your face.",
+                            BodyFa = "فاصله مردمک‌ها و زاویه دید شما اندازه‌گیری می‌شود تا لوپ دقیقاً برای چهره شما ساخته شود.",
+                            CardKey = "fitting",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            CtaLink = "/faq",
+                            CtaTextEn = "FAQ on measuring and building your loupes",
+                            CtaTextFa = "پرسش‌های رایج درباره اندازه‌گیری و ساخت لوپ",
+                            ImageAltEn = "",
+                            ImageAltFa = "",
+                            ImageUrl = "",
+                            IsActive = true,
+                            IsDeleted = false,
+                            LandingExperienceId = 1,
+                            MobileImageUrl = "",
+                            TitleEn = "Measurement and custom build",
+                            TitleFa = "اندازه‌گیری و ساخت سفارشی"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BodyEn = "Get in touch for buying advice, order tracking or after-sales service.",
+                            BodyFa = "برای مشاوره خرید، پیگیری سفارش یا خدمات پس از فروش با ما در تماس باشید.",
+                            CardKey = "contact",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            CtaLink = "/cooperation",
+                            CtaTextEn = "Ways to contact and work with Luca",
+                            CtaTextFa = "راه‌های تماس و همکاری با لوکا",
+                            ImageAltEn = "",
+                            ImageAltFa = "",
+                            ImageUrl = "",
+                            IsActive = true,
+                            IsDeleted = false,
+                            LandingExperienceId = 1,
+                            MobileImageUrl = "",
+                            TitleEn = "Contact us",
+                            TitleFa = "تماس با ما"
+                        });
+                });
+
             modelBuilder.Entity("OnlineShop.Domain.Entities.LandingFeature", b =>
                 {
                     b.Property<int>("Id")
@@ -2235,6 +2473,204 @@ namespace Infrastructure.Migrations
                             Reverse = true,
                             TitleEn = "Clarity, centre to edge",
                             TitleFa = "وضوح، از مرکز تا لبه"
+                        });
+                });
+
+            modelBuilder.Entity("OnlineShop.Domain.Entities.LandingPageComponent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ComponentKey")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("DeletedBy")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ComponentKey")
+                        .IsUnique();
+
+                    b.HasIndex("DisplayOrder");
+
+                    b.ToTable("LandingPageComponents", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ComponentKey = "hero",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 0,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ComponentKey = "products",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 1,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ComponentKey = "homeSlider",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 2,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ComponentKey = "categories",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 3,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ComponentKey = "features",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 4,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ComponentKey = "specialOffers",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 5,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ComponentKey = "experience",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 6,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ComponentKey = "usp",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 7,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ComponentKey = "trust",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 8,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ComponentKey = "blog",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 9,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ComponentKey = "testimonials",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 10,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ComponentKey = "faq",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 11,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ComponentKey = "contactBand",
+                            CreatedAt = new DateTime(2026, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc),
+                            CreatedBy = 1,
+                            DisplayOrder = 12,
+                            IsActive = true,
+                            IsDeleted = false,
+                            IsEnabled = true
                         });
                 });
 
@@ -3826,6 +4262,15 @@ namespace Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("OnlineShop.Domain.Entities.LandingExperienceCard", b =>
+                {
+                    b.HasOne("OnlineShop.Domain.Entities.LandingExperience", null)
+                        .WithMany("Cards")
+                        .HasForeignKey("LandingExperienceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("OnlineShop.Domain.Entities.Order", b =>
                 {
                     b.HasOne("DiscountCode", "DiscountCode")
@@ -4104,6 +4549,11 @@ namespace Infrastructure.Migrations
             modelBuilder.Entity("OnlineShop.Domain.Entities.Discount", b =>
                 {
                     b.Navigation("ProductOfferDiscounts");
+                });
+
+            modelBuilder.Entity("OnlineShop.Domain.Entities.LandingExperience", b =>
+                {
+                    b.Navigation("Cards");
                 });
 
             modelBuilder.Entity("OnlineShop.Domain.Entities.Order", b =>

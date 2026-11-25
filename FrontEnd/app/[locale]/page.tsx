@@ -32,6 +32,10 @@ import Header from '@layout/header';
 import { siteBaseUrl } from '@lib/api';
 import { getLandingCategories } from '@lib/category';
 import {
+  getLandingPageComponents,
+} from '@lib/landingPage';
+import { landingKeys, type LandingKey } from '@lib/landingPageContract';
+import {
   getHomeSlides,
   getSlides,
   pickHeroSlide,
@@ -70,9 +74,31 @@ export default async function Home({ params }: Props) {
   const tSeo = await getTranslations({ locale, namespace: 'seo' });
 
   // Hero banner (Slides) and mid-page slider (HomeSlides) are separate tables and APIs.
-  const [heroSlides, homeSlides] = await Promise.all([getSlides(), getHomeSlides()]);
+  const [heroSlides, homeSlides, composition] = await Promise.all([
+    getSlides(), getHomeSlides(), getLandingPageComponents(),
+  ]);
   const hero = pickHeroSlide(heroSlides);
   const { categories, error: categoriesError } = await getLandingCategories();
+  // Database keys select from this server-owned allowlist; they never become import paths.
+  const sections: Record<LandingKey, React.ReactNode> = {
+    hero: <LandingHero slide={hero} />,
+    products: <TheMostProducts />,
+    homeSlider: <LandingSlider slides={homeSlides} />,
+    categories: <LandingCategory categories={categories} error={categoriesError} />,
+    features: <LandingFeatures />,
+    specialOffers: <LandingSpecialOffer />,
+    experience: <LandingExperience />,
+    usp: <USPSection />,
+    trust: <TrustSection />,
+    blog: <BlogSection />,
+    testimonials: <TestimonialsSection />,
+    faq: <LandingFaq locale={locale} />,
+    contactBand: <LandingContactBand />,
+  };
+  const allowed = new Set<string>(landingKeys);
+  const ordered = [...composition]
+    .filter((part) => part.isEnabled && part.componentKey !== 'hero' && allowed.has(part.componentKey))
+    .sort((a, b) => a.displayOrder - b.displayOrder || a.componentKey.localeCompare(b.componentKey));
 
 const organizationLd = {
     '@context': 'https://schema.org',
@@ -122,20 +148,12 @@ const organizationLd = {
       <JsonLd data={[organizationLd, websiteLd]} />
       <Header />
       <main className="flex flex-col min-h-screen">
-        <LandingHero slide={hero} />
-        <TheMostProducts />
-        <LandingSlider slides={homeSlides} />
-        <LandingCategory categories={categories} error={categoriesError} />
-        <LandingFeatures />
-        <LandingSpecialOffer />
-        {/* <LandingBrands /> */}
-        <LandingExperience />
-        <USPSection />
-        <TrustSection />
-        <BlogSection />
-        <TestimonialsSection />
-        <LandingFaq locale={locale} />
-        <LandingContactBand />
+        {sections.hero}
+        {ordered.map((part) => (
+          <div key={part.componentKey} className="contents">
+            {sections[part.componentKey as LandingKey]}
+          </div>
+        ))}
       </main>
       <AdminDock />
       <Footer />

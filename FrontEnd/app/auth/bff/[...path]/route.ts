@@ -53,6 +53,10 @@ async function proxyToBackend(req: NextRequest, pathParts: string[]) {
       revalidateTag('landingFeatures');
       revalidatePath('/fa');
       revalidatePath('/en');
+    } else if (entity === 'landingexperiences' || entity === 'landingpagecomponents') {
+      revalidateTag(entity === 'landingexperiences' ? 'landingExperience' : 'landingPageComponents');
+      revalidatePath('/fa');
+      revalidatePath('/en');
     } else if (entity === 'aboutsections') {
       revalidateTag('aboutSections');
       revalidatePath('/fa/story');
