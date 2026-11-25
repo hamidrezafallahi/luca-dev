@@ -96,7 +96,8 @@ namespace OnlineShop.Infrastructure.Configurations
                 CreateHomeSlidesEntity(),
                 CreateAboutSectionsEntity(),
                 CreateCustomFontsEntity(),
-                CreateLandingFeaturesEntity()
+                CreateLandingFeaturesEntity(),
+                CreateLandingExperiencesEntity()
             //CreateCartsEntity(),
             //CreateOrdersEntity(),
 
@@ -2765,6 +2766,71 @@ namespace OnlineShop.Infrastructure.Configurations
         };
 
         /// <summary>فونت‌های آپلودی؛ افزودن از «تم سایت»، مدیریت (ویرایش نام، غیرفعال، حذف) از همین لیست.</summary>
+        private static object CreateLandingExperiencesEntity() => new
+        {
+            Id = 38,
+            EntityName = "landingExperiences",
+            PersianDisplayName = "تجربه لوکا",
+            EnglishDisplayName = "Luca experience",
+            EndPoint = "landingExperiences",
+            EntityIconBase64 = AboutIcon,
+            ActionsJson = JsonSerializer.Serialize(new List<string> { "new", "edit", "delete" }),
+            ColumnsJson = JsonSerializer.Serialize(new List<JsonDefinition>
+            {
+                new JsonDefinition { Header = "ID", Accessor = "id", Type = "number" },
+                new JsonDefinition { Header = "عنوان فارسی", Accessor = "titleFa", Type = "text" },
+                new JsonDefinition { Header = "English title", Accessor = "titleEn", Type = "text" },
+            }),
+            FormFieldsJson = JsonSerializer.Serialize(new List<FormFieldDefinition>
+            {
+                new FormFieldDefinition { Name = "titleFa", Caption = "عنوان بخش فارسی", Type = "text", GroupFa = "\u0628\u062e\u0634\u0020\u062a\u062c\u0631\u0628\u0647", GroupEn = "Experience section" },
+                new FormFieldDefinition { Name = "titleEn", Caption = "English section title", Type = "text", GroupFa = "\u0628\u062e\u0634\u0020\u062a\u062c\u0631\u0628\u0647", GroupEn = "Experience section" },
+                new FormFieldDefinition { Name = "appointmentTitleFa", Caption = "ملاقات — عنوان فارسی", Type = "text", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentTitleEn", Caption = "ملاقات — English title", Type = "text", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentBodyFa", Caption = "ملاقات — متن فارسی", Type = "textarea", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentBodyEn", Caption = "ملاقات — English body", Type = "textarea", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentCtaTextFa", Caption = "ملاقات — متن دکمه فارسی", Type = "text", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentCtaTextEn", Caption = "ملاقات — English button text", Type = "text", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentCtaLink", Caption = "ملاقات — پیوند دکمه", Type = "text", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentImageAltFa", Caption = "ملاقات — متن جایگزین تصویر فارسی", Type = "text", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentImageAltEn", Caption = "ملاقات — English image alternative", Type = "text", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentImage", Caption = "ملاقات — تصویر اصلی", Type = "file", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentMobileImage", Caption = "ملاقات — تصویر موبایل", Type = "file", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentRemoveImage", Caption = "ملاقات — حذف تصویر اصلی", Type = "checkbox", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "appointmentRemoveMobileImage", Caption = "ملاقات — حذف تصویر موبایل", Type = "checkbox", GroupFa = "\u0645\u0644\u0627\u0642\u0627\u062a", GroupEn = "Appointment" },
+                new FormFieldDefinition { Name = "fittingTitleFa", Caption = "تنظیم — عنوان فارسی", Type = "text", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingTitleEn", Caption = "تنظیم — English title", Type = "text", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingBodyFa", Caption = "تنظیم — متن فارسی", Type = "textarea", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingBodyEn", Caption = "تنظیم — English body", Type = "textarea", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingCtaTextFa", Caption = "تنظیم — متن دکمه فارسی", Type = "text", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingCtaTextEn", Caption = "تنظیم — English button text", Type = "text", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingCtaLink", Caption = "تنظیم — پیوند دکمه", Type = "text", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingImageAltFa", Caption = "تنظیم — متن جایگزین تصویر فارسی", Type = "text", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingImageAltEn", Caption = "تنظیم — English image alternative", Type = "text", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingImage", Caption = "تنظیم — تصویر اصلی", Type = "file", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingMobileImage", Caption = "تنظیم — تصویر موبایل", Type = "file", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingRemoveImage", Caption = "تنظیم — حذف تصویر اصلی", Type = "checkbox", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "fittingRemoveMobileImage", Caption = "تنظیم — حذف تصویر موبایل", Type = "checkbox", GroupFa = "\u062a\u0646\u0638\u06cc\u0645", GroupEn = "Fitting" },
+                new FormFieldDefinition { Name = "contactTitleFa", Caption = "پشتیبانی — عنوان فارسی", Type = "text", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactTitleEn", Caption = "پشتیبانی — English title", Type = "text", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactBodyFa", Caption = "پشتیبانی — متن فارسی", Type = "textarea", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactBodyEn", Caption = "پشتیبانی — English body", Type = "textarea", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactCtaTextFa", Caption = "پشتیبانی — متن دکمه فارسی", Type = "text", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactCtaTextEn", Caption = "پشتیبانی — English button text", Type = "text", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactCtaLink", Caption = "پشتیبانی — پیوند دکمه", Type = "text", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactImageAltFa", Caption = "پشتیبانی — متن جایگزین تصویر فارسی", Type = "text", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactImageAltEn", Caption = "پشتیبانی — English image alternative", Type = "text", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactImage", Caption = "پشتیبانی — تصویر اصلی", Type = "file", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactMobileImage", Caption = "پشتیبانی — تصویر موبایل", Type = "file", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactRemoveImage", Caption = "پشتیبانی — حذف تصویر اصلی", Type = "checkbox", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+                new FormFieldDefinition { Name = "contactRemoveMobileImage", Caption = "پشتیبانی — حذف تصویر موبایل", Type = "checkbox", GroupFa = "\u067e\u0634\u062a\u06cc\u0628\u0627\u0646\u06cc", GroupEn = "Contact" },
+            }),
+            IsActive = true,
+            CreatedAt = new DateTime(2026, 1, 1),
+            CreatedBy = 1,
+            IsDeleted = false
+        };
+
         private static object CreateLandingFeaturesEntity() => new
         {
             Id = 37,

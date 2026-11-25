@@ -11,7 +11,19 @@ import { fetchWithAuth } from '@lib/client-auth';
 import { defaultLandingComponents, landingKeys, type LandingPageComponent } from '@lib/landingPageContract';
 
 const labels: Record<string, [string, string]> = {
-  hero: ['Hero', 'بنر اصلی'], products: ['Products', 'محصولات'], homeSlider: ['Home slider', 'اسلایدر صفحه اصلی'], categories: ['Categories', 'دسته‌بندی‌ها'], features: ['Features', 'ویژگی‌ها'], specialOffers: ['Special offers', 'پیشنهادهای ویژه'], experience: ['Luca experience', 'تجربه لوکا'], usp: ['Benefits', 'مزیت‌ها'], trust: ['Trust', 'اعتماد'], blog: ['Journal', 'مجله'], testimonials: ['Testimonials', 'نظر مشتریان'], faq: ['FAQ', 'پرسش‌های متداول'], contactBand: ['Contact', 'تماس'],
+  hero: ['Hero', 'بنر اصلی'], products: ['Products', 'محصولات'], homeSlider: ['Home slider', 'اسلایدر صفحه اصلی'], categories: ['Categories', 'دسته‌بندی‌ها'], features: ['Features', 'ویژگی‌ها'], specialOffers: ['Special offers', 'پیشنهادهای ویژه'], experience: ['Luca experience', 'تجربه لوکا'], usp: ['Benefits', 'مزیت‌ها'], trust: ['Trust', 'اعتماد'], blog: ['Journal', 'مجله'], testimonials: ['Testimonials', 'نظر مشتریان'], faq: ['FAQ', 'سوالات متداول'], contactBand: ['Contact', 'تماس'],
+};
+// Only sections with a real content editor receive an edit action.
+const contentEndpoints: Partial<Record<typeof landingKeys[number], string>> = {
+  hero: 'landing',
+  products: 'products',
+  homeSlider: 'homeSlides',
+  categories: 'categories',
+  features: 'landingFeatures',
+  specialOffers: 'specialOffers',
+  experience: 'landingExperiences',
+  blog: 'blogs',
+  faq: 'faqs',
 };
 const copy = {
   en: { heading: 'Landing page layout', hint: 'Drag sections or use the move buttons. Changes appear after saving.', enabled: 'Visible', required: 'Required', up: 'Move up', down: 'Move down', save: 'Save changes', discard: 'Discard changes', reset: 'Default order', editing: 'Edit content', saved: 'Layout saved.', loading: 'Loading layout…', retry: 'Retry', error: 'Could not load layout.' },
@@ -77,7 +89,7 @@ export default function LandingLayoutEditor() {
             <span aria-hidden="true" className="text-[var(--admin-text-muted)]">⋮⋮</span>
             <span className="min-w-[9rem] flex-1 text-[var(--admin-text)]">{index + 1}. {label}</span>
             {required && <span className="text-[var(--admin-text-muted)]">{c.required}</span>}
-            {item.componentKey === 'experience' && <Link className="admin-btn admin-btn-ghost" href={`/${locale}/admin/landingExperience`}>{c.editing}</Link>}
+            {contentEndpoints[item.componentKey as typeof landingKeys[number]] && <Link className="admin-btn admin-btn-ghost" href={`/${locale}/admin/${contentEndpoints[item.componentKey as typeof landingKeys[number]]}?ByConfig=true`}>{c.editing}</Link>}
             <label className="flex items-center gap-2 text-[var(--admin-text)]"><input type="checkbox" checked={required || item.isEnabled} disabled={required} onChange={(event) => setDraft((old) => old.map((row) => row.componentKey === item.componentKey ? { ...row, isEnabled: event.target.checked } : row))} />{c.enabled}</label>
             <div className="flex gap-1"><button type="button" className="admin-icon-btn" aria-label={`${c.up}: ${label}`} disabled={required || index < 2} onClick={() => move(index, index - 1)}>↑</button><button type="button" className="admin-icon-btn" aria-label={`${c.down}: ${label}`} disabled={required || index === draft.length - 1} onClick={() => move(index, index + 1)}>↓</button></div>
           </li>;

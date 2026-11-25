@@ -117,24 +117,14 @@ export default function Sidebar({
               );
             })
           )}
-
-          <Link
-            href={`/${locale}/admin/landingExperience`}
-            title={locale === 'en' ? 'Luca experience' : 'تجربه لوکا'}
-            onClick={onClose}
-            className={cn('admin-nav-item mt-1', activeEndpoint === 'landingExperience' && 'admin-nav-item-active')}
-          >
-            <span className="flex justify-center items-center w-6 h-6 shrink-0">✦</span>
-            <span>{locale === 'en' ? 'Luca experience' : 'تجربه لوکا'}</span>
-          </Link>
           <Link
             href={`/${locale}/admin/landingPageLayout`}
-            title={locale === 'en' ? 'Landing page layout' : 'چیدمان صفحه اصلی'}
+            title={t('admin.landingLayoutNav')}
             onClick={onClose}
             className={cn('admin-nav-item', activeEndpoint === 'landingPageLayout' && 'admin-nav-item-active')}
           >
             <span className="flex justify-center items-center w-6 h-6 shrink-0">↕</span>
-            <span>{locale === 'en' ? 'Landing page layout' : 'چیدمان صفحه اصلی'}</span>
+            <span>{t('admin.landingLayoutNav')}</span>
           </Link>
           <Link
             href={`/${locale}/admin/backup`}

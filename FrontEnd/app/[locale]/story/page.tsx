@@ -159,8 +159,8 @@ export default async function Page({ params }: Props) {
       {/* Statement */}
       {intro.body ? (
         <section className="flex flex-col justify-center items-center gap-6 py-14 md:py-24 text-center luca-container">
-          {intro.eyebrow ? <span className="luca-eyebrow">{intro.eyebrow}</span> : null}
-          <p className="max-w-[820px] text-[26px] md:text-[32px] xl:text-[36px] leading-normal whitespace-pre-line luca-display">
+          {intro.eyebrow ? <span className="story-intro-eyebrow">{intro.eyebrow}</span> : null}
+          <p className="max-w-[820px] text-[18px] md:text-[20px] leading-relaxed whitespace-pre-line font-body">
             {intro.body}
           </p>
         </section>

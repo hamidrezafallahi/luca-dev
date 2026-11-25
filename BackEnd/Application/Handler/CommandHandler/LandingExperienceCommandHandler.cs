@@ -17,9 +17,75 @@ public sealed class LandingExperienceCommandHandler(ILandingExperienceRepository
     IRequestHandler<CreateLandingExperienceCommand, ServiceResult<IdDto>>,
     IRequestHandler<UpdateLandingExperienceCommand, ServiceResult<IdDto>>,
     IRequestHandler<DeleteLandingExperienceCommand, ServiceResult<IdDto>>,
+    IRequestHandler<SaveLandingExperienceAdminFormCommand, ServiceResult<IdDto>>,
     IRequestHandler<UpdateLandingExperienceImageCommand, ServiceResult<IdDto>>
 {
     private int? UserId => accessor.HttpContext?.GetUserId();
+
+    public async Task<ServiceResult<IdDto>> Handle(SaveLandingExperienceAdminFormCommand r, CancellationToken ct)
+    {
+        if (UserId is null) return ServiceResult<IdDto>.Unauthorized();
+        const long maxImageBytes = 10 * 1024 * 1024;
+        if (new[] { r.AppointmentImage, r.AppointmentMobileImage, r.FittingImage, r.FittingMobileImage,
+                r.ContactImage, r.ContactMobileImage }.Any(file => file is { Length: > maxImageBytes }))
+            return ServiceResult<IdDto>.Failed("Each image must be 10 MB or smaller.");
+        if ((r.AppointmentImage is { Length: > 0 } && r.AppointmentRemoveImage) ||
+            (r.AppointmentMobileImage is { Length: > 0 } && r.AppointmentRemoveMobileImage) ||
+            (r.FittingImage is { Length: > 0 } && r.FittingRemoveImage) ||
+            (r.FittingMobileImage is { Length: > 0 } && r.FittingRemoveMobileImage) ||
+            (r.ContactImage is { Length: > 0 } && r.ContactRemoveImage) ||
+            (r.ContactMobileImage is { Length: > 0 } && r.ContactRemoveMobileImage))
+            return ServiceResult<IdDto>.Failed("Cannot replace and remove the same image.");
+        var cards = new List<ExperienceCardInput>
+        {
+            new ExperienceCardInput { CardKey = "appointment", TitleFa = r.AppointmentTitleFa, TitleEn = r.AppointmentTitleEn, BodyFa = r.AppointmentBodyFa, BodyEn = r.AppointmentBodyEn, CtaTextFa = r.AppointmentCtaTextFa, CtaTextEn = r.AppointmentCtaTextEn, CtaLink = r.AppointmentCtaLink, ImageAltFa = r.AppointmentImageAltFa, ImageAltEn = r.AppointmentImageAltEn },
+            new ExperienceCardInput { CardKey = "fitting", TitleFa = r.FittingTitleFa, TitleEn = r.FittingTitleEn, BodyFa = r.FittingBodyFa, BodyEn = r.FittingBodyEn, CtaTextFa = r.FittingCtaTextFa, CtaTextEn = r.FittingCtaTextEn, CtaLink = r.FittingCtaLink, ImageAltFa = r.FittingImageAltFa, ImageAltEn = r.FittingImageAltEn },
+            new ExperienceCardInput { CardKey = "contact", TitleFa = r.ContactTitleFa, TitleEn = r.ContactTitleEn, BodyFa = r.ContactBodyFa, BodyEn = r.ContactBodyEn, CtaTextFa = r.ContactCtaTextFa, CtaTextEn = r.ContactCtaTextEn, CtaLink = r.ContactCtaLink, ImageAltFa = r.ContactImageAltFa, ImageAltEn = r.ContactImageAltEn },
+        };
+        if (r.Id is > 0)
+        {
+            var currentId = await repo.Query(e => e.SiteKey == "home" && !e.IsDeleted)
+                .Select(e => (int?)e.Id).FirstOrDefaultAsync(ct);
+            if (currentId != r.Id) return ServiceResult<IdDto>.Failed("Landing experience not found.");
+        }
+        var saved = r.Id is > 0
+            ? await Handle(new UpdateLandingExperienceCommand { TitleFa = r.TitleFa, TitleEn = r.TitleEn, Cards = cards }, ct)
+            : await Handle(new CreateLandingExperienceCommand { TitleFa = r.TitleFa, TitleEn = r.TitleEn, Cards = cards }, ct);
+        if (!saved.IsSuccess) return saved;
+        if (r.AppointmentImage is not null || r.AppointmentMobileImage is not null || r.AppointmentRemoveImage || r.AppointmentRemoveMobileImage)
+        {
+            var uploaded = await Handle(new UpdateLandingExperienceImageCommand
+            {
+                CardKey = "appointment", Image = r.AppointmentImage, MobileImage = r.AppointmentMobileImage,
+                RemoveImage = r.AppointmentRemoveImage, RemoveMobileImage = r.AppointmentRemoveMobileImage,
+            }, ct);
+            if (!uploaded.IsSuccess) return PartialImageFailure(uploaded, saved);
+        }
+        if (r.FittingImage is not null || r.FittingMobileImage is not null || r.FittingRemoveImage || r.FittingRemoveMobileImage)
+        {
+            var uploaded = await Handle(new UpdateLandingExperienceImageCommand
+            {
+                CardKey = "fitting", Image = r.FittingImage, MobileImage = r.FittingMobileImage,
+                RemoveImage = r.FittingRemoveImage, RemoveMobileImage = r.FittingRemoveMobileImage,
+            }, ct);
+            if (!uploaded.IsSuccess) return PartialImageFailure(uploaded, saved);
+        }
+        if (r.ContactImage is not null || r.ContactMobileImage is not null || r.ContactRemoveImage || r.ContactRemoveMobileImage)
+        {
+            var uploaded = await Handle(new UpdateLandingExperienceImageCommand
+            {
+                CardKey = "contact", Image = r.ContactImage, MobileImage = r.ContactMobileImage,
+                RemoveImage = r.ContactRemoveImage, RemoveMobileImage = r.ContactRemoveMobileImage,
+            }, ct);
+            if (!uploaded.IsSuccess) return PartialImageFailure(uploaded, saved);
+        }
+        return saved;
+    }
+
+    private static ServiceResult<IdDto> PartialImageFailure(ServiceResult<IdDto> failure, ServiceResult<IdDto> saved) =>
+        new() { IsSuccess = false, Error = $"Text saved, but an image could not be updated: {failure.Error}",
+            ErrorCode = ErrorCodes.PartialSave, Data = saved.Data };
+
     private static LandingExperienceCardText Text(ExperienceCardInput c) => new(c.TitleFa, c.TitleEn,
         c.BodyFa, c.BodyEn, c.CtaTextFa, c.CtaTextEn, c.CtaLink, c.ImageAltFa, c.ImageAltEn);
 

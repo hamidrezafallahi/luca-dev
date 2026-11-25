@@ -89,6 +89,19 @@ export default function FormGenerator({
       : entityFormConfig.persianDisplayName;
   const isEdit = Boolean(defaultValues?.id);
 
+  // Adjacent fields with the same configured group share one section. Configs
+  // without groups keep their original two-column layout and field order.
+  const orderedFields = formFields
+    .filter((field) => field.Type !== 'hidden')
+    .sort((a, b) => (a.Order || 0) - (b.Order || 0));
+  const fieldGroups: { label: string; fields: FormField[] }[] = [];
+  for (const field of orderedFields) {
+    const label = (locale === 'fa' ? field.GroupFa : field.GroupEn) || '';
+    const last = fieldGroups[fieldGroups.length - 1];
+    if (label && last?.label === label) last.fields.push(field);
+    else fieldGroups.push({ label, fields: [field] });
+  }
+
   const getValidationRules = (field: FormField): RegisterOptions => {
     const rules: RegisterOptions = {};
     if (field.Type === "number" || field.Type === "price") {
@@ -209,6 +222,13 @@ export default function FormGenerator({
           } else {
             const { showErrorToast } = await import('@utils/core');
             showErrorToast(describeSaveError(res), '', 5000);
+            // A multipart request can persist text before an upload fails. Retry against
+            // that record so a second submission updates it instead of creating another.
+            const savedId = Number(res?.data?.id);
+            if (res?.errorCode === 'PARTIAL_SAVE' && Number.isSafeInteger(savedId) && savedId > 0) {
+              route.push(`/${locale}/admin/${entityFormConfig.endPoint}/${savedId}`);
+              route.refresh();
+            }
           }
         } catch (err) {
           const { showErrorToast } = await import('@utils/core');
@@ -283,10 +303,8 @@ export default function FormGenerator({
               : 'max-h-[calc(100dvh-240px)] lg:max-h-[calc(100dvh-220px)]'
           }`}
         >
-          {formFields
-            .filter((field) => field.Type !== "hidden")
-            .sort((a, b) => (a.Order || 0) - (b.Order || 0))
-            .map((field) => (
+          {fieldGroups.map((group, groupIndex) => {
+            const fields = group.fields.map((field) => (
               <div
                 key={field.Name}
                 className={
@@ -306,7 +324,14 @@ export default function FormGenerator({
                   error={errors[field.Name]?.message as string | undefined}
                 />
               </div>
-            ))}
+            ));
+            return group.label ? (
+              <section key={`${group.label}-${groupIndex}`} className="md:col-span-2 min-w-0 pt-4 border-t border-[var(--admin-border)]">
+                <h2 className="mb-4 font-display text-lg text-[var(--admin-text)]">{group.label}</h2>
+                <div className="gap-4 sm:gap-5 grid grid-cols-1 md:grid-cols-2">{fields}</div>
+              </section>
+            ) : fields;
+          })}
         </div>
 
         <div className="admin-form-actions">

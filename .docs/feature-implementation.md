@@ -15,6 +15,8 @@ Find the nearest working feature in `BackEnd/Domain`, `BackEnd/Application`, `Ba
 4. Expose routes in `Api/Controllers`: public reads may be anonymous; every admin mutation and admin read must enforce the project's admin roles. Check unauthorized, not found, validation, and upload failure paths. Use multipart `[FromForm]` with `IFormFile` for files; store only relative media paths, and keep old media until replacement succeeds.
 5. Register the entity in `EntityConfigConfiguration` for the generic admin menu/list/form when that UI is appropriate. Match endpoint names and form field names to the controller and DTO exactly. Confirm that the generic form can submit the chosen types (especially file and checkbox fields).
 
+Every new admin CRUD list and form must derive its columns, actions, fields, and field groups from the backend `EntityConfig` JSON and use the shared list/form generators. Extend the JSON contract and shared renderer for a needed field or workflow rather than adding a handwritten CRUD page. Preserve the specialized behavior of existing editors when migrating them to this contract; a route redirect alone does not establish feature parity.
+
 ## Frontend checklist
 
 1. Put public API access in a server only `FrontEnd/lib` function. Render public content with server components where possible and set an explicit cache window/tag. Cache invalidation after admin changes should target the corresponding tag or public path; a timed refresh is the fallback.

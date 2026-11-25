@@ -27,6 +27,7 @@ namespace Common
         public const string RequiredValueMissing = "REQUIRED_VALUE_MISSING";
         public const string InvalidData = "INVALID_DATA";
         public const string ConcurrencyConflict = "CONCURRENCY_CONFLICT";
+        public const string PartialSave = "PARTIAL_SAVE";
 
         public const string DatabaseUnavailable = "DATABASE_UNAVAILABLE";
         public const string DatabaseTimeout = "DATABASE_TIMEOUT";

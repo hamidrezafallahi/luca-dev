@@ -27,6 +27,10 @@ public class FormFieldDefinition
     public FetchConfig? FetchConfig { get; set; }                 // واکشی داده برای selectOption
     public List<Option>? Options { get; set; }     
     public List<ValidationRule>? Rules { get; set; }  
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? GroupFa { get; set; }
+    [System.Text.Json.Serialization.JsonIgnore(Condition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull)]
+    public string? GroupEn { get; set; }
 }
 public class ValidationRule
 {

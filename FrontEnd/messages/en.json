@@ -644,6 +644,7 @@
       "panel": "Panel"
     },
     "backupNav": "Backup",
+    "landingLayoutNav": "Landing page layout",
     "backupTitle": "Backup & restore",
     "backupSubtitle": "Full backup (database + images and files), restore from file, and automatic backups",
     "backupCreate": "Create new backup",

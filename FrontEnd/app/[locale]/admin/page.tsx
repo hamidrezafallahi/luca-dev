@@ -12,7 +12,7 @@ export default async function AdminPage() {
   const t = await getTranslations();
   const locale = await getLocale();
   const menu = await getMenu();
-  const items = menu?.data ?? [];
+  const items = [...new Map((menu?.data ?? []).map((item) => [item.endPoint.toLowerCase(), item])).values()];
 
   return (
     <div className="admin-page">
@@ -58,32 +58,12 @@ export default async function AdminPage() {
           </div>
         </div>
 
-        {items.length === 0 ? (
-          <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-            <div className="admin-panel admin-empty sm:col-span-2 lg:col-span-3 xl:col-span-3">
-              <p className="admin-empty-title">{t('admin.menuEmpty')}</p>
-            </div>
-            <Link
-              href={`/${locale}/admin/backup`}
-              className="admin-stat-card group"
-            >
-              <div className="flex items-center gap-3">
-                <span className="flex justify-center items-center border border-[var(--admin-border)] w-11 h-11 text-[var(--admin-text)] text-sm font-semibold">
-                  BK
-                </span>
-                <div className="min-w-0">
-                  <p className="font-medium text-[var(--admin-text)] group-hover:underline truncate transition-colors">
-                    {t('admin.backupNav')}
-                  </p>
-                  <p className="text-[var(--admin-text-muted)] text-xs truncate">
-                    /admin/backup
-                  </p>
-                </div>
+        <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {items.length === 0 && (
+              <div className="admin-panel admin-empty sm:col-span-2 lg:col-span-3 xl:col-span-3">
+                <p className="admin-empty-title">{t('admin.menuEmpty')}</p>
               </div>
-            </Link>
-          </div>
-        ) : (
-          <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            )}
             {items.map((item, idx) => (
               <Link
                 key={`${item.endPoint}-${idx}`}
@@ -108,6 +88,15 @@ export default async function AdminPage() {
                 </div>
               </Link>
             ))}
+            <Link href={`/${locale}/admin/landingPageLayout`} className="admin-stat-card group">
+              <div className="flex items-center gap-3">
+                <span aria-hidden="true" className="flex justify-center items-center border border-[var(--admin-border)] w-11 h-11 text-[var(--admin-text)] text-lg">↕</span>
+                <div className="min-w-0">
+                  <p className="font-medium text-[var(--admin-text)] group-hover:underline truncate transition-colors">{t('admin.landingLayoutNav')}</p>
+                  <p className="text-[var(--admin-text-muted)] text-xs truncate">/admin/landingPageLayout</p>
+                </div>
+              </div>
+            </Link>
             <Link
               href={`/${locale}/admin/backup`}
               className="admin-stat-card group"
@@ -126,8 +115,7 @@ export default async function AdminPage() {
                 </div>
               </div>
             </Link>
-          </div>
-        )}
+        </div>
       </section>
     </div>
   );

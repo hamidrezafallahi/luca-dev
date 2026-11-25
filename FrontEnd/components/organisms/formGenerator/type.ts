@@ -35,6 +35,8 @@ export interface FormField {
     Name: string;
     Caption: string;
     Type: string;
+    GroupFa?: string;
+    GroupEn?: string;
     PlaceHolder?: string;
     Help?: string;
     Order?: number;
