@@ -19,7 +19,7 @@ function ensureApiSuffix(value: string) {
 }
 
 /**
- * Browser calls go through Next BFF so httpOnly candyAccess can be attached
+ * Browser calls go through Next BFF so httpOnly lucaloupeAccess can be attached
  * as Authorization. Nginx still routes raw /api/* straight to the backend.
  */
 export const browserApiBaseUrl = '/auth/bff';

@@ -78,7 +78,7 @@ export default function CommentAndRate({ ...props }: TCommentAndRate) {
   };
   const redirectUrl = encodeURIComponent(pathname);
   useEffect(() => {
-    setIsAuthenticated(Boolean(getCookie("candySession")));
+    setIsAuthenticated(Boolean(getCookie("lucaloupeSession")));
   }, []);
   return (
     <div className="flex flex-col items-start gap-3 p-6 border w-full md:max-w-[560px] text-start luca-line">

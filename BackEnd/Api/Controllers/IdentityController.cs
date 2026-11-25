@@ -42,8 +42,8 @@ public async Task<IActionResult> RefreshToken(
 {
     var command = new RefreshTokenCommand
     {
-        AccessToken = request?.AccessToken ?? Request.Cookies["candyAccess"] ?? "",
-        RefreshToken = request?.RefreshToken ?? Request.Cookies["candyRefresh"] ?? "",
+        AccessToken = request?.AccessToken ?? Request.Cookies["lucaloupeAccess"] ?? "",
+        RefreshToken = request?.RefreshToken ?? Request.Cookies["lucaloupeRefresh"] ?? "",
         Ip = request?.Ip,
         UserAgent = request?.UserAgent
     };

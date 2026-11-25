@@ -14,7 +14,7 @@ import { ShoppingCartButtonProps } from './type';
 
 function IncreaseButton({ ...props }: ShoppingCartButtonProps) {
   const { id, productOfferId, className, content } = props;
-  const isAuthenticated = Boolean(getCookie("candySession"));
+  const isAuthenticated = Boolean(getCookie("lucaloupeSession"));
   const [itemMutate, { isLoading }] = useGetConditionallyMutation();
 
   const dispatch = useDispatch();

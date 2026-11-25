@@ -15,7 +15,7 @@ namespace OnlineShop.Infrastructure.Repositories
         // پیدا کردن توکن با مقدار رشته‌ای آن
         // The refresh token is a 64-byte random secret, so it identifies the row on its own.
         // It must not also require the access token: by the time a refresh is needed the
-        // candyAccess cookie has usually expired and the browser no longer sends it.
+        // lucaloupeAccess cookie has usually expired and the browser no longer sends it.
         public async Task<RefreshToken?> GetByTokenAsync(string refreshToken)
         {
             return await _context.RefreshTokens

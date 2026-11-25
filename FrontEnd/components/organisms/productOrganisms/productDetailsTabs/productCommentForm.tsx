@@ -69,7 +69,7 @@ const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
   };
   const redirectUrl = encodeURIComponent(pathname);
   useEffect(() => {
-  setIsAuthenticated(Boolean(getCookie("candySession")));
+  setIsAuthenticated(Boolean(getCookie("lucaloupeSession")));
 }, []);
   return (
     <div className="flex flex-col items-start gap-3 mt-6 max-w-[820px]">

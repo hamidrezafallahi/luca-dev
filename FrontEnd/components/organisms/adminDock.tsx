@@ -1,6 +1,5 @@
 'use client';
 
-import { jwtDecode } from 'jwt-decode';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
 import {
@@ -15,6 +14,7 @@ import {
   Package,
   ShoppingBagIcon,
 } from '@components/atoms/iconComponents';
+import { refreshSession } from '@lib/client-auth';
 
 const VISIBLE_ROLES = new Set([
   'SuperAdmin',
@@ -23,9 +23,6 @@ const VISIBLE_ROLES = new Set([
   'ContentEditor',
 ]);
 
-const ROLE_CLAIM =
-  'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
-
 type DockItem = {
   key: string;
   href: string;
@@ -33,26 +30,6 @@ type DockItem = {
   icon: ReactNode;
   emphasize?: boolean;
 };
-
-function readCookie(name: string): string | undefined {
-  if (typeof document === 'undefined') return undefined;
-  const match = document.cookie.match(
-    new RegExp(`(?:^|; )${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}=([^;]*)`),
-  );
-  return match ? decodeURIComponent(match[1]) : undefined;
-}
-
-function readRole(token: string | undefined): string | null {
-  if (!token) return null;
-
-  try {
-    const decoded = jwtDecode<Record<string, unknown>>(token);
-    const role = decoded.role ?? decoded[ROLE_CLAIM];
-    return typeof role === 'string' && role.length > 0 ? role : null;
-  } catch {
-    return null;
-  }
-}
 
 /**
  * Client-only: reading auth cookies in an RSC would force Cache-Control: no-store
@@ -64,8 +41,21 @@ export default function AdminDock() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    const role = readRole(readCookie('candyAccess'));
-    setVisible(Boolean(role && VISIBLE_ROLES.has(role)));
+    let active = true;
+    async function loadRole() {
+      try {
+        let response = await fetch('/auth/session', { cache: 'no-store' });
+        if (response.status === 401 && await refreshSession() === 'refreshed') {
+          response = await fetch('/auth/session', { cache: 'no-store' });
+        }
+        const data = response.ok ? await response.json() as { role?: string } : null;
+        if (active) setVisible(Boolean(data?.role && VISIBLE_ROLES.has(data.role)));
+      } catch {
+        if (active) setVisible(false);
+      }
+    }
+    void loadRole();
+    return () => { active = false; };
   }, []);
 
   if (!visible) return null;

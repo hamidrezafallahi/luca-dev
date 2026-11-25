@@ -22,7 +22,7 @@ const intlMiddleware = createMiddleware({
 });
 
 export default async function middleware(req: NextRequest) {
-  // Only does work when candyAccess is missing/expiring and candyRefresh exists,
+  // Only does work when lucaloupeAccess is missing/expiring and lucaloupeRefresh exists,
   // so normal page loads send no extra request and set no cookies.
   const session = await refreshSessionIfNeeded(req);
   // next-intl forwards req.headers (incl. the updated cookie) to the render.

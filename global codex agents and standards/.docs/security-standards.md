@@ -1,0 +1,6 @@
+# Security standards
+- Use existing authentication/authorization approach; enforce resource, role, tenant and ownership checks server-side. Default deny for protected actions. Never trust UI gating, client role claims or arbitrary IDs.
+- Validate at boundaries and preserve domain invariants; parameterize SQL, prevent mass assignment, XSS, CSRF where cookie auth applies, SSRF, unsafe redirects and path traversal. Apply context-appropriate output encoding and safe file upload constraints. Avoid disabling TLS, CORS restrictions or auth to make tests pass.
+- Keep secrets in approved environment/secret stores; redact logs, error responses and test artifacts. Avoid storing sensitive tokens in insecure client persistence. Respect privacy and data minimization.
+- Review cache isolation, session lifecycle, dependency vulnerabilities, least privilege, rate limits and audit trails where relevant. Do not introduce security packages or policy changes without need.
+- Test unauthorized/forbidden, cross-tenant, invalid input and failure cases in authorized test environments. Report evidence, severity, affected files and remediation. No active testing of external/production targets without permission.

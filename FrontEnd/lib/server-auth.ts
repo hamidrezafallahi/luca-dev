@@ -17,7 +17,7 @@ import { CURRENT_PATH_HEADER } from './session-refresh';
 
 /**
  * For backend calls made while rendering for the logged-in user: Authorization from
- * candyAccess and the visitor's IP (lib/client-ip.ts).
+ * lucaloupeAccess and the visitor's IP (lib/client-ip.ts).
  */
 export async function authHeaders(): Promise<Record<string, string>> {
   const token = (await cookies()).get(ACCESS_COOKIE)?.value;

@@ -1,261 +1,36 @@
-# Global Software Engineering Instructions
+# Project-Specific Engineering Instructions
 
-## 1. Mandatory Custom Agent Discovery
+## 1. Global-to-Project Instructions
 
-At the beginning of every new user task, the primary agent MUST discover the available custom agents before planning or implementing changes.
+Follow the effective global AGENTS.md, global custom agents and engineering standards from the active Codex home. Complete the global bootstrap before applying these project-specific rules. Do not duplicate global agent definitions unless a project-specific specialization is needed.
 
-Resolve the Codex home directory using the following priority:
+Resolve CODEX_HOME from the environment or execution user's home directory followed by `.codex`. Resolve REPOSITORY_ROOT using `git rev-parse --show-toplevel`, or the confirmed active project root if Git is unavailable. Resolve all project-relative paths against REPOSITORY_ROOT, never CODEX_HOME.
 
-1. The `CODEX_HOME` environment variable, if defined.
-2. Otherwise, `~/.codex`.
-3. On the current Windows environment, the expected default path is `C:\Users\h.falahi\.codex`.
+## 2. Project Architecture
 
-### Global Custom Agents
+- Backend: `${REPOSITORY_ROOT}/BackEnd/` — preserve existing Domain, Application, Infrastructure and API layers, repository contracts, commands, queries, handlers, persistence and authorization conventions.
+- Frontend: `${REPOSITORY_ROOT}/FrontEnd/` — preserve Next.js conventions, server rendering and caching, Persian/English content, RTL/LTR and the backend-configurable theme system.
 
-Discover all `*.toml` agent definitions inside:
+Inspect actual dependencies, scripts and analogous features before making changes. Global preferences do not require migration.
 
-`<CODEX_HOME>/agents/`
+## 3. Project Documentation
 
-The expected Windows path is:
+Read these project-local documents in addition to global standards:
 
-`C:\Users\h.falahi\.codex\agents`
+- `${REPOSITORY_ROOT}/.docs/agent-orchestration.md` — before task planning and delegation.
+- `${REPOSITORY_ROOT}/.docs/feature-implementation.md` — before adding or modifying features; backend, database, API, admin and frontend implementation contract.
+- `${REPOSITORY_ROOT}/.docs/frontend-design-system.md` — before designing, implementing or reviewing frontend UI; configurable theme, semantic tokens, typography and responsive behavior.
 
-Enumerate all TOML files and inspect their current definitions, including:
+The global and project `agent-orchestration.md` files are distinct; read both. Respect applicable nested instructions. Report missing or inaccessible required documents.
 
-- Agent name.
-- Description.
-- Developer instructions.
-- Specialization and capabilities.
-- Model configuration, if explicitly defined.
-- Reasoning effort, if explicitly defined.
-- Responsibilities and restrictions.
+## 4. Multi-Agent Execution
 
-Do not rely on a hardcoded list of agent names or previous task assumptions.
+Use global custom agents from `${CODEX_HOME}/agents/`. Project-specific agents in `${REPOSITORY_ROOT}/.codex/agents/` are optional. Follow global orchestration policy and applicable project workflows. Pass both global and project documentation paths, constraints, scope and file ownership to every delegated agent.
 
-The current TOML definitions are the source of truth for configured agent capabilities.
+## 5. Engineering Rules
 
-Automatically consider newly added, renamed, updated, or removed agents.
+Trace analogous features before implementation. Preserve existing contracts, architecture, security, localization, accessibility and user changes. Keep business logic out of API controllers and React components. Preserve admin CRUD, public active-content behavior, media paths and server caching. Use semantic theme tokens and the existing typography pipeline rather than hardcoded theme-owned colors or font families. Follow verified project conventions. Do not commit, merge, push or deploy without explicit authorization.
 
-### Project-Specific Custom Agents
+## 6. Verification
 
-Also discover project-specific agents, when available, inside:
-
-`<REPOSITORY_ROOT>/.codex/agents/`
-
-Consider both global and project-specific agents when selecting the execution team.
-
-Resolve naming conflicts according to the actual Codex runtime precedence rules.
-
-### Runtime Registration Verification
-
-Distinguish between:
-
-- Agent definitions discovered on disk.
-- Agents registered and available in the current runtime.
-- Agents selected for the current task.
-- Agents actually spawned and executed.
-
-A TOML file existing on disk does not prove that its agent is registered or executable.
-
-Use the actual runtime-registered agent names when spawning subagents.
-
-Report unavailable agents, unsupported models, missing permissions, and runtime limitations explicitly.
-
-Never simulate subagent execution.
-
-## 2. Main Orchestrator Responsibilities
-
-The primary agent acts as the main orchestrator.
-
-Automatically determine:
-
-- Task classification.
-- Task complexity and risk.
-- Relevant project architecture.
-- Required specialized agents.
-- Appropriate models and reasoning effort, where supported.
-- Execution phases.
-- Dependencies.
-- Parallel and sequential execution.
-- File ownership.
-- Acceptance criteria.
-- Validation strategy.
-
-Do not require the user to manually select planners, implementers, reviewers, models, or reasoning effort.
-
-Use the smallest effective team.
-
-Simple and isolated tasks may be completed directly.
-
-Complex, multi-layer, or high-risk tasks should use appropriate specialized agents.
-
-Subagents execute only their delegated scope. They must not restart global orchestration or recursively spawn additional agents by default.
-
-## 3. Mandatory Task Startup Report
-
-Before implementation, provide a concise user-visible startup report containing:
-
-- Global custom agents discovered.
-- Project-specific custom agents discovered.
-- Runtime-available agents, where verifiable.
-- Task classification and complexity.
-- Selected agents.
-- Assigned responsibilities.
-- Intended model and reasoning effort, where known.
-- Execution dependencies and parallel work.
-
-Do not print the complete contents of agent TOML files.
-
-If no specialized agent is required, briefly explain why.
-
-Proceed automatically without waiting for approval unless required by the user or runtime permissions.
-
-## 4. Dynamic Model Selection
-
-Automatically select appropriate models and reasoning effort based on task complexity, risk, specialization, and available runtime capabilities.
-
-Prefer efficient models for simple exploration and routine tasks.
-
-Prefer stronger reasoning for complex architecture, difficult debugging, security analysis, and critical implementation.
-
-Respect explicit model settings in individual agent TOML definitions.
-
-When model settings are omitted, select an appropriate supported model dynamically if the runtime exposes that capability.
-
-Otherwise, use the runtime defaults or inherited settings.
-
-Never invent model identifiers or claim that a particular model was used without confirmation.
-
-## 5. Global Engineering Standards
-
-Resolve all global documentation paths relative to the Codex home directory, not the current repository.
-
-Before planning substantial work, read:
-
-- `.docs/agent-orchestration.md`
-
-Before changing files, read all relevant standards:
-
-- `.docs/backend-standards.md`: .NET, DDD, Clean Architecture, CQRS, MediatR, REST.
-- `.docs/frontend-standards.md`: Next.js App Router, TypeScript, Atomic Design, Redux Toolkit, RTK Query, Tailwind, next-intl, server-first.
-- `.docs/database-standards.md`: PostgreSQL, EF Core Code First, migrations.
-- `.docs/devops-standards.md`: Docker Compose, Linux, environment, CI/CD.
-- `.docs/security-standards.md`: authorization, secrets, input and data protection.
-- `.docs/testing-standards.md`: xUnit, project frontend runner, Playwright.
-- `.docs/git-standards.md`: preserve work, no unauthorized commit or push.
-
-Pass the relevant standards and project constraints to every delegated agent.
-
-## 6. Project Awareness
-
-Inspect applicable repository AGENTS.md files, project documentation, actual dependencies, scripts, architecture, and conventions.
-
-Repository-specific requirements refine global defaults.
-
-Never migrate an existing technology stack solely to match a global preference.
-
-Trace an existing analogous feature before implementing a new one.
-
-Explicit user scope and runtime permissions remain binding.
-
-## 7. Execution and Coordination
-
-Run independent analysis tasks concurrently when beneficial.
-
-Wait for required upstream agent results before starting dependent work.
-
-Assign clear responsibilities and exclusive file ownership where necessary.
-
-Do not run conflicting file edits concurrently.
-
-Pass relevant analysis, contracts, specifications, constraints, and acceptance criteria to downstream agents.
-
-The main orchestrator remains responsible for integration, review, and final correctness.
-
-Use independent review for substantial or high-risk changes.
-
-Return confirmed material defects to the responsible implementation agent and retest after corrections.
-
-## 8. Non-Negotiable Engineering Behavior
-
-- Preserve existing user edits.
-- Preserve public contracts and business invariants.
-- Preserve accessibility and localization.
-- Preserve existing security requirements.
-- Prefer small coherent changes and reuse over unnecessary abstractions.
-- Follow SOLID, DRY, KISS, and Clean Code pragmatically.
-- Do not expose secrets.
-- Do not disable safeguards.
-- Do not introduce unrelated modifications.
-- Do not apply migrations to shared or production databases without explicit authorization.
-- Do not deploy, commit, merge, or push without explicit authorization.
-- Do not invent test results, screenshots, tools, models, or agent execution.
-- Use relevant installed skills and MCP tools when available.
-- Verify version-sensitive APIs against actual installed versions.
-
-## 9. Completion and Verification
-
-Before declaring completion:
-
-- Collect required agent results.
-- Review the actual implementation and diff.
-- Run relevant tests, builds, linting, and type checks.
-- Verify architecture and contract compliance.
-- Fix confirmed material defects.
-- Retest affected behavior.
-- Report blockers and unexecuted checks.
-
-Do not claim completion if acceptance criteria remain unmet.
-
-## 10. Final Report
-
-Provide the final summary in Persian unless the user requests another language.
-
-Include:
-
-- Task outcome.
-- Actual agents used.
-- Confirmed models and reasoning effort, where available.
-- Modified files.
-- Important architectural or design decisions.
-- Validation commands and actual results.
-- Screenshots when actually captured.
-- Remaining risks, limitations, or blockers.
-
-
-
-
-
-
-
-
-# Project-Specific Instructions
-
-Follow the global software engineering and multi-agent orchestration instructions defined in the Codex home directory.
-
-## Project Architecture
-
-- Backend: `BackEnd/`
-- Frontend: `FrontEnd/`
-
-## Project Documentation
-
-Before implementing new features, read:
-
-- `.docs/feature-implementation.md`
-
-Before creating or modifying frontend UI, read:
-
-- `.docs/frontend-design-system.md`
-
-Preserve the existing backend-configurable theme system, typography, CSS tokens, API contracts, and business logic.
-
-Follow all repository-specific architectural conventions.
-
-## Project Restrictions
-
-Keep existing user changes intact.
-
-Do not introduce unrelated modifications.
-
-Do not commit, merge, or push unless explicitly requested.
+Review actual changes and run relevant tests, builds and checks. Report actual results, agent identities where exposed, missing prerequisites and limitations. Provide the final report in Persian unless otherwise requested.

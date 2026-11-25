@@ -1,11 +1,11 @@
 const isProd = process.env.NODE_ENV === 'production';
 
-export const ACCESS_COOKIE = 'candyAccess';
-export const REFRESH_COOKIE = 'candyRefresh';
+export const ACCESS_COOKIE = 'lucaloupeAccess';
+export const REFRESH_COOKIE = 'lucaloupeRefresh';
 /** Non-httpOnly flag for client UI only — never stores a token. */
-export const SESSION_FLAG_COOKIE = 'candySession';
+export const SESSION_FLAG_COOKIE = 'lucaloupeSession';
 /** Set by GET /auth/refresh to the page it returns to, so that page does not bounce back on another 401. */
-export const AUTH_RETRY_COOKIE = 'candyAuthRetry';
+export const AUTH_RETRY_COOKIE = 'lucaloupeAuthRetry';
 
 /** Where every layer sends the user once the refresh token is rejected. */
 export const LOGIN_PATH = '/fa/register';

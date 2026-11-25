@@ -15,7 +15,7 @@ export default function ProductCTA({
   productId: number;
 }) {
   const t = useTranslations();
-  const isAuthenticated = Boolean(getCookie("candySession"));
+  const isAuthenticated = Boolean(getCookie("lucaloupeSession"));
   const [addToShoppingCart] = useGetConditionallyMutation();
   const dispatch = useDispatch();
   const handleAddToCart = async () => {

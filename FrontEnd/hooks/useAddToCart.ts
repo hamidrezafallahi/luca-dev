@@ -37,7 +37,7 @@ export function useAddToCart() {
   /** Resolves to true once the item is in the cart (used by "buy now" to go on to it). */
   const add = async (item: AddToCartItem): Promise<boolean> => {
     if (pending) return false;
-    if (Boolean(getCookie('candySession'))) {
+    if (Boolean(getCookie('lucaloupeSession'))) {
       setPending(true);
       try {
         const res = await addToShoppingCart({

@@ -37,7 +37,7 @@ export default function SpecialOfferCarouselClient({ spacialOffers }: Props) {
   const scrollLeft = useRef(0);
   const containerLeft = useRef(0);
   const items = spacialOffers ?? [];
-  const isAuthenticated = Boolean(getCookie("candySession"));
+  const isAuthenticated = Boolean(getCookie("lucaloupeSession"));
   const [itemMutate] = useGetConditionallyMutation();
   const dispatch = useDispatch();
 

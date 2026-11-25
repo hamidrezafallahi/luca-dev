@@ -22,7 +22,7 @@ import {
 function OrderList({...props}: OrderListProps) {
   const { setSelectedOrderId,selectedOrderId } = props
   const route = useRouter();
-  const isAuthenticated = Boolean(getCookie("candySession"));
+  const isAuthenticated = Boolean(getCookie("lucaloupeSession"));
   const t = useTranslations();
   const locale = useLocale();
   useEffect(() => {

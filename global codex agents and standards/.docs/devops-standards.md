@@ -1,0 +1,6 @@
+# DevOps standards
+- Default Docker Compose and Linux deployment; CI/CD and reverse proxy depend on repository. Inspect Dockerfiles, compose files, env examples, existing pipeline and target architecture.
+- Use version-compatible base images, multi-stage builds where suitable, non-root runtime when feasible, minimal context and .dockerignore. Keep secrets out of images, build args, logs and commits; use existing secret injection.
+- Compose: stable service names, internal DNS, explicit ports only when required, persistent volumes, health checks, readiness/retry, resource and network boundaries. Verify dependencies and startup ordering; depends_on alone is not readiness. Do not delete volumes or expose databases publicly without explicit approval.
+- Separate local, test and production settings. Preserve env names, proxy/TLS behavior and deployment compatibility. Ensure migrations have a reviewed deployment strategy, not uncontrolled startup changes.
+- Validate docker compose config (avoid printing resolved secrets), builds and safe local smoke checks as applicable. Do not deploy, restart shared services, change cloud resources or publish images without explicit permission. Report unverified environment assumptions.

@@ -15,7 +15,7 @@ import { clientIpHeaders } from './client-ip';
  * The only caller of /Identity/refresh-token. Used by middleware.ts (before a page
  * renders), the BFF proxy and /auth/refresh (after a 401) and server actions.
  *
- * Server Components (getById, getAll, …) read candyAccess but cannot write cookies,
+ * Server Components (getById, getAll, …) read lucaloupeAccess but cannot write cookies,
  * so they have no way to refresh an expired session themselves. The middleware runs
  * this before rendering: the new tokens go into the request cookies (so this render
  * uses them) and into the response cookies (so the browser keeps them).

@@ -1,0 +1,153 @@
+# Allow Codex to edit files inside the workspace
+sandbox_mode = "danger-full-access"
+
+# Ask permission for operations outside the sandbox
+approval_policy = "never"
+
+
+
+
+notify = [ "C:\\Users\\h.falahi\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\3ddbf46d3e480df9\\bin\\node_modules\\@oai\\sky\\bin\\windows\\codex-computer-use.exe", "turn-ended" ]
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 6
+
+[marketplaces.openai-primary-runtime]
+source_type = "local"
+source = '\\?\C:\Users\h.falahi\.cache\codex-runtimes\codex-primary-runtime\plugins\openai-primary-runtime'
+
+[marketplaces.openai-bundled]
+source_type = "local"
+source = '\\?\C:\Users\h.falahi\.codex\.tmp\bundled-marketplaces\openai-bundled'
+
+[marketplaces.dotnet-agent-skills]
+source_type = "git"
+source = "https://github.com/dotnet/skills.git"
+
+[marketplaces.docker]
+source_type = "git"
+source = "https://github.com/docker/skills.git"
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[plugins."unified-computer-use@openai-bundled"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."docker-skills@docker"]
+enabled = true
+
+[plugins."dotnet@dotnet-agent-skills"]
+enabled = true
+
+[plugins."dotnet-aspnetcore@dotnet-agent-skills"]
+enabled = true
+
+[plugins."dotnet-data@dotnet-agent-skills"]
+enabled = true
+
+[plugins."dotnet-test@dotnet-agent-skills"]
+enabled = true
+
+[plugins."dotnet-diag@dotnet-agent-skills"]
+enabled = true
+
+[mcp_servers.node_repl]
+args = []
+command = 'C:\Users\h.falahi\AppData\Local\OpenAI\Codex\runtimes\cua_node\3ddbf46d3e480df9\bin\node_repl.exe'
+env_vars = ["BROWSER_USE_ACCESS_EXECUTOR_ID", "BROWSER_USE_ACCESS_PIPE_PATH", "BROWSER_USE_ACCESS_VERIFYING_IDENTITY", "CODEX_WINDOWS_REGISTERED_CORE"]
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
+NODE_REPL_NODE_MODULE_DIRS = 'C:\Users\h.falahi\AppData\Local\OpenAI\Codex\runtimes\cua_node\3ddbf46d3e480df9\bin\node_modules'
+NODE_REPL_NODE_PATH = 'C:\Users\h.falahi\AppData\Local\OpenAI\Codex\runtimes\cua_node\3ddbf46d3e480df9\bin\node.exe'
+NODE_REPL_TRUSTED_CODE_PATHS = 'C:\Users\h.falahi\.codex;C:\Users\h.falahi\AppData\Local\OpenAI\Codex\runtimes\cua_node\3ddbf46d3e480df9\bin\node_modules'
+CODEX_HOME = 'C:\Users\h.falahi\.codex'
+BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab,mcpapps"
+BROWSER_USE_TINYSKY_ENABLED = "1"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
+BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
+BROWSER_USE_CODEX_APP_VERSION = "26.1120.41243"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"C:/Users/h.falahi/.codex/plugins/cache/openai-bundled/browser/26.1120.41243/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+SKY_CUA_NATIVE_PIPE = "1"
+SKY_CUA_NATIVE_PIPE_DIRECTORY = '\\.\pipe\codex-computer-use-953cf0ed-964b-4daf-82eb-8a11bf9e9052'
+CODEX_CLI_PATH = 'C:\Users\h.falahi\AppData\Local\OpenAI\Codex\bin\1cb21d4ee104a51c\codex.exe'
+NODE_REPL_UNTRUSTED_ENV_ALLOWLIST = "CODEX_WINDOWS_REGISTERED_CORE"
+NODE_REPL_LAZY_TRUSTED_WORKER = "0"
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = ""
+
+[mcp_servers.next-devtools]
+command = "npx"
+args = ["-y", "next-devtools-mcp@latest"]
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@playwright/mcp@latest"]
+
+[mcp_servers.chrome-devtools]
+command = "npx"
+args = ["-y", "chrome-devtools-mcp@latest"]
+
+[desktop]
+conversationDetailMode = "STEPS_PROSE"
+sansFontSize = 14
+codeFontSize = 13
+ambient-suggestions-enabled = true
+default-workspace-full-view = true
+show-context-window-usage = true
+composerPlainTextMode = true
+
+[projects.'C:\fallahi\luca-dev']
+trust_level = "trusted"
+
+[projects.'C:\fallahi\luca-prod']
+trust_level = "trusted"
+
+[projects.'C:\fallahi\rooshak-dev']
+trust_level = "trusted"
+
+[features]
+memories = true
+
+[memories]
+generate_memories = true
+use_memories = true
+
+[tui]
+screen_reader_detection_done = true
+
+[tui.model_availability_nux]
+"gpt-6.1-sol" = 1
+
+[windows]
+sandbox = "elevated"

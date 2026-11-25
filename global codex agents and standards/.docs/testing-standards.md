@@ -1,0 +1,6 @@
+# Testing standards
+- Inspect existing commands, CI, fixtures and dependency availability. Backend defaults to xUnit; frontend runner is project-dependent; E2E defaults to Playwright. Do not introduce a second runner without justification.
+- Test domain invariants and handlers, API integration/status/auth/validation, real PostgreSQL behavior in disposable tests where needed, migrations and serialization. Mock external boundaries rather than implementation details; deterministic time/data.
+- Frontend: test behavior, loading/error/empty states, state transitions, RTK invalidation, locale and accessible controls. Browser E2E verifies actual user flows, desktop/mobile, RTL/LTR, theme states when relevant, console/network errors. Capture screenshots only when useful and avoid sensitive data.
+- Run targeted tests first, then relevant broader build/typecheck/lint/regression checks. Do not delete or weaken failing tests to obtain green results. Record command, exit status, failures and whether tests were executed. Distinguish pre-existing failures only with evidence.
+- If dependency, browser, API or database unavailable, report blocked checks and remaining risk. Do not claim success from static review alone.

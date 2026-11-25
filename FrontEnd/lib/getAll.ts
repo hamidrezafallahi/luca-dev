@@ -107,7 +107,7 @@ export async function getAll<T>(
 
 
 export async function getById(entity: string, id: string): Promise<Record<string, any>> {
-  // An expired candyAccess is refreshed in middleware.ts before this render,
+  // An expired lucaloupeAccess is refreshed in middleware.ts before this render,
   // because a Server Component cannot write the rotated cookies itself.
   const res = await fetch(`${serverApiBaseUrl}/${entity}/${id}`, {
     headers: {
