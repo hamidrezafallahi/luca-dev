@@ -1,19 +1,25 @@
 import type { Metadata } from 'next';
-import { getTranslations, setRequestLocale } from 'next-intl/server';
+import {
+  getTranslations,
+  setRequestLocale,
+} from 'next-intl/server';
 import type { StaticImageData } from 'next/image';
 import Link from 'next/link';
-import MediaImage from '@components/atoms/MediaImage';
 
-// Keep filenames URL-safe (no commas): /_next/image decodes the url param and
-// a comma path makes its internal fetch 404.
-import heroPicture from '@public/images/landingPage/Black Eyeglasses with LUCA Magnifying Loupe.png';
-import headbandPicture from '@public/images/landingPage/luca-headband-loupe.png';
-import caseOpenPicture from '@public/images/landingPage/luca-loupe-case-open.png';
-import casePicture from '@public/images/landingPage/luca-loupe-case.png';
-import onexPicture from '@public/images/landingPage/luca-onex-loupe.png';
+import MediaImage from '@components/atoms/MediaImage';
 import { getAboutContent } from '@lib/about';
 import { isPlaceholder } from '@lib/placeholder';
 import { buildPageMetadata } from '@lib/seo';
+// Keep filenames URL-safe (no commas): /_next/image decodes the url param and
+// a comma path makes its internal fetch 404.
+import heroPicture
+  from '@public/images/landingPage/Black Eyeglasses with LUCA Magnifying Loupe.png';
+import headbandPicture
+  from '@public/images/landingPage/luca-headband-loupe.png';
+import caseOpenPicture
+  from '@public/images/landingPage/luca-loupe-case-open.png';
+import casePicture from '@public/images/landingPage/luca-loupe-case.png';
+import onexPicture from '@public/images/landingPage/luca-onex-loupe.png';
 
 type Props = {
   params: Promise<{ locale: string }>;
@@ -147,7 +153,7 @@ export default async function Page({ params }: Props) {
           alt={t('images.hero')}
           sizes="100vw"
           priority
-          className="flex-1 -mx-5 md:-mx-10 mb-6 self-stretch"
+          className="flex-1 self-stretch -mx-5 md:-mx-10 mb-6"
         />
         <div className="flex flex-col items-center gap-2.5">
           {hero.eyebrow ? <span className="font-medium text-[#d0d0cb] text-[13px]">{hero.eyebrow}</span> : null}
@@ -160,7 +166,7 @@ export default async function Page({ params }: Props) {
       {intro.body ? (
         <section className="flex flex-col justify-center items-center gap-6 py-14 md:py-24 text-center luca-container">
           {intro.eyebrow ? <span className="story-intro-eyebrow">{intro.eyebrow}</span> : null}
-          <p className="max-w-[820px] text-[18px] md:text-[20px] leading-relaxed whitespace-pre-line font-body">
+          <p className="max-w-[820px] font-body text-[18px] md:text-[20px] leading-relaxed whitespace-pre-line">
             {intro.body}
           </p>
         </section>
@@ -199,7 +205,7 @@ export default async function Page({ params }: Props) {
       {quote.text ? (
         <section
           className="flex flex-col justify-center items-center gap-5 px-5 md:px-10 py-14 min-h-[340px] xl:min-h-[380px] text-white text-center"
-          style={{ background: 'var(--primary-color)' }}
+          style={{ background: 'var(--store-surface-muted)' }}
         >
           <blockquote className="m-0 max-w-[860px] text-[28px] md:text-[36px] xl:text-[44px] leading-snug luca-display">
             «{quote.text}»
